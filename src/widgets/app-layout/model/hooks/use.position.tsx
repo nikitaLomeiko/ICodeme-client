@@ -1,3 +1,4 @@
+import { Transition, TargetAndTransition } from "framer-motion";
 import { TypePosition } from "../types/type.position";
 
 interface IResponse {
@@ -5,6 +6,11 @@ interface IResponse {
   textPosition: string;
   initialX: string;
   gradient: string;
+  animation: {
+    initial: TargetAndTransition;
+    animate: TargetAndTransition;
+    transition: Transition;
+  };
 }
 
 export const usePosition = (position: TypePosition): IResponse => {
@@ -60,10 +66,61 @@ export const usePosition = (position: TypePosition): IResponse => {
     }
   };
 
+  const getAnimationProps = () => {
+    switch (position) {
+      case "left":
+        return {
+          initial: { x: -500, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          transition: {
+            type: "spring",
+            stiffness: 100,
+            damping: 20,
+          } as Transition,
+        };
+      case "right":
+        return {
+          initial: { x: 500, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          transition: {
+            type: "spring",
+            stiffness: 100,
+            damping: 20,
+          } as Transition,
+        };
+      case "center":
+        return {
+          initial: { opacity: 0, scale: 0.95 },
+          animate: { opacity: 1, scale: 1 },
+          transition: {
+            duration: 0.3,
+            ease: "easeOut",
+          } as Transition,
+        };
+      default:
+        return {
+          initial: { x: "100%", opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          transition: {
+            type: "spring",
+            stiffness: 100,
+            damping: 20,
+          } as Transition,
+        };
+    }
+  };
+
+  const animationProps = getAnimationProps();
+
   return {
     contentPosition: getPositionClasses(),
     textPosition: getTextPositionClasses(),
     gradient: getGradientDirection(),
     initialX: getInitialX(),
+    animation: {
+      initial: animationProps.initial,
+      animate: animationProps.animate,
+      transition: animationProps.transition,
+    },
   };
 };
