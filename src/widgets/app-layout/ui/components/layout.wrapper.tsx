@@ -14,8 +14,6 @@ export const LayoutWrapper: React.FC<IProps> = ({ children, position }) => {
   return (
     <div className="h-screen w-screen flex relative overflow-hidden">
       <div className="absolute inset-0 w-full h-full">
-        <ParticleEffect />
-
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -27,7 +25,7 @@ export const LayoutWrapper: React.FC<IProps> = ({ children, position }) => {
           }}
         />
 
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/70" />
 
         <div
           className={`absolute inset-0 bg-gradient-${gradient} from-black/90 via-transparent to-transparent`}

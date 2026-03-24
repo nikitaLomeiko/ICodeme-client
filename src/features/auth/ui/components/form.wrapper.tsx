@@ -1,4 +1,11 @@
-import { motion } from "framer-motion";
+"use client";
+
+import React, { useState } from "react";
+import { OAuth } from "./ouath";
+import { Notification } from "@/shared/ui/kit";
+import { AuthModeSwitcher } from "./ui/auth.mode.switcher";
+import { Logotype } from "@/shared/ui/logotype";
+
 import { ModeData } from "../../model/data/mode.data";
 import { typeMode } from "../../model/types/mode.types";
 
@@ -6,25 +13,23 @@ interface IProps {
   children: React.ReactNode;
   onMode: (mode: typeMode) => void;
   mode: typeMode;
+  error?: string | null;
+  onClearError: () => void;
 }
 
 export const FormWrapper: React.FC<IProps> = (props) => {
-  const { children, mode, onMode } = props;
+  const { children, mode, onMode, error, onClearError } = props;
+
+  const [showError, setShowError] = useState(true);
+
+  const handleCloseError = () => {
+    setShowError(false);
+    onClearError();
+  };
   return (
-    <>
+    <div>
       <div className="text-center mb-4">
-        <motion.div
-          animate={{
-            scale: [1, 1.1, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 mx-auto mb-2"
-        />
+        <Logotype />
         <h1 className="text-base font-bold text-emerald-800">
           {ModeData[mode].title}
         </h1>
@@ -33,32 +38,21 @@ export const FormWrapper: React.FC<IProps> = (props) => {
         </p>
       </div>
 
+      {error && showError && (
+        <Notification
+          type="error"
+          message={error}
+          onClose={handleCloseError}
+          autoClose
+          autoCloseDelay={5000}
+        />
+      )}
+
       {children}
 
-      <div className="mt-3 text-center">
-        {mode === "login" && (
-          <p className="text-[12px] text-gray-600">
-            Нет аккаунта?{" "}
-            <button
-              onClick={() => onMode("register")}
-              className="text-emerald-600 hover:text-emerald-700 font-medium"
-            >
-              {ModeData["register"].buttonTitle}
-            </button>
-          </p>
-        )}
-        {mode === "register" && (
-          <p className="text-[12px] text-gray-600">
-            Уже есть?{" "}
-            <button
-              onClick={() => onMode("login")}
-              className="text-emerald-600 hover:text-emerald-700 font-medium"
-            >
-              {ModeData["login"].buttonTitle}
-            </button>
-          </p>
-        )}
-      </div>
-    </>
+      <OAuth />
+
+      <AuthModeSwitcher mode={mode} onModeChange={onMode} />
+    </div>
   );
 };

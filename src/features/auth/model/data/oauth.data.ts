@@ -1,6 +1,6 @@
 import { FaGithub, FaGoogle, FaTelegram } from "react-icons/fa";
 
-const oauthProviders = [
+export const oauthProviders = [
   {
     id: "google",
     name: "Google",
@@ -14,7 +14,7 @@ const oauthProviders = [
     id: "github",
     name: "GitHub",
     icon: FaGithub,
-    color: "bg-gray-900 hover:bg-gray-800",
+    color: "!bg-gray-900 hover:bg-gray-800",
     textColor: "text-white",
     borderColor: "border-gray-900",
     iconColor: "text-white",
@@ -23,7 +23,7 @@ const oauthProviders = [
     id: "telegram",
     name: "Telegram",
     icon: FaTelegram,
-    color: "bg-blue-500 hover:bg-blue-600",
+    color: "!bg-blue-500 hover:bg-blue-600",
     textColor: "text-white",
     borderColor: "border-blue-500",
     iconColor: "text-white",
