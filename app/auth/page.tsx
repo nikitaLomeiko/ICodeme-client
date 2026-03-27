@@ -1,15 +1,11 @@
 "use client";
 
 import { AuthForm } from "@/features/auth";
-import { LayoutApp } from "@/widgets/app-layout";
+import { AuthLayout } from "@/widgets/auth-layout";
 export default function Auth() {
   return (
-    <LayoutApp
-      panelWidth="xl:w-[500px] md:w-[400px] sm:w-[300px] w-full"
-      position="right"
-      className="bg-white/95"
-    >
+    <AuthLayout>
       <AuthForm onSuccess={() => null} />
-    </LayoutApp>
+    </AuthLayout>
   );
 }

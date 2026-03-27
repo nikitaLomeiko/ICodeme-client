@@ -11,20 +11,16 @@ export const OAuth = () => {
         return (
           <Button
             key={provider.id}
-            variant="outline"
-            size="sm"
+            variant="ghost"
             onClick={() => null}
             disabled={false}
             icon={Icon}
+            size="sm"
+            sizeIcon={35}
             className={`
-              ${provider.color} 
-              ${provider.textColor} 
-              border ${provider.borderColor}
-              ${provider.iconColor}
+              ${provider.textColor}
             `}
-          >
-            <span className="sr-only">{provider.name}</span>
-          </Button>
+          ></Button>
         );
       })}
     </div>

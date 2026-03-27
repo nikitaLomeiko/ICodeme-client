@@ -23,19 +23,19 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
       onBlur,
       icon: Icon,
       required = false,
-      placeholder,
       disabled = false,
       error,
-      focusedField,
-      setFocusedField,
-      variant = "primary",
+      variant = "rounded",
       size = "md",
       fullWidth = false,
       className = "",
+      inputMode = "floating",
+      placeholder,
       ...restProps
     } = props;
 
     const [internalValue, setInternalValue] = useState(value || "");
+    const [isFocused, setIsFocused] = useState(false);
 
     useEffect(() => {
       if (value !== undefined) {
@@ -43,7 +43,6 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
       }
     }, [value]);
 
-    const isFocused = focusedField === id;
     const hasValue = String(internalValue || "").length > 0;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,12 +51,12 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
     };
 
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-      setFocusedField(id);
+      setIsFocused(true);
       onFocus?.(e);
     };
 
     const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-      setFocusedField(null);
+      setIsFocused(false);
       onBlur?.(e);
     };
 
@@ -80,6 +79,8 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
         hasValue={hasValue}
         error={error}
         required={required}
+        mode={inputMode}
+        isIcon={!!Icon}
       >
         <div className="relative">
           {Icon && (
@@ -97,8 +98,8 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
             onBlur={handleBlur}
             required={required}
             disabled={disabled}
-            placeholder={placeholder}
             className={inputStyles}
+            placeholder={placeholder}
             {...restProps}
           />
         </div>

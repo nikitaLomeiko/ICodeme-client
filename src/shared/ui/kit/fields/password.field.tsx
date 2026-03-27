@@ -12,9 +12,7 @@ import {
   errorStyles,
 } from "./styles/field.styles";
 
-interface PasswordFieldProps extends BaseInputProps {}
-
-export const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
+export const PasswordField = forwardRef<HTMLInputElement, BaseInputProps>(
   (props, forwardedRef) => {
     const {
       id,
@@ -25,20 +23,20 @@ export const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
       onBlur,
       icon: Icon = FaLock,
       required = false,
-      placeholder,
       disabled = false,
       error,
-      focusedField,
-      setFocusedField,
-      variant = "primary",
+      variant = "rounded",
       size = "md",
       fullWidth = false,
       className = "",
+      inputMode = "floating",
+      placeholder,
       ...restProps
     } = props;
 
     const [showPassword, setShowPassword] = useState(false);
     const [internalValue, setInternalValue] = useState(value || "");
+    const [isFocused, setIsFocused] = useState(false);
 
     useEffect(() => {
       if (value !== undefined) {
@@ -46,7 +44,6 @@ export const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
       }
     }, [value]);
 
-    const isFocused = focusedField === id;
     const hasValue = String(internalValue || "").length > 0;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,12 +52,12 @@ export const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
     };
 
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-      setFocusedField(id);
+      setIsFocused(true);
       onFocus?.(e);
     };
 
     const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-      setFocusedField(null);
+      setIsFocused(false);
       onBlur?.(e);
     };
 
@@ -83,6 +80,8 @@ export const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
         hasValue={hasValue}
         error={error}
         required={required}
+        mode={inputMode}
+        isIcon={!!Icon}
       >
         <div className="relative">
           <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10">
@@ -98,8 +97,8 @@ export const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
             onBlur={handleBlur}
             required={required}
             disabled={disabled}
-            placeholder={placeholder}
             className={inputStyles}
+            placeholder={placeholder}
             {...restProps}
           />
           <button

@@ -8,12 +8,48 @@ export const sizeStyles = {
 };
 
 export const variantStyles = {
-  primary:
-    "bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:shadow-md hover:scale-[1.02] active:scale-[0.98]",
-  outline:
-    "border border-gray-300 bg-transperent text-gray-700 hover:bg-gray-50 hover:border-gray-400 hover:scale-[1.02] active:scale-[0.98]",
-  ghost:
-    "text-gray-600 hover:bg-gray-100 hover:text-gray-900 active:scale-[0.98]",
-  danger:
-    "bg-gradient-to-r from-red-500 to-red-600 text-white hover:shadow-md hover:scale-[1.02] active:scale-[0.98]",
+  primary: `
+    !bg-[var(--ui-primary)] 
+    text-white 
+    hover:bg-[var(--ui-primary-hover)] 
+    active:bg-[var(--ui-primary-active)]
+    shadow-sm
+    hover:shadow-md
+    hover:scale-[1.02] 
+    active:scale-[0.98]
+  `,
+  secondary: `
+    bg-[var(--ui-secondary)] 
+    text-white 
+    hover:opacity-90 
+    active:opacity-80
+    hover:scale-[1.02] 
+    active:scale-[0.98]
+  `,
+  outline: `
+    border-2 
+    border-[var(--ui-primary)] 
+    bg-transparent 
+    text-[var(--ui-primary)] 
+    hover:border-[var(--ui-primary)] 
+    hover:text-[var(--ui-text-inverse)]
+    hover:bg-[var(--ui-primary)]
+    hover:scale-[1.02] 
+    active:scale-[0.98]
+  `,
+  ghost: `
+    bg-transparent 
+    text-[var(--ui-primary)] 
+    hover:bg-[var(--ui-background-secondary)] 
+    hover:text-[var(--ui-primary-hover)]
+    active:scale-[0.98]
+  `,
+  danger: `
+    bg-[var(--ui-error)] 
+    text-white 
+    hover:opacity-90 
+    active:opacity-80
+    hover:scale-[1.02] 
+    active:scale-[0.98]
+  `,
 };

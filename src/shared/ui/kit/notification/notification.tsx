@@ -8,17 +8,15 @@ import {
   FaInfoCircle,
   FaTimesCircle,
 } from "react-icons/fa";
+import { NotificationProps } from "./types/notification.props";
+import { notificationStyles } from "./styles/notification.styles";
 
-export type NotificationType = "success" | "error" | "info" | "warning";
-
-interface NotificationProps {
-  type?: NotificationType;
-  message: string | null;
-  onClose?: () => void;
-  autoClose?: boolean;
-  autoCloseDelay?: number;
-  className?: string;
-}
+const icons = {
+  success: <FaCheckCircle className="text-xs" />,
+  error: <FaTimesCircle className="text-xs" />,
+  info: <FaInfoCircle className="text-xs" />,
+  warning: <FaExclamationCircle className="text-xs" />,
+};
 
 export const Notification: React.FC<NotificationProps> = ({
   type = "error",
@@ -42,20 +40,6 @@ export const Notification: React.FC<NotificationProps> = ({
 
   if (!message) return null;
 
-  const icons = {
-    success: <FaCheckCircle className="text-xs" />,
-    error: <FaTimesCircle className="text-xs" />,
-    info: <FaInfoCircle className="text-xs" />,
-    warning: <FaExclamationCircle className="text-xs" />,
-  };
-
-  const styles = {
-    success: "bg-emerald-50 border-emerald-200 text-emerald-600",
-    error: "bg-red-50 border-red-200 text-red-600",
-    info: "bg-blue-50 border-blue-200 text-blue-600",
-    warning: "bg-yellow-50 border-yellow-200 text-yellow-600",
-  };
-
   return (
     <AnimatePresence>
       {isVisible && (
@@ -65,12 +49,12 @@ export const Notification: React.FC<NotificationProps> = ({
           exit={{ opacity: 0, y: -10 }}
           className={`
             mb-3 p-2.5 rounded-lg border flex items-center gap-2 text-xs
-            ${styles[type]}
+            ${notificationStyles[type]}
             ${className}
           `}
           role="alert"
         >
-          <span className="flex-shrink-0">{icons[type]}</span>
+          <span className="flex-shrink-0">icons[type]</span>
           <span className="flex-1">{message}</span>
           {onClose && (
             <button

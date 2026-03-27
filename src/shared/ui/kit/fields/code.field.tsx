@@ -2,14 +2,8 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { InputSize, InputVariant } from "./types/field.props";
-import {
-  baseStyles,
-  variantStyles,
-  sizeStyles,
-  disabledStyles,
-  errorStyles,
-} from "./styles/field.styles";
+import { InputSize, InputVariant } from "./types";
+import { CellInput } from "./ui/cell.input";
 
 interface CodeFieldProps {
   length?: number;
@@ -23,12 +17,6 @@ interface CodeFieldProps {
   size?: InputSize;
 }
 
-const CELL_SIZE: Record<InputSize, string> = {
-  sm: "w-8 h-8 text-sm",
-  md: "w-12 h-12 text-lg",
-  lg: "w-16 h-16 text-xl",
-};
-
 export const CodeField: React.FC<CodeFieldProps> = ({
   length = 6,
   value,
@@ -37,7 +25,7 @@ export const CodeField: React.FC<CodeFieldProps> = ({
   error,
   className = "",
   autoFocus = true,
-  variant = "primary",
+  variant = "rounded",
   size = "md",
 }) => {
   const [code, setCode] = useState<string[]>(Array(length).fill(""));
@@ -56,9 +44,7 @@ export const CodeField: React.FC<CodeFieldProps> = ({
     }
   }, [value, length]);
 
-  const handleChange = (index: number, inputValue: string) => {
-    if (inputValue.length > 1) return;
-
+  const handleCellChange = (index: number, inputValue: string) => {
     const newCode = [...code];
     newCode[index] = inputValue;
     setCode(newCode);
@@ -103,46 +89,26 @@ export const CodeField: React.FC<CodeFieldProps> = ({
     inputRefs.current[lastFilledIndex]?.focus();
   };
 
-  const getCellStyles = (index: number) => {
-    return `
-      ${baseStyles}
-      text-center font-semibold border-2
-      focus:ring-2 focus:border-transparent
-      ${CELL_SIZE[size]}
-      ${variantStyles[variant]}
-      ${error ? errorStyles : ""}
-      ${disabled ? disabledStyles : ""}
-    `;
-  };
-
   return (
     <div className={`space-y-2 ${className}`}>
       <div className="flex justify-between gap-2">
         {code.map((digit, index) => (
-          <motion.div
+          <CellInput
             key={index}
-            initial={false}
-            animate={{
-              scale: digit ? [1, 1.05, 1] : 1,
+            ref={(el) => {
+              inputRefs.current[index] = el;
             }}
-            transition={{ duration: 0.2 }}
-          >
-            <input
-              ref={(el) => {
-                inputRefs.current[index] = el;
-              }}
-              type="text"
-              inputMode="numeric"
-              maxLength={1}
-              value={digit}
-              onChange={(e) => handleChange(index, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(index, e)}
-              onPaste={handlePaste}
-              disabled={disabled}
-              autoFocus={autoFocus && index === 0}
-              className={getCellStyles(index)}
-            />
-          </motion.div>
+            index={index}
+            value={digit}
+            onChange={handleCellChange}
+            onKeyDown={handleKeyDown}
+            onPaste={handlePaste}
+            disabled={disabled}
+            error={!!error}
+            autoFocus={autoFocus && index === 0}
+            variant={variant}
+            size={size}
+          />
         ))}
       </div>
       {error && (

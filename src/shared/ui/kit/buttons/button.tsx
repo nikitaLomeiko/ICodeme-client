@@ -16,54 +16,21 @@ export const Button: React.FC<BaseButtonProps> = ({
   className = "",
   onClick,
   type = "button",
+  sizeIcon,
   disabled,
 }) => {
   const widthStyle = fullWidth ? "w-full" : "";
 
   const buttonStyles = `
+    ${className}
     ${baseStyles}
     ${sizeStyles[size]}
     ${variantStyles[variant]}
     ${widthStyle}
-    ${className}
     cursor-pointer
   `;
 
-  const content = (
-    <>
-      {isLoading ? (
-        <div className="flex items-center justify-center gap-2">
-          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-          <span>{children || "Загрузка..."}</span>
-        </div>
-      ) : (
-        <>
-          {Icon && iconPosition === "left" && (
-            <Icon size={size === "sm" ? 14 : size === "md" ? 16 : 18} />
-          )}
-          {children}
-          {Icon && iconPosition === "right" && (
-            <Icon size={size === "sm" ? 14 : size === "md" ? 16 : 18} />
-          )}
-        </>
-      )}
-    </>
-  );
-
   const isDisabled = disabled || isLoading;
-
-  if (variant === "ghost") {
-    return (
-      <button
-        type={type}
-        className={buttonStyles}
-        disabled={isDisabled}
-        onClick={onClick}
-      >
-        {content}
-      </button>
-    );
-  }
 
   return (
     <motion.button
@@ -74,7 +41,38 @@ export const Button: React.FC<BaseButtonProps> = ({
       whileHover={{ scale: isDisabled ? 1 : 1.02 }}
       whileTap={{ scale: isDisabled ? 1 : 0.98 }}
     >
-      {content}
+      {isLoading ? (
+        <div className="flex items-center justify-center gap-2">
+          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+          <span>{children || "Загрузка..."}</span>
+        </div>
+      ) : (
+        <>
+          {Icon && iconPosition === "left" && (
+            <Icon
+              size={
+                size === "sm"
+                  ? (sizeIcon ?? 14)
+                  : size === "md"
+                    ? (sizeIcon ?? 16)
+                    : (sizeIcon ?? 18)
+              }
+            />
+          )}
+          {children}
+          {Icon && iconPosition === "right" && (
+            <Icon
+              size={
+                size === "sm"
+                  ? (sizeIcon ?? 14)
+                  : size === "md"
+                    ? (sizeIcon ?? 16)
+                    : (sizeIcon ?? 18)
+              }
+            />
+          )}
+        </>
+      )}
     </motion.button>
   );
 };

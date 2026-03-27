@@ -29,7 +29,7 @@ export const FormWrapper: React.FC<IProps> = (props) => {
   return (
     <div>
       <div className="text-center mb-4">
-        <Logotype />
+        <Logotype className="flex justify-center" />
         <h1 className="text-base font-bold text-emerald-800">
           {ModeData[mode].title}
         </h1>

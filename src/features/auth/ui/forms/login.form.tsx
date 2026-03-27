@@ -12,15 +12,11 @@ interface LoginFormProps {
   onSuccess?: () => void;
   setError: (message: string | null) => void;
   onForgotClick: () => void;
-  focusedField: string | null;
-  setFocusedField: (field: string | null) => void;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({
   onForgotClick,
-  focusedField,
   onSuccess,
-  setFocusedField,
   setError,
 }) => {
   const {
@@ -47,7 +43,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(handleLogin)} className="space-y-2">
+    <form onSubmit={handleSubmit(handleLogin)} className="space-y-2 mb-5">
       <TextField
         id="email"
         label="Email"
@@ -56,10 +52,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         icon={FaEnvelope}
         required
         error={errors.email?.message}
-        focusedField={focusedField}
-        setFocusedField={setFocusedField}
         disabled={isLoading}
-        variant="primary"
+        variant="pill"
         autoComplete="off"
       />
 
@@ -69,8 +63,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         {...register("password")}
         required
         error={errors.password?.message}
-        focusedField={focusedField}
-        setFocusedField={setFocusedField}
+        variant="pill"
         disabled={isLoading}
         autoComplete="off"
       />
@@ -82,15 +75,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           size="sm"
           onClick={onForgotClick}
           disabled={isLoading}
-          className="text-emerald-600 hover:text-emerald-700"
         >
           Забыли пароль?
         </Button>
       </div>
 
       <Button
+        className="mt-2"
         type="submit"
-        variant="primary"
+        variant="outline"
         size="md"
         fullWidth
         isLoading={isLoading}

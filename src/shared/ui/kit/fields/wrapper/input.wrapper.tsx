@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { InputMode } from "../types";
 
 interface InputWrapperProps {
   id: string;
@@ -11,6 +12,8 @@ interface InputWrapperProps {
   hasValue: boolean;
   error?: string;
   required?: boolean;
+  mode?: InputMode;
+  isIcon?: boolean;
 }
 
 export const InputWrapper: React.FC<InputWrapperProps> = ({
@@ -21,34 +24,82 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
   hasValue,
   error,
   required,
+  mode = "floating",
+  isIcon = false,
 }) => {
+  if (mode === "placeholder") {
+    return (
+      <div className="relative">
+        {children}
+        {error && (
+          <motion.p
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-[10px] text-[var(--ui-error)] mt-1 ml-3"
+          >
+            {error}
+          </motion.p>
+        )}
+      </div>
+    );
+  }
+
+  if (mode === "static") {
+    return (
+      <div className="relative">
+        <label
+          htmlFor={id}
+          className={`
+            block text-[12px] mb-1 text-[var(--ui-text-secondary)]
+            ${error ? "text-[var(--ui-error)]" : ""}
+            ${required ? "after:content-['*'] after:ml-0.5 after:text-[var(--ui-error)]" : ""}
+          `}
+        >
+          {label}
+        </label>
+        {children}
+        {error && (
+          <motion.p
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-[10px] text-[var(--ui-error)] mt-1 ml-3"
+          >
+            {error}
+          </motion.p>
+        )}
+      </div>
+    );
+  }
+
   return (
-    <div className="relative my-6">
-      {children}
-      <label
-        htmlFor={id}
-        className={`
-          absolute left-10 transition-all pointer-events-none
+    <>
+      <div className="relative my-6">
+        {children}
+        <label
+          htmlFor={id}
+          className={`
+          absolute ${isIcon ? "left-10" : "left-5"} transition-all pointer-events-none
           ${
             isFocused || hasValue
-              ? "text-[12px] -top-[15px] text-emerald-600"
-              : "text-sm text-gray-400 top-1/2 -translate-y-1/2"
+              ? "text-[12px] -top-[15px] text-[var(--ui-text-muted)]"
+              : "text-sm text-[var(--ui-text-muted)] top-1/2 -translate-y-1/2"
           }
-          ${error ? "text-red-500" : ""}
-          ${required ? "after:content-['*'] after:ml-0.5 after:text-red-500" : ""}
+          ${error ? "!text-[var(--ui-error)]" : ""}
+          ${required ? "after:content-['*'] after:ml-0.5 after:text-[var(--ui-error)]" : ""}
         `}
-      >
-        {label}
-      </label>
+        >
+          {label}
+        </label>
+      </div>
       {error && (
         <motion.p
           initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-[10px] text-red-500 mt-1 ml-3"
+          className="text-[10px] text-[var(--ui-error)] -mt-5 ml-3"
         >
           {error}
         </motion.p>
       )}
-    </div>
+    </>
   );
 };

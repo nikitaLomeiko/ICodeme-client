@@ -11,4 +11,5 @@ export interface BaseButtonProps extends Omit<
   icon?: React.ElementType;
   iconPosition?: "left" | "right";
   children?: React.ReactNode;
+  sizeIcon?: number;
 }
