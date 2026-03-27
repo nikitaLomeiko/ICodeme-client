@@ -5,13 +5,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, CodeField } from "@/shared/ui/kit";
 import { VerifyFormData, verifySchema } from "../../model/types/auth.types";
+import { IBaseFormProps } from "../../model/types/form.props";
 
-interface VerifyFormProps {
-  onSuccess?: () => void;
-  setError: (message: string | null) => void;
-}
-
-export const VerifyForm: React.FC<VerifyFormProps> = ({
+export const VerifyForm: React.FC<IBaseFormProps> = ({
   setError,
   onSuccess,
 }) => {

@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/shared/ui/kit";
 import { oauthProviders } from "../../model/data/oauth.data";
 

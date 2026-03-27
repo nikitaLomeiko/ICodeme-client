@@ -6,19 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FaUser, FaEnvelope } from "react-icons/fa";
 import { PasswordField, TextField, Button, Checkbox } from "@/shared/ui/kit";
 import { RegisterFormData, registerSchema } from "../../model/types/auth.types";
+import { IBaseFormProps } from "../../model/types/form.props";
 
-interface RegisterFormProps {
-  onSuccess?: () => void;
-  setError: (message: string | null) => void;
-  focusedField: string | null;
-  setFocusedField: (field: string | null) => void;
-}
-
-export const RegisterForm: React.FC<RegisterFormProps> = ({
+export const RegisterForm: React.FC<IBaseFormProps> = ({
   onSuccess,
   setError,
-  focusedField,
-  setFocusedField,
 }) => {
   const {
     register,
@@ -60,8 +52,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         icon={FaUser}
         required
         error={errors.username?.message}
-        focusedField={focusedField}
-        setFocusedField={setFocusedField}
         disabled={isLoading}
       />
 
@@ -73,8 +63,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         icon={FaEnvelope}
         required
         error={errors.email?.message}
-        focusedField={focusedField}
-        setFocusedField={setFocusedField}
         disabled={isLoading}
       />
 
@@ -84,8 +72,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         {...register("password")}
         required
         error={errors.password?.message}
-        focusedField={focusedField}
-        setFocusedField={setFocusedField}
         disabled={isLoading}
       />
 
@@ -95,8 +81,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         {...register("confirmPassword")}
         required
         error={errors.confirmPassword?.message}
-        focusedField={focusedField}
-        setFocusedField={setFocusedField}
         disabled={isLoading}
       />
 

@@ -6,19 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FaEnvelope } from "react-icons/fa";
 import { TextField, Button } from "@/shared/ui/kit";
 import { ForgotFormData, forgotSchema } from "../../model/types/auth.types";
+import { IBaseFormProps } from "../../model/types/form.props";
 
-interface ForgotFormProps {
-  onSuccess?: () => void;
-  setError: (message: string | null) => void;
-  focusedField: string | null;
-  setFocusedField: (field: string | null) => void;
-}
-
-export const ForgotForm: React.FC<ForgotFormProps> = ({
+export const ForgotForm: React.FC<IBaseFormProps> = ({
   setError,
   onSuccess,
-  focusedField,
-  setFocusedField,
 }) => {
   const {
     register,
@@ -53,8 +45,6 @@ export const ForgotForm: React.FC<ForgotFormProps> = ({
         icon={FaEnvelope}
         required
         error={errors.email?.message}
-        focusedField={focusedField}
-        setFocusedField={setFocusedField}
         disabled={isLoading}
       />
 

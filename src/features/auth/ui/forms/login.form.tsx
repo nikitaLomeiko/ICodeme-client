@@ -7,10 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PasswordField, TextField, Button } from "@/shared/ui/kit";
 import { LoginFormData, loginSchema } from "../../model/types/auth.types";
 import { FaEnvelope } from "react-icons/fa";
+import { IBaseFormProps } from "../../model/types/form.props";
 
-interface LoginFormProps {
-  onSuccess?: () => void;
-  setError: (message: string | null) => void;
+interface LoginFormProps extends IBaseFormProps {
   onForgotClick: () => void;
 }
 
