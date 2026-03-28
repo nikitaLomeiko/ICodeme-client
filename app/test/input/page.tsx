@@ -147,6 +147,7 @@ export default function Test() {
               label="Пароль с ошибкой"
               value={values.password}
               onChange={handleChange("password")}
+              required
               error="Пароль должен содержать минимум 6 символов"
             />
           </div>

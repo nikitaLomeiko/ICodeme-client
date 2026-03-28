@@ -29,6 +29,7 @@
   --ui-border-light: #f3f4f6;
   --ui-placeholder: #9ca3af;
   --ui-disabled: #f3f4f6;
+  --ui-fill: #e5e7eb;
 
   --ui-brand-gradient-start: #10b981;
   --ui-brand-gradient-end: #14b8a6;
@@ -66,6 +67,7 @@
   --ui-border-light: #1f2937;
   --ui-placeholder: #6b7280;
   --ui-disabled: #1f2937;
+  --ui-fill: #4b5563;
 
   --ui-brand-gradient-start: #10b981;
   --ui-brand-gradient-end: #14b8a6;
@@ -103,6 +105,7 @@
   --ui-border-light: #dbeafe;
   --ui-placeholder: #93c5fd;
   --ui-disabled: #dbeafe;
+  --ui-fill: #bfdbfe;
 
   --ui-brand-gradient-start: #3b82f6;
   --ui-brand-gradient-end: #06b6d4;
@@ -140,6 +143,7 @@
   --ui-border-light: #f3e8ff;
   --ui-placeholder: #c4b5fd;
   --ui-disabled: #f3e8ff;
+  --ui-fill: #e9d5ff;
 
   --ui-brand-gradient-start: #8b5cf6;
   --ui-brand-gradient-end: #c084fc;
@@ -177,6 +181,7 @@
   --ui-border-light: #fef9c3;
   --ui-placeholder: #fde047;
   --ui-disabled: #fef9c3;
+  --ui-fill: #fef08a;
 
   --ui-brand-gradient-start: #eab308;
   --ui-brand-gradient-end: #f59e0b;
@@ -214,6 +219,7 @@
   --ui-border-light: #fee2e2;
   --ui-placeholder: #fca5a5;
   --ui-disabled: #fee2e2;
+  --ui-fill: #fecaca;
 
   --ui-brand-gradient-start: #ef4444;
   --ui-brand-gradient-end: #f97316;
@@ -251,6 +257,7 @@
   --ui-border-light: #fce7f3;
   --ui-placeholder: #f9a8d4;
   --ui-disabled: #fce7f3;
+  --ui-fill: #fbcfe8;
 
   --ui-brand-gradient-start: #ec489a;
   --ui-brand-gradient-end: #f472b6;
@@ -288,6 +295,7 @@
   --ui-border-light: #cffafe;
   --ui-placeholder: #67e8f9;
   --ui-disabled: #cffafe;
+  --ui-fill: #a5f3fc;
 
   --ui-brand-gradient-start: #06b6d4;
   --ui-brand-gradient-end: #22d3ee;
@@ -325,6 +333,7 @@
   --ui-border-light: #ffedd5;
   --ui-placeholder: #fdba74;
   --ui-disabled: #ffedd5;
+  --ui-fill: #fed7aa;
 
   --ui-brand-gradient-start: #f97316;
   --ui-brand-gradient-end: #fb923c;
@@ -362,6 +371,7 @@
   --ui-border-light: #ccfbf1;
   --ui-placeholder: #5eead4;
   --ui-disabled: #ccfbf1;
+  --ui-fill: #99f6e4;
 
   --ui-brand-gradient-start: #14b8a6;
   --ui-brand-gradient-end: #2dd4bf;
@@ -399,6 +409,7 @@
   --ui-border-light: #f3f4f6;
   --ui-placeholder: #9ca3af;
   --ui-disabled: #f3f4f6;
+  --ui-fill: #e5e7eb;
 
   --ui-brand-gradient-start: #6b7280;
   --ui-brand-gradient-end: #9ca3af;

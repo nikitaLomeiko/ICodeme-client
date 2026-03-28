@@ -49,6 +49,24 @@
   }
 }
 
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes stripes {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 2rem 2rem;
+  }
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
@@ -63,10 +81,6 @@
 
 .animate-bounce-custom {
   animation: bounce-custom 2s ease infinite;
-}
-
-.animate-glow {
-  animation: glow 2s ease-in-out infinite;
 }
 
 :root {

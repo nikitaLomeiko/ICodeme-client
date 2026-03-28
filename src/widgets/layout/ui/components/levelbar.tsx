@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FaArrowUp, FaStar } from "react-icons/fa";
 import { ILevel } from "../../model/types/level.type";
+import { ProgressBar } from "@/shared/ui/kit";
 
 export const LevelBar: React.FC<ILevel> = (props) => {
   const { currentLevel, currentXP, levelName, nextLevelXP, progress } = props;
@@ -20,14 +21,13 @@ export const LevelBar: React.FC<ILevel> = (props) => {
           </span>
         </div>
 
-        <div className="h-1.5 bg-emerald-100 rounded-full overflow-hidden">
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ delay: 0.3, duration: 1 }}
-            className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"
-          />
-        </div>
+        <ProgressBar
+          value={progress}
+          size="sm"
+          state="success"
+          variant="capsule"
+          duration={1000}
+        />
 
         <motion.div
           initial={{ opacity: 0 }}

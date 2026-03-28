@@ -48,12 +48,9 @@ export const FormWrapper: React.FC<IProps> = (props) => {
         />
       )}
 
-      <div className="form-container">
-        <div className="form-content">{children}</div>
-      </div>
+      <div className="form-content">{children}</div>
 
       {(mode === "login" || mode === "register") && <OAuth />}
-
       <AuthModeSwitcher mode={mode} onModeChange={onMode} />
     </div>
   );

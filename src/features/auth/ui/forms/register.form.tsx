@@ -20,7 +20,6 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -46,19 +45,10 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
   return (
     <form onSubmit={handleSubmit(handleRegister)} className="space-y-2">
       <TextField
-        id="username"
-        label="Имя"
-        {...register("username")}
-        icon={FaUser}
-        required
-        error={errors.username?.message}
-        disabled={isLoading}
-      />
-
-      <TextField
         id="email"
         label="Email"
         type="email"
+        variant="pill"
         {...register("email")}
         icon={FaEnvelope}
         required
@@ -69,6 +59,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
       <PasswordField
         id="password"
         label="Пароль"
+        variant="pill"
         {...register("password")}
         required
         error={errors.password?.message}
@@ -78,6 +69,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
       <PasswordField
         id="confirmPassword"
         label="Подтвердите пароль"
+        variant="pill"
         {...register("confirmPassword")}
         required
         error={errors.confirmPassword?.message}
@@ -104,7 +96,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
 
       <Button
         type="submit"
-        variant="primary"
+        variant="outline"
         size="md"
         fullWidth
         isLoading={isLoading}

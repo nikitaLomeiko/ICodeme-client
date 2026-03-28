@@ -14,7 +14,6 @@ export const loginSchema = z.object({
 
 export const registerSchema = z
   .object({
-    username: z.string().min(2, "Имя должно содержать минимум 2 символа"),
     email: z.string().email("Неверный формат email"),
     password: z.string().min(6, "Пароль должен содержать минимум 6 символов"),
     confirmPassword: z.string(),

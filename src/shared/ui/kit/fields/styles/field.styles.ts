@@ -81,3 +81,10 @@ export const errorStyles = `
   !focus:ring-2 
   !focus:ring-[var(--ui-error)]/20
 `;
+
+export const textareaBaseStyles = `
+  w-full rounded-xl outline-none text-sm transition-all duration-200 resize-none
+  bg-[var(--ui-background)]
+  text-black/80
+  placeholder:text-gray-500
+`;

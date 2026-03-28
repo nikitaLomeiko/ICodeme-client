@@ -40,6 +40,7 @@ export const ForgotForm: React.FC<IBaseFormProps> = ({
       <TextField
         id="email"
         label="Email"
+        variant="pill"
         type="email"
         {...register("email")}
         icon={FaEnvelope}
@@ -50,7 +51,7 @@ export const ForgotForm: React.FC<IBaseFormProps> = ({
 
       <Button
         type="submit"
-        variant="primary"
+        variant="outline"
         size="md"
         fullWidth
         isLoading={isLoading}

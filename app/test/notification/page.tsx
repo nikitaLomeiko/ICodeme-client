@@ -1,10 +1,12 @@
 "use client";
 
-import { Button } from "@/shared/ui/kit";
 import {
-  Notification,
+  Button,
   NotificationType,
-} from "@/shared/ui/kit/notification/notification";
+  ProgressBar,
+  TextareaField,
+} from "@/shared/ui/kit";
+import { Notification } from "@/shared/ui/kit/notification/notification";
 import { useState } from "react";
 
 export default function NotificationDemo() {
@@ -16,6 +18,8 @@ export default function NotificationDemo() {
     }[]
   >([]);
   const [lastId, setLastId] = useState(0);
+
+  const [progress, setProgress] = useState(0);
 
   const showNotification = (type: NotificationType, message: string) => {
     const id = lastId + 1;
@@ -202,6 +206,84 @@ export default function NotificationDemo() {
             </div>
           </div>
         </div>
+
+        {/* Textarea Field */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-[var(--ui-text-secondary)] mb-4">
+            Textarea Field
+          </h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Обычный */}
+            <TextareaField id="textarea-default" label="Обычный" />
+
+            {/* С variant */}
+            <TextareaField
+              id="textarea-underlined"
+              label="Underlined"
+              variant="clean"
+            />
+
+            <TextareaField
+              id="textarea-error"
+              label="С ошибкой"
+              error="Поле обязательно для заполнения"
+              variant="square"
+            />
+
+            {/* Disabled */}
+            <TextareaField
+              id="textarea-disabled"
+              label="Disabled"
+              disabled
+              value="Этот текст нельзя редактировать"
+            />
+
+            {/* С maxLength */}
+            <TextareaField
+              id="textarea-maxlength"
+              label="С ограничением длины"
+              maxLength={100}
+            />
+
+            {/* autoExpand */}
+            <TextareaField
+              id="textarea-autoexpand"
+              label="Auto Expand"
+              autoExpand
+              maxRows={100}
+            />
+
+            {/* С label и value */}
+            <TextareaField
+              id="textarea-value"
+              label="С значением"
+              value="Предзаполненный текст"
+              rows={3}
+            />
+
+            {/* Floating label */}
+            <TextareaField id="textarea-floating" label="Floating Label" />
+          </div>
+        </div>
+
+        <ProgressBar
+          showValue
+          value={progress}
+          size="lg"
+          segments={4}
+          state="success"
+          variant="segmented-capsule"
+          trackVariant="solid"
+          label="asdg"
+          labelPosition="top-right"
+          duration={300}
+        />
+
+        <button
+          onClick={() => setProgress((prev) => (prev < 100 ? prev + 10 : 0))}
+        >
+          +
+        </button>
       </div>
     </div>
   );

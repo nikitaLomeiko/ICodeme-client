@@ -210,7 +210,7 @@ export const AuthLayout: React.FC<IProps> = ({ children }) => {
               />
             </motion.div>
 
-            <div className="relative p-8">
+            <div className="relative p-8 overflow-hidden">
               <div className="text-center mb-8">
                 <motion.h1
                   initial={{ opacity: 0 }}

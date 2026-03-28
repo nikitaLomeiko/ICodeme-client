@@ -27,25 +27,23 @@ export const AnimatedForm: React.FC<AnimatedFormProps> = ({
   }, [mode, prevMode]);
 
   return (
-    <div style={{ position: "relative", overflow: "hidden" }}>
-      <AnimatePresence initial={false} mode="wait" custom={direction}>
-        <motion.div
-          key={mode}
-          custom={direction}
-          variants={animatedData}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{
-            x: { type: "spring", stiffness: 300, damping: 30 },
-            opacity: { duration: 0.2 },
-            scale: { duration: 0.2 },
-          }}
-          style={{ position: "relative" }}
-        >
-          {children}
-        </motion.div>
-      </AnimatePresence>
-    </div>
+    <AnimatePresence initial={false} mode="wait" custom={direction}>
+      <motion.div
+        key={mode}
+        custom={direction}
+        variants={animatedData}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        transition={{
+          x: { type: "spring", stiffness: 300, damping: 30 },
+          opacity: { duration: 0.2 },
+          scale: { duration: 0.2 },
+        }}
+        style={{ position: "relative" }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   );
 };
