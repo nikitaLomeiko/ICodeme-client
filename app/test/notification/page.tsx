@@ -214,7 +214,11 @@ export default function NotificationDemo() {
           </h2>
           <div className="grid gap-6 md:grid-cols-2">
             {/* Обычный */}
-            <TextareaField id="textarea-default" label="Обычный" />
+            <TextareaField
+              inputMode="floating"
+              id="textarea-default"
+              label="Обычный"
+            />
 
             {/* С variant */}
             <TextareaField

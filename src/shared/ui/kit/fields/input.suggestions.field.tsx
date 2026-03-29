@@ -1,6 +1,6 @@
 "use client";
 
-import React, { forwardRef, useState, useEffect, useRef } from "react";
+import React, { forwardRef } from "react";
 import { InputWrapper } from "./wrapper/input.wrapper";
 import { BaseInputProps } from "./types/field.props";
 import {
@@ -10,7 +10,10 @@ import {
   disabledStyles,
   errorStyles,
 } from "./styles/field.styles";
-import { motion, AnimatePresence } from "framer-motion";
+import { Suggestions } from "./ui/suggestions";
+import { useSuggestions } from "./hooks/use.suggestions";
+import { useFocused } from "./hooks/use.focused";
+import { useInternal } from "./hooks/use.internal";
 
 export interface InputWithSuggestionsProps extends Omit<
   BaseInputProps,
@@ -47,87 +50,37 @@ export const InputWithSuggestions = forwardRef<
     ...restProps
   } = props;
 
-  const [internalValue, setInternalValue] = useState(value || "");
-  const [isFocused, setIsFocused] = useState(false);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const { handleBlur, handleFocus, isFocused } = useFocused({
+    onFocus,
+    onBlur,
+  });
 
-  useEffect(() => {
-    if (value !== undefined) {
-      setInternalValue(value);
-    }
-  }, [value]);
+  const {
+    internalValue,
+    hasValue,
+    handleChange: handleBaseChange,
+    setInternalValue,
+  } = useInternal({
+    value,
+    onChange,
+  });
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node)
-      ) {
-        setShowSuggestions(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const hasValue = String(internalValue || "").length > 0;
-
-  const filteredSuggestions = suggestions
-    .filter((s) =>
-      String(s).toLowerCase().includes(String(internalValue).toLowerCase()),
-    )
-    .slice(0, maxSuggestions);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInternalValue(e.target.value);
-    setShowSuggestions(true);
-    setHighlightedIndex(-1);
-    onChange?.(e);
-  };
-
-  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    setIsFocused(true);
-    setShowSuggestions(true);
-    onFocus?.(e);
-  };
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setIsFocused(false);
-    onBlur?.(e);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setHighlightedIndex((prev) =>
-        prev < filteredSuggestions.length - 1 ? prev + 1 : prev,
-      );
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setHighlightedIndex((prev) => (prev > 0 ? prev - 1 : -1));
-    } else if (e.key === "Enter") {
-      e.preventDefault();
-      if (highlightedIndex >= 0 && filteredSuggestions[highlightedIndex]) {
-        selectSuggestion(filteredSuggestions[highlightedIndex]);
-      }
-    } else if (e.key === "Escape") {
-      setShowSuggestions(false);
-    }
-  };
-
-  const selectSuggestion = (suggestion: string) => {
-    setInternalValue(suggestion);
-    setShowSuggestions(false);
-    onSelectSuggestion?.(suggestion);
-
-    const event = {
-      target: { value: suggestion },
-    } as React.ChangeEvent<HTMLInputElement>;
-    onChange?.(event);
-  };
+  const {
+    handleChange,
+    handleKeyDown,
+    selectSuggestion,
+    highlightedIndex,
+    setShowSuggestions,
+    showSuggestions,
+    wrapperRef,
+    filteredSuggestions,
+  } = useSuggestions({
+    internalValue,
+    setInternalValue,
+    suggestions,
+    onChange,
+    onSelectSuggestion,
+  });
 
   const inputStyles = `
       ${baseStyles}
@@ -150,14 +103,15 @@ export const InputWithSuggestions = forwardRef<
         required={required}
         mode={inputMode}
         isIcon={false}
+        labelSize={size}
       >
         <input
           ref={forwardedRef}
           id={id}
           type="text"
           value={internalValue}
-          onChange={handleChange}
-          onFocus={handleFocus}
+          onChange={(e) => handleBaseChange(e, () => handleChange(e))}
+          onFocus={(e) => handleFocus(e, () => setShowSuggestions(true))}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
           required={required}
@@ -169,34 +123,13 @@ export const InputWithSuggestions = forwardRef<
         />
       </InputWrapper>
 
-      <AnimatePresence>
-        {showSuggestions && filteredSuggestions.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute z-50 w-full mt-1 bg-[var(--ui-background)] border border-[var(--ui-border)] rounded-lg shadow-lg max-h-48 overflow-y-auto"
-          >
-            {filteredSuggestions.map((suggestion, index) => (
-              <button
-                key={suggestion}
-                type="button"
-                onClick={() => selectSuggestion(suggestion)}
-                className={`
-                    w-full px-4 py-2 text-left text-sm transition-colors
-                    ${
-                      index === highlightedIndex
-                        ? "bg-[var(--ui-primary)]/10 text-[var(--ui-primary)]"
-                        : "text-[var(--ui-text)] hover:bg-[var(--ui-background-secondary)]"
-                    }
-                  `}
-              >
-                {suggestion}
-              </button>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Suggestions
+        suggestions={filteredSuggestions}
+        showSuggestions={showSuggestions}
+        highlightedIndex={highlightedIndex}
+        selectSuggestion={selectSuggestion}
+        internalValue={internalValue}
+      />
     </div>
   );
 });

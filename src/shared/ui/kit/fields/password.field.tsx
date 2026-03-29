@@ -11,6 +11,8 @@ import {
   disabledStyles,
   errorStyles,
 } from "./styles/field.styles";
+import { useInternal } from "./hooks/use.internal";
+import { useFocused } from "./hooks/use.focused";
 
 export const PasswordField = forwardRef<HTMLInputElement, BaseInputProps>(
   (props, forwardedRef) => {
@@ -35,31 +37,16 @@ export const PasswordField = forwardRef<HTMLInputElement, BaseInputProps>(
     } = props;
 
     const [showPassword, setShowPassword] = useState(false);
-    const [internalValue, setInternalValue] = useState(value || "");
-    const [isFocused, setIsFocused] = useState(false);
 
-    useEffect(() => {
-      if (value !== undefined) {
-        setInternalValue(value);
-      }
-    }, [value]);
+    const { handleChange, hasValue, internalValue } = useInternal({
+      value,
+      onChange,
+    });
 
-    const hasValue = String(internalValue || "").length > 0;
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInternalValue(e.target.value);
-      onChange?.(e);
-    };
-
-    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-      setIsFocused(true);
-      onFocus?.(e);
-    };
-
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-      setIsFocused(false);
-      onBlur?.(e);
-    };
+    const { handleBlur, handleFocus, isFocused } = useFocused({
+      onFocus,
+      onBlur,
+    });
 
     const inputStyles = `
       ${baseStyles}
@@ -82,6 +69,7 @@ export const PasswordField = forwardRef<HTMLInputElement, BaseInputProps>(
         required={required}
         mode={inputMode}
         isIcon={!!Icon}
+        labelSize={size}
       >
         <div className="relative">
           <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10">

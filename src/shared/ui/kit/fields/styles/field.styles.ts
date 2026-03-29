@@ -6,8 +6,8 @@ export const baseStyles = `
 `;
 
 export const sizeStyles = {
-  sm: "px-3 py-2 text-xs",
-  md: "px-4 py-3 text-sm",
+  sm: "px-5 py-2 text-xs",
+  md: "px-5 py-3 text-sm",
   lg: "px-5 py-4 text-base",
 };
 
@@ -53,8 +53,7 @@ export const variantStyles = {
     !border-b-2 
     !border-[var(--ui-border)]
     !rounded-none 
-    !bg-transparent 
-    !px-0
+    !bg-transparent
     !focus:border-[var(--ui-border-focus)] 
     !focus:ring-0 
     !hover:border-[var(--ui-primary)]/50

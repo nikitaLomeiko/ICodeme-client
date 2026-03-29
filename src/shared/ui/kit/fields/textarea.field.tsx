@@ -1,6 +1,6 @@
 "use client";
 
-import React, { forwardRef, useEffect, useState, useRef } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 import { InputWrapper } from "./wrapper/input.wrapper";
 import { BaseTextareaProps } from "./types/field.props";
 import {
@@ -10,6 +10,8 @@ import {
   errorStyles,
   textareaBaseStyles,
 } from "./styles/field.styles";
+import { useInternal } from "./hooks/use.internal";
+import { useFocused } from "./hooks/use.focused";
 
 export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
   (props, forwardedRef) => {
@@ -37,14 +39,16 @@ export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
     } = props;
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const [internalValue, setInternalValue] = useState(value || "");
-    const [isFocused, setIsFocused] = useState(false);
 
-    useEffect(() => {
-      if (value !== undefined) {
-        setInternalValue(value);
-      }
-    }, [value]);
+    const { handleChange, hasValue, internalValue } = useInternal({
+      value,
+      onChange,
+    });
+
+    const { handleBlur, handleFocus, isFocused } = useFocused({
+      onFocus,
+      onBlur,
+    });
 
     useEffect(() => {
       if (autoExpand && textareaRef.current) {
@@ -78,23 +82,6 @@ export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
       }
     }, [internalValue, autoExpand, rows, maxRows]);
 
-    const hasValue = String(internalValue || "").length > 0;
-
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setInternalValue(e.target.value);
-      onChange?.(e);
-    };
-
-    const handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
-      setIsFocused(true);
-      onFocus?.(e);
-    };
-
-    const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
-      setIsFocused(false);
-      onBlur?.(e);
-    };
-
     const inputStyles = `
       ${textareaBaseStyles}
       ${sizeStyles[size]}
@@ -114,7 +101,8 @@ export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
         error={error}
         required={required}
         mode={inputMode}
-        isIcon={false}
+        labelSize={size}
+        labelPosition="top"
       >
         <div className="relative">
           <textarea

@@ -188,7 +188,7 @@ export default function Test() {
               label="Маленькое поле"
               value={values.text}
               onChange={handleChange("text")}
-              className="px-3 py-2 text-xs"
+              size="sm"
             />
 
             <TextField
@@ -196,7 +196,7 @@ export default function Test() {
               label="Среднее поле"
               value={values.text}
               onChange={handleChange("text")}
-              className="px-4 py-3 text-sm"
+              size="md"
             />
 
             <TextField
@@ -204,7 +204,7 @@ export default function Test() {
               label="Большое поле"
               value={values.text}
               onChange={handleChange("text")}
-              className="px-5 py-4 text-base"
+              size="lg"
             />
           </div>
           <CodeField onChange={() => null} value="" variant="square" />

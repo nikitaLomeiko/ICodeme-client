@@ -36,8 +36,8 @@ const programmingLanguages = [
 
 const stepTitles = [
   {
-    title: "Давай познакомимся! 👋",
-    subtitle: "Расскажи нам, как к тебе обращаться",
+    title: "Welcome!",
+    subtitle: "What's your name?",
   },
   {
     title: "Выбери аватар 🎨",
@@ -137,15 +137,14 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
         return (
           <TextField
             id="name"
-            label="Ваше имя"
+            label="Name"
             value={formData.name}
             onChange={(e) => updateField("name", e.target.value)}
-            placeholder="Как к вам обращаться?"
             error={errors.name}
             variant="rounded"
-            size="lg"
+            size="sm"
             fullWidth
-            inputMode="static"
+            inputMode="floating"
           />
         );
 
@@ -209,20 +208,15 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
       <div className="mb-8">
         <ProgressBar
           value={progress}
-          size="sm"
+          size="md"
           segments={totalSteps}
           state="success"
           variant="segmented-capsule"
-          trackVariant="striped"
-          label={`Шаг ${currentStep + 1} из ${totalSteps}`}
-          labelPosition="top-left"
-          animation="slide"
-          showValue
+          trackVariant="solid"
           duration={300}
         />
       </div>
 
-      {/* Title */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentStep}
@@ -230,7 +224,7 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.2 }}
-          className="mb-8"
+          className="mb-8 text-center"
         >
           <h2 className="text-2xl font-bold text-[var(--ui-text)] mb-2">
             {stepTitles[currentStep].title}

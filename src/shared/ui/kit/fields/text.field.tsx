@@ -1,6 +1,6 @@
 "use client";
 
-import React, { forwardRef, useEffect, useState } from "react";
+import { forwardRef } from "react";
 import { InputWrapper } from "./wrapper/input.wrapper";
 import { BaseInputProps } from "./types/field.props";
 import {
@@ -10,6 +10,8 @@ import {
   disabledStyles,
   errorStyles,
 } from "./styles/field.styles";
+import { useFocused } from "./hooks/use.focused";
+import { useInternal } from "./hooks/use.internal";
 
 export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
   (props, forwardedRef) => {
@@ -34,31 +36,14 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
       ...restProps
     } = props;
 
-    const [internalValue, setInternalValue] = useState(value || "");
-    const [isFocused, setIsFocused] = useState(false);
-
-    useEffect(() => {
-      if (value !== undefined) {
-        setInternalValue(value);
-      }
-    }, [value]);
-
-    const hasValue = String(internalValue || "").length > 0;
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInternalValue(e.target.value);
-      onChange?.(e);
-    };
-
-    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-      setIsFocused(true);
-      onFocus?.(e);
-    };
-
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-      setIsFocused(false);
-      onBlur?.(e);
-    };
+    const { handleChange, hasValue, internalValue } = useInternal({
+      value,
+      onChange,
+    });
+    const { handleBlur, handleFocus, isFocused } = useFocused({
+      onFocus,
+      onBlur,
+    });
 
     const inputStyles = `
       ${baseStyles}
@@ -81,6 +66,7 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
         required={required}
         mode={inputMode}
         isIcon={!!Icon}
+        labelSize={size}
       >
         <div className="relative">
           {Icon && (
