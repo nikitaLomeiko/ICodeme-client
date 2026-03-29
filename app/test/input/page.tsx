@@ -1,7 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { TextField, PasswordField, CodeField } from "@/shared/ui/kit";
+import {
+  TextField,
+  PasswordField,
+  CodeField,
+  TextareaField,
+  InputWithSuggestions,
+  Avatar,
+} from "@/shared/ui/kit";
+import {
+  FaSearch,
+  FaUser,
+  FaEnvelope,
+  FaCheck,
+  FaLock,
+  FaDownload,
+  FaRobot,
+} from "react-icons/fa";
 
 export default function Test() {
   const [values, setValues] = useState({
@@ -11,10 +27,18 @@ export default function Test() {
     confirmPassword: "",
     error: "",
     disabled: "",
+    search: "",
+    username: "",
+    withIconsLeft: "",
+    withIconsRight: "",
+    withBothIcons: "",
+    textarea: "",
+    suggestions: "",
   });
 
   const handleChange =
-    (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (field: string) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setValues({ ...values, [field]: e.target.value });
     };
 
@@ -59,46 +83,78 @@ export default function Test() {
           <div className="space-y-4">
             <TextField
               id="search"
-              label="Поиск"
-              value={values.text}
-              onChange={handleChange("text")}
-              icon={() => (
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              )}
+              label="Поиск (icon - legacy)"
+              value={values.search}
+              onChange={handleChange("search")}
+              icon={FaSearch}
             />
 
             <TextField
               id="user"
-              label="Имя пользователя"
-              value={values.text}
-              onChange={handleChange("text")}
-              icon={() => (
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-              )}
+              label="Имя пользователя (iconLeft)"
+              value={values.username}
+              onChange={handleChange("username")}
+              iconLeft={FaUser}
+            />
+          </div>
+        </div>
+
+        {/* Иконки с разных сторон */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-[var(--ui-text-secondary)] mb-4">
+            Иконки слева и справа
+          </h2>
+          <div className="space-y-4">
+            <TextField
+              id="iconsLeft"
+              label="Иконка слева"
+              value={values.withIconsLeft}
+              onChange={handleChange("withIconsLeft")}
+              iconLeft={FaEnvelope}
+            />
+
+            <TextField
+              id="iconsRight"
+              label="Иконка справа"
+              value={values.withIconsRight}
+              onChange={handleChange("withIconsRight")}
+              iconRight={FaCheck}
+            />
+
+            <TextField
+              id="iconsBoth"
+              label="Иконки с обеих сторон"
+              value={values.withBothIcons}
+              onChange={handleChange("withBothIcons")}
+              iconLeft={FaSearch}
+              iconRight={FaCheck}
+            />
+
+            <InputWithSuggestions
+              id="suggestionsBoth"
+              label="Suggestions с иконками"
+              value={values.suggestions}
+              onChange={handleChange("suggestions")}
+              suggestions={["React", "Vue", "Angular", "Svelte", "Next.js"]}
+              iconLeft={FaSearch}
+              iconRight={FaDownload}
+            />
+          </div>
+        </div>
+
+        {/* Textarea с иконкой */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-[var(--ui-text-secondary)] mb-4">
+            Textarea с иконкой
+          </h2>
+          <div className="space-y-4">
+            <TextareaField
+              id="textarea"
+              label="Сообщение с иконкой"
+              value={values.textarea}
+              onChange={handleChange("textarea")}
+              iconLeft={FaEnvelope}
+              rows={4}
             />
           </div>
         </div>
@@ -208,6 +264,127 @@ export default function Test() {
             />
           </div>
           <CodeField onChange={() => null} value="" variant="square" />
+        </div>
+
+        {/* Аватары */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-[var(--ui-text-secondary)] mb-4">
+            Аватары
+          </h2>
+
+          <div className="space-y-6">
+            {/* Размеры */}
+            <div>
+              <h3 className="text-sm font-medium text-[var(--ui-text-muted)] mb-3">
+                Размеры
+              </h3>
+              <div className="flex items-end gap-4 flex-wrap">
+                <Avatar size="xs" />
+                <Avatar size="sm" />
+                <Avatar size="md" />
+                <Avatar size="lg" />
+                <Avatar size="xl" />
+                <Avatar size="2xl" />
+              </div>
+            </div>
+
+            {/* Формы */}
+            <div>
+              <h3 className="text-sm font-medium text-[var(--ui-text-muted)] mb-3">
+                Формы
+              </h3>
+              <div className="flex items-center gap-4">
+                <Avatar size="lg" shape="circle" />
+                <Avatar size="lg" shape="rounded" />
+                <Avatar size="lg" shape="square" />
+              </div>
+            </div>
+
+            {/* С изображением */}
+            <div>
+              <h3 className="text-sm font-medium text-[var(--ui-text-muted)] mb-3">
+                С изображением
+              </h3>
+              <div className="flex items-center gap-4">
+                <Avatar
+                  src="https://i.pravatar.cc/100?img=1"
+                  size="lg"
+                  shape="circle"
+                  alt="User 1"
+                />
+                <Avatar
+                  src="https://i.pravatar.cc/100?img=5"
+                  size="lg"
+                  shape="rounded"
+                  alt="User 2"
+                />
+                <Avatar
+                  src="https://i.pravatar.cc/100?img=8"
+                  size="lg"
+                  shape="square"
+                  alt="User 3"
+                />
+              </div>
+            </div>
+
+            {/* С инициалами */}
+            <div>
+              <h3 className="text-sm font-medium text-[var(--ui-text-muted)] mb-3">
+                С инициалами
+              </h3>
+              <div className="flex items-center gap-4 flex-wrap">
+                <Avatar initials="ИИ" size="lg" />
+                <Avatar initials="АВ" size="lg" />
+                <Avatar initials="JD" size="lg" />
+                <Avatar initials="MK" size="lg" />
+              </div>
+            </div>
+
+            {/* С цветом фона */}
+            <div>
+              <h3 className="text-sm font-medium text-[var(--ui-text-muted)] mb-3">
+                С цветом фона
+              </h3>
+              <div className="flex items-center gap-4 flex-wrap">
+                <Avatar bgColor="#EF4444" size="lg" />
+                <Avatar bgColor="#3B82F6" size="lg" />
+                <Avatar bgColor="#10B981" size="lg" />
+                <Avatar bgColor="#8B5CF6" size="lg" />
+                <Avatar bgColor="#F59E0B" size="lg" />
+              </div>
+            </div>
+
+            {/* С кастомной иконкой */}
+            <div>
+              <h3 className="text-sm font-medium text-[var(--ui-text-muted)] mb-3">
+                С кастомной иконкой
+              </h3>
+              <div className="flex items-center gap-4">
+                <Avatar icon={<FaRobot />} size="lg" bgColor="#6366F1" />
+                <Avatar icon={<FaUser />} size="lg" bgColor="#EC4899" />
+                <Avatar showDefaultIcon={false} size="lg" bgColor="#64748B" />
+              </div>
+            </div>
+
+            {/* Клик */}
+            <div>
+              <h3 className="text-sm font-medium text-[var(--ui-text-muted)] mb-3">
+                С кликом
+              </h3>
+              <div className="flex items-center gap-4">
+                <Avatar
+                  src="https://i.pravatar.cc/100?img=12"
+                  size="lg"
+                  onClick={() => alert("Клик по аватару!")}
+                />
+                <Avatar
+                  initials="CL"
+                  size="lg"
+                  onClick={() => console.log("Клик по инициалам")}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

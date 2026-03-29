@@ -12,6 +12,7 @@ import {
 } from "./styles/field.styles";
 import { useFocused } from "./hooks/use.focused";
 import { useInternal } from "./hooks/use.internal";
+import { FieldIcon } from "./ui/field.icon";
 
 export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
   (props, forwardedRef) => {
@@ -23,7 +24,9 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
       onChange,
       onFocus,
       onBlur,
-      icon: Icon,
+      icon,
+      iconLeft,
+      iconRight,
       required = false,
       disabled = false,
       error,
@@ -35,6 +38,10 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
       placeholder,
       ...restProps
     } = props;
+
+    const Icon = icon || iconLeft;
+    const hasLeftIcon = !!Icon;
+    const hasRightIcon = !!iconRight;
 
     const { handleChange, hasValue, internalValue } = useInternal({
       value,
@@ -52,7 +59,8 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
       ${error ? errorStyles : ""}
       ${disabled ? disabledStyles : ""}
       ${fullWidth ? "w-full" : ""}
-      ${Icon ? "pl-10" : ""}
+      ${hasLeftIcon ? "pl-10" : ""}
+      ${hasRightIcon ? "pr-10" : ""}
       ${className}
     `;
 
@@ -65,15 +73,12 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
         error={error}
         required={required}
         mode={inputMode}
-        isIcon={!!Icon}
+        isIcon={!!Icon || !!iconRight}
         labelSize={size}
       >
         <div className="relative">
-          {Icon && (
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10">
-              <Icon size={16} />
-            </div>
-          )}
+          {hasLeftIcon && <FieldIcon icon={Icon} position="left" />}
+          {hasRightIcon && <FieldIcon icon={iconRight} position="right" />}
           <input
             ref={forwardedRef}
             id={id}

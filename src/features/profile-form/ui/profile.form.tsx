@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   TextField,
   TextareaField,
-  AvatarPicker,
   InputWithSuggestions,
   ProgressBar,
+  Avatar,
 } from "@/shared/ui/kit";
 import { Button } from "@/shared/ui/kit";
 
@@ -150,14 +150,17 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
 
       case 1:
         return (
-          <AvatarPicker
-            value={formData.avatar}
-            onChange={(color) => updateField("avatar", color)}
-            size="xl"
-            shape="circle"
-            label="Выберите цвет аватара"
-            error={errors.avatar}
-          />
+          // <AvatarPicker
+          //   value={formData.avatar}
+          //   onChange={(color) => updateField("avatar", color)}
+          //   size="xl"
+          //   shape="circle"
+          //   label="Выберите цвет аватара"
+          //   error={errors.avatar}
+          // />
+          <>
+            <Avatar src={formData.avatar} alt={formData.name || "Avatar"} />
+          </>
         );
 
       case 2:

@@ -14,6 +14,7 @@ import { Suggestions } from "./ui/suggestions";
 import { useSuggestions } from "./hooks/use.suggestions";
 import { useFocused } from "./hooks/use.focused";
 import { useInternal } from "./hooks/use.internal";
+import { FieldIcon } from "./ui/field.icon";
 
 export interface InputWithSuggestionsProps extends Omit<
   BaseInputProps,
@@ -35,6 +36,9 @@ export const InputWithSuggestions = forwardRef<
     onChange,
     onFocus,
     onBlur,
+    icon,
+    iconLeft,
+    iconRight,
     required = false,
     disabled = false,
     error,
@@ -49,6 +53,10 @@ export const InputWithSuggestions = forwardRef<
     maxSuggestions = 5,
     ...restProps
   } = props;
+
+  const Icon = icon || iconLeft;
+  const hasLeftIcon = !!Icon;
+  const hasRightIcon = !!iconRight;
 
   const { handleBlur, handleFocus, isFocused } = useFocused({
     onFocus,
@@ -89,6 +97,8 @@ export const InputWithSuggestions = forwardRef<
       ${error ? errorStyles : ""}
       ${disabled ? disabledStyles : ""}
       ${fullWidth ? "w-full" : ""}
+      ${hasLeftIcon ? "pl-10" : ""}
+      ${hasRightIcon ? "pr-10" : ""}
       ${className}
     `;
 
@@ -102,25 +112,29 @@ export const InputWithSuggestions = forwardRef<
         error={error}
         required={required}
         mode={inputMode}
-        isIcon={false}
+        isIcon={hasLeftIcon || hasRightIcon}
         labelSize={size}
       >
-        <input
-          ref={forwardedRef}
-          id={id}
-          type="text"
-          value={internalValue}
-          onChange={(e) => handleBaseChange(e, () => handleChange(e))}
-          onFocus={(e) => handleFocus(e, () => setShowSuggestions(true))}
-          onBlur={handleBlur}
-          onKeyDown={handleKeyDown}
-          required={required}
-          disabled={disabled}
-          className={inputStyles}
-          placeholder={placeholder}
-          autoComplete="off"
-          {...restProps}
-        />
+        <div className="relative">
+          {hasLeftIcon && <FieldIcon icon={Icon} position="left" />}
+          {hasRightIcon && <FieldIcon icon={iconRight} position="right" />}
+          <input
+            ref={forwardedRef}
+            id={id}
+            type="text"
+            value={internalValue}
+            onChange={(e) => handleBaseChange(e, () => handleChange(e))}
+            onFocus={(e) => handleFocus(e, () => setShowSuggestions(true))}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            required={required}
+            disabled={disabled}
+            className={inputStyles}
+            placeholder={placeholder}
+            autoComplete="off"
+            {...restProps}
+          />
+        </div>
       </InputWrapper>
 
       <Suggestions

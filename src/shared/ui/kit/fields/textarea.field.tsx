@@ -12,6 +12,7 @@ import {
 } from "./styles/field.styles";
 import { useInternal } from "./hooks/use.internal";
 import { useFocused } from "./hooks/use.focused";
+import { FieldIcon } from "./ui/field.icon";
 
 export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
   (props, forwardedRef) => {
@@ -22,6 +23,7 @@ export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
       onChange,
       onFocus,
       onBlur,
+      iconLeft,
       required = false,
       disabled = false,
       error,
@@ -39,6 +41,7 @@ export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
     } = props;
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const hasLeftIcon = !!iconLeft;
 
     const { handleChange, hasValue, internalValue } = useInternal({
       value,
@@ -89,6 +92,7 @@ export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
       ${error ? errorStyles : ""}
       ${disabled ? disabledStyles : ""}
       ${fullWidth ? "w-full" : ""}
+      ${hasLeftIcon ? "pl-10" : ""}
       ${className}
     `;
 
@@ -101,10 +105,13 @@ export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
         error={error}
         required={required}
         mode={inputMode}
+        isIcon={hasLeftIcon}
         labelSize={size}
-        labelPosition="top"
       >
         <div className="relative">
+          {hasLeftIcon && (
+            <FieldIcon icon={iconLeft} position="left" isTextarea />
+          )}
           <textarea
             ref={(el) => {
               textareaRef.current = el;

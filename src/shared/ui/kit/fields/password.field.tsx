@@ -13,6 +13,7 @@ import {
 } from "./styles/field.styles";
 import { useInternal } from "./hooks/use.internal";
 import { useFocused } from "./hooks/use.focused";
+import { FieldIcon } from "./ui/field.icon";
 
 export const PasswordField = forwardRef<HTMLInputElement, BaseInputProps>(
   (props, forwardedRef) => {
@@ -68,13 +69,11 @@ export const PasswordField = forwardRef<HTMLInputElement, BaseInputProps>(
         error={error}
         required={required}
         mode={inputMode}
-        isIcon={!!Icon}
+        isIcon={true}
         labelSize={size}
       >
         <div className="relative">
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10">
-            <Icon size={16} />
-          </div>
+          <FieldIcon icon={Icon} position="left" />
           <input
             ref={forwardedRef}
             id={id}
@@ -93,7 +92,7 @@ export const PasswordField = forwardRef<HTMLInputElement, BaseInputProps>(
             type="button"
             onClick={() => setShowPassword(!showPassword)}
             disabled={disabled}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-50"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors disabled:opacity-50 z-10"
           >
             {showPassword ? <FaEyeSlash size={14} /> : <FaEye size={14} />}
           </button>
