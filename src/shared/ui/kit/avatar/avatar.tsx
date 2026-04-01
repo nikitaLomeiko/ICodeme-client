@@ -57,7 +57,9 @@ export const Avatar: React.FC<AvatarProps> = ({
       onClick={onClick}
     >
       {initials ? (
-        <span style={{ color: textColor }}>{initials}</span>
+        <span style={{ color: textColor, fontSize: "1.9em", lineHeight: "1" }}>
+          {initials}
+        </span>
       ) : showDefaultIcon ? (
         icon || <FaUser />
       ) : null}

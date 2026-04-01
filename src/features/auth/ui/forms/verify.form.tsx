@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, CodeField } from "@/shared/ui/kit";
-import { VerifyFormData, verifySchema } from "../../model/types/auth.types";
 import { IBaseFormProps } from "../../model/types/form.props";
+import { VerifyFormData, verifySchema } from "../../model/validate/auth.schema";
 
 export const VerifyForm: React.FC<IBaseFormProps> = ({
   setError,

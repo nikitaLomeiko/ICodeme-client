@@ -5,9 +5,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { PasswordField, TextField, Button } from "@/shared/ui/kit";
-import { LoginFormData, loginSchema } from "../../model/types/auth.types";
 import { FaEnvelope } from "react-icons/fa";
 import { IBaseFormProps } from "../../model/types/form.props";
+import { LoginFormData, loginSchema } from "../../model/validate/auth.schema";
 
 interface LoginFormProps extends IBaseFormProps {
   onForgotClick: () => void;
@@ -52,7 +52,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         required
         error={errors.email?.message}
         disabled={isLoading}
-        variant="pill"
+        variant="underline"
         autoComplete="off"
       />
 
@@ -62,7 +62,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         {...register("password")}
         required
         error={errors.password?.message}
-        variant="pill"
+        variant="underline"
         disabled={isLoading}
         autoComplete="off"
       />

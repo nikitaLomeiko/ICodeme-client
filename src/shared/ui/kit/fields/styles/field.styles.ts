@@ -8,7 +8,7 @@ export const baseStyles = `
 export const sizeStyles = {
   sm: "px-5 py-2 text-xs",
   md: "px-5 py-3 text-sm",
-  lg: "px-5 py-4 text-base",
+  lg: "px-5 py-4 text-[18px]",
 };
 
 export const variantStyles = {
@@ -55,7 +55,8 @@ export const variantStyles = {
     !rounded-none 
     !bg-transparent
     !focus:border-[var(--ui-border-focus)] 
-    !focus:ring-0 
+    !focus:ring-0
+    !py-2
     !hover:border-[var(--ui-primary)]/50
   `,
 
@@ -82,7 +83,7 @@ export const errorStyles = `
 `;
 
 export const textareaBaseStyles = `
-  w-full rounded-xl outline-none text-sm transition-all duration-200 resize-none
+  w-full rounded-xl outline-none text-sm transition-all duration-200 resize-none overflow-hidden
   bg-[var(--ui-background)]
   text-black/80
   placeholder:text-gray-500

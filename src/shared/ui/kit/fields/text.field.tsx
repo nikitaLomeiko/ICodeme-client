@@ -59,8 +59,8 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
       ${error ? errorStyles : ""}
       ${disabled ? disabledStyles : ""}
       ${fullWidth ? "w-full" : ""}
-      ${hasLeftIcon ? "pl-10" : ""}
-      ${hasRightIcon ? "pr-10" : ""}
+      ${hasLeftIcon ? "pl-10" : "pl-0"}
+      ${hasRightIcon ? "pr-10" : "pr-0"}
       ${className}
     `;
 

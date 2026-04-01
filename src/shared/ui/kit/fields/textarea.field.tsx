@@ -56,6 +56,8 @@ export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
     useEffect(() => {
       if (autoExpand && textareaRef.current) {
         const textarea = textareaRef.current;
+
+        // Сбрасываем высоту для корректного расчёта scrollHeight
         textarea.style.height = "auto";
 
         const computedStyle = window.getComputedStyle(textarea);
@@ -67,19 +69,33 @@ export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
 
         const borderAndPadding =
           borderTopWidth + borderBottomWidth + paddingTop + paddingBottom;
-        const lineHeight = parseFloat(computedStyle.lineHeight) || 20;
+
+        // Получаем line-height в пикселях
+        let lineHeight = parseFloat(computedStyle.lineHeight);
+        if (isNaN(lineHeight) || computedStyle.lineHeight === "normal") {
+          // Для "normal" используем 1.2 * font-size (стандартное значение)
+          const fontSize = parseFloat(computedStyle.fontSize) || 16;
+          lineHeight = fontSize * 1.2;
+        }
 
         const minRows = Math.min(rows, maxRows);
         const maxRowsLimit = maxRows;
 
+        // scrollHeight уже включает border и padding, поэтому вычитаем их
         const contentHeight = textarea.scrollHeight - borderAndPadding;
-        const minContentHeight = lineHeight * minRows + borderAndPadding;
-        const maxContentHeight = lineHeight * maxRowsLimit + borderAndPadding;
 
-        const newHeight = Math.max(
+        // Минимальная и максимальная высота контента (без border и padding)
+        const minContentHeight = lineHeight * minRows;
+        const maxContentHeight = lineHeight * maxRowsLimit;
+
+        // Ограничиваем высоту контента
+        const constrainedContentHeight = Math.max(
           minContentHeight,
           Math.min(contentHeight, maxContentHeight),
         );
+
+        // Итоговая высота включает border и padding
+        const newHeight = constrainedContentHeight + borderAndPadding;
 
         textarea.style.height = `${newHeight}px`;
       }
@@ -93,6 +109,7 @@ export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
       ${disabled ? disabledStyles : ""}
       ${fullWidth ? "w-full" : ""}
       ${hasLeftIcon ? "pl-10" : ""}
+      ${autoExpand ? "overflow-y-hidden" : ""}
       ${className}
     `;
 

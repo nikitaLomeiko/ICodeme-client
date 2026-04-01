@@ -6,7 +6,7 @@ export interface BaseInputProps extends Omit<
   "size" | "inputMode"
 > {
   id: string;
-  label: string;
+  label?: string;
   icon?: React.ElementType;
   iconLeft?: React.ElementType;
   iconRight?: React.ElementType;
@@ -23,7 +23,7 @@ export interface BaseTextareaProps extends Omit<
   "size" | "inputMode"
 > {
   id: string;
-  label: string;
+  label?: string;
   iconLeft?: React.ElementType;
   error?: string;
   variant?: InputVariant;

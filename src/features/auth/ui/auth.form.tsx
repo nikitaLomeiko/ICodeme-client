@@ -18,38 +18,33 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
   const [error, setError] = useState<string | null>(null);
 
   return (
-    <>
-      <FormWrapper
-        onClearError={() => setError(null)}
-        error={error}
-        mode={mode}
-        onMode={setMode}
-      >
-        <AnimatedForm mode={mode}>
-          {mode === "login" && (
-            <LoginForm
-              onSuccess={onSuccess}
-              onForgotClick={() => setMode("forgot")}
-              setError={setError}
-            />
-          )}
-          {mode === "register" && (
-            <RegisterForm
-              setError={setError}
-              onSuccess={() => setMode("verify")}
-            />
-          )}
-          {mode === "forgot" && (
-            <ForgotForm
-              setError={setError}
-              onSuccess={() => setMode("verify")}
-            />
-          )}
-          {mode === "verify" && (
-            <VerifyForm setError={setError} onSuccess={onSuccess} />
-          )}
-        </AnimatedForm>
-      </FormWrapper>
-    </>
+    <FormWrapper
+      onClearError={() => setError(null)}
+      error={error}
+      mode={mode}
+      onMode={setMode}
+    >
+      <AnimatedForm mode={mode}>
+        {mode === "login" && (
+          <LoginForm
+            onSuccess={onSuccess}
+            onForgotClick={() => setMode("forgot")}
+            setError={setError}
+          />
+        )}
+        {mode === "register" && (
+          <RegisterForm
+            setError={setError}
+            onSuccess={() => setMode("verify")}
+          />
+        )}
+        {mode === "forgot" && (
+          <ForgotForm setError={setError} onSuccess={() => setMode("verify")} />
+        )}
+        {mode === "verify" && (
+          <VerifyForm setError={setError} onSuccess={onSuccess} />
+        )}
+      </AnimatedForm>
+    </FormWrapper>
   );
 };

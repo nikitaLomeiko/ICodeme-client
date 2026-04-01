@@ -6,7 +6,7 @@ import { InputMode } from "../types";
 
 interface InputWrapperProps {
   id: string;
-  label: string;
+  label?: string;
   children: React.ReactNode;
   isFocused: boolean;
   hasValue: boolean;

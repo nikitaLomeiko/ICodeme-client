@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaEnvelope } from "react-icons/fa";
 import { TextField, Button } from "@/shared/ui/kit";
-import { ForgotFormData, forgotSchema } from "../../model/types/auth.types";
 import { IBaseFormProps } from "../../model/types/form.props";
+import { ForgotFormData, forgotSchema } from "../../model/validate/auth.schema";
 
 export const ForgotForm: React.FC<IBaseFormProps> = ({
   setError,
@@ -40,7 +40,7 @@ export const ForgotForm: React.FC<IBaseFormProps> = ({
       <TextField
         id="email"
         label="Email"
-        variant="pill"
+        variant="underline"
         type="email"
         {...register("email")}
         icon={FaEnvelope}

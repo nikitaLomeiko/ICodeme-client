@@ -7,6 +7,7 @@ interface UseSuggestionsProps {
   suggestions: string[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSelectSuggestion?: (value: string) => void;
+  maxSuggestions?: number;
 }
 
 interface UseSuggestionsReturn {
@@ -27,6 +28,7 @@ export const useSuggestions = ({
   suggestions,
   onChange,
   onSelectSuggestion,
+  maxSuggestions = 5,
 }: UseSuggestionsProps): UseSuggestionsReturn => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -50,8 +52,8 @@ export const useSuggestions = ({
     const inputValue = String(internalValue).toLowerCase();
     return suggestions
       .filter((s) => String(s).toLowerCase().includes(inputValue))
-      .slice(0, 5);
-  }, [suggestions, internalValue]);
+      .slice(0, maxSuggestions);
+  }, [suggestions, internalValue, maxSuggestions]);
 
   const selectSuggestion = useCallback(
     (suggestion: string) => {

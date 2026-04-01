@@ -3,10 +3,13 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FaUser, FaEnvelope } from "react-icons/fa";
+import { FaEnvelope } from "react-icons/fa";
 import { PasswordField, TextField, Button, Checkbox } from "@/shared/ui/kit";
-import { RegisterFormData, registerSchema } from "../../model/types/auth.types";
 import { IBaseFormProps } from "../../model/types/form.props";
+import {
+  RegisterFormData,
+  registerSchema,
+} from "../../model/validate/auth.schema";
 
 export const RegisterForm: React.FC<IBaseFormProps> = ({
   onSuccess,
@@ -48,7 +51,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
         id="email"
         label="Email"
         type="email"
-        variant="pill"
+        variant="underline"
         {...register("email")}
         icon={FaEnvelope}
         required
@@ -59,7 +62,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
       <PasswordField
         id="password"
         label="Пароль"
-        variant="pill"
+        variant="underline"
         {...register("password")}
         required
         error={errors.password?.message}
@@ -69,7 +72,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
       <PasswordField
         id="confirmPassword"
         label="Подтвердите пароль"
-        variant="pill"
+        variant="underline"
         {...register("confirmPassword")}
         required
         error={errors.confirmPassword?.message}

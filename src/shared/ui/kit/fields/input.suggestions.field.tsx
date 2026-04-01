@@ -88,6 +88,7 @@ export const InputWithSuggestions = forwardRef<
     suggestions,
     onChange,
     onSelectSuggestion,
+    maxSuggestions,
   });
 
   const inputStyles = `
