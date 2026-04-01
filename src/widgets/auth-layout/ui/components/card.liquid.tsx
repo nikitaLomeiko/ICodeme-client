@@ -1,4 +1,5 @@
 import { motion, MotionValue } from "framer-motion";
+import { Title } from "@/shared/ui/kit";
 
 interface IProps {
   children: React.ReactNode;
@@ -38,13 +39,10 @@ export const CardLiquid: React.FC<IProps> = (props) => {
         transition={{ duration: 0.5 }}
         className="relative"
       >
-        {/* Основной слой стекла */}
         <div className="absolute inset-0 bg-white/70 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-2xl" />
 
-        {/* Внутренняя тень для глубины */}
         <div className="absolute inset-0 rounded-3xl shadow-[inset_0_1px_2px_rgba(255,255,255,0.8),inset_0_-1px_2px_rgba(0,0,0,0.1)] pointer-events-none" />
 
-        {/* Динамический градиент по краям */}
         <motion.div
           animate={{
             background: [
@@ -62,7 +60,6 @@ export const CardLiquid: React.FC<IProps> = (props) => {
           className="absolute inset-0 rounded-3xl p-[1px] opacity-30"
         />
 
-        {/* Плавающий градиент внутри */}
         <motion.div
           animate={{
             backgroundPosition: [
@@ -86,7 +83,6 @@ export const CardLiquid: React.FC<IProps> = (props) => {
           }}
         />
 
-        {/* Блик, следующий за мышью */}
         <motion.div
           style={{
             x: translateX,
@@ -94,7 +90,6 @@ export const CardLiquid: React.FC<IProps> = (props) => {
           }}
           className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none"
         >
-          {/* Основной блик */}
           <div
             className="absolute inset-0 opacity-40"
             style={{
@@ -102,7 +97,7 @@ export const CardLiquid: React.FC<IProps> = (props) => {
                 "radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 30%, transparent 70%)",
             }}
           />
-          {/* Дополнительный скользящий блик */}
+
           <motion.div
             animate={{
               x: ["-100%", "100%"],
@@ -123,23 +118,29 @@ export const CardLiquid: React.FC<IProps> = (props) => {
           />
         </motion.div>
 
-        {/* Контент */}
         <div className="relative p-8 overflow-hidden">
           <div className="text-center mb-8">
-            <motion.h1
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-4xl font-bold bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 bg-clip-text text-transparent"
             >
-              {title}
-            </motion.h1>
+              <Title
+                size="4xl"
+                weight="bold"
+                color="gradient"
+                align="center"
+                as="h1"
+              >
+                {title}
+              </Title>
+            </motion.div>
 
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-sm text-gray-500 mt-2 font-mono"
+              className="text-sm text-gray-500 mt-2 font-mono text-center"
             >
               {subtitle}
             </motion.p>

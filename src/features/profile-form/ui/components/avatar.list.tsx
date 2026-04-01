@@ -1,4 +1,4 @@
-import { Avatar } from "@/shared/ui/kit";
+import { Avatar, Title } from "@/shared/ui/kit";
 import { IAvatar } from "../../model/types/avatar.types";
 
 interface IProps {
@@ -54,7 +54,18 @@ export const AvatarList: React.FC<IProps> = (props) => {
           </button>
         ))}
       </div>
-      {error && <p className="text-sm text-red-500 text-center">{error}</p>}
+      {error && (
+        <Title
+          as="p"
+          size="sm"
+          weight="normal"
+          color="error"
+          align="center"
+          isError
+        >
+          {error}
+        </Title>
+      )}
     </div>
   );
 };

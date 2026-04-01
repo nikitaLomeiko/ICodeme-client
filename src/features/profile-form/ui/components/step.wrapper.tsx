@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Button, ProgressBar } from "@/shared/ui/kit";
+import { Button, ProgressBar, Title } from "@/shared/ui/kit";
 
 interface IProps {
   currentStep: number;
@@ -47,7 +47,15 @@ export const StepWrapper: React.FC<IProps> = (props) => {
           transition={{ duration: 0.2 }}
           className="mb-8"
         >
-          <p className="text-sm text-[var(--ui-text-muted)]">{title}</p>
+          <Title
+            as="p"
+            size="sm"
+            weight="medium"
+            color="gray-600"
+            align="center"
+          >
+            {title}
+          </Title>
         </motion.div>
       </AnimatePresence>
 

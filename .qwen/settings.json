@@ -3,7 +3,8 @@
     "allow": [
       "Bash(npm run *)",
       "Bash(taskkill *)",
-      "Bash(del *)"
+      "Bash(del *)",
+      "Bash(mkdir *)"
     ]
   },
   "$version": 3

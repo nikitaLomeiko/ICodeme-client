@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { OAuth } from "./ouath";
-import { Notification } from "@/shared/ui/kit";
+import { Notification, Title } from "@/shared/ui/kit";
 import { AuthModeSwitcher } from "./ui/auth.mode.switcher";
 import { Logotype } from "@/shared/ui/logotype";
 
@@ -30,12 +30,19 @@ export const FormWrapper: React.FC<IProps> = (props) => {
     <div>
       <div className="text-center mb-4">
         <Logotype className="flex justify-center" />
-        <h1 className="text-base font-bold text-emerald-800">
+        <Title size="base" weight="bold" color="emerald-800" align="center">
           {ModeData[mode].title}
-        </h1>
-        <p className="text-[12px] text-gray-600 mt-0.5">
+        </Title>
+        <Title
+          as="p"
+          size="xs"
+          weight="normal"
+          color="gray-600"
+          align="center"
+          className="mt-0.5"
+        >
           {ModeData[mode].subtitle}
-        </p>
+        </Title>
       </div>
 
       {error && showError && (
