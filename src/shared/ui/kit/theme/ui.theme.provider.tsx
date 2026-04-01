@@ -23,7 +23,7 @@ interface ThemeProviderProps {
   theme: ThemeEnum;
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({
+export const UIThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   theme,
 }) => {

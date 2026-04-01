@@ -123,6 +123,7 @@ export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
         required={required}
         mode={inputMode}
         isIcon={hasLeftIcon}
+        labelPosition={rows > 1 ? "top" : "center"}
         labelSize={size}
       >
         <div className="relative">

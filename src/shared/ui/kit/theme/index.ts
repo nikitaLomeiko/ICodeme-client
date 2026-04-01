@@ -1,2 +1,2 @@
-export { ThemeProvider } from "./theme-provider";
+export { UIThemeProvider } from "./ui.theme.provider";
 export * from "./types";
