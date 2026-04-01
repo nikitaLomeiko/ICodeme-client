@@ -1,4 +1,4 @@
-import { Avatar } from "@/shared/ui/kit";
+import { Avatar, Title } from "@/shared/ui/kit";
 import { illustratedAvatars } from "../../model/data/avatar.data";
 import { AvatarList } from "../components/avatar.list";
 
@@ -46,9 +46,15 @@ export const AvatarStep: React.FC<AvatarStepProps> = ({
             />
           </div>
         </div>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <Title
+          as="p"
+          size="xs"
+          weight="normal"
+          align="center"
+          className="light:text-gray-500 dark:text-gray-400 transition-colors duration-500"
+        >
           choose an avatar
-        </p>
+        </Title>
       </div>
 
       <AvatarList
