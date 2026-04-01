@@ -13,11 +13,9 @@ export const OAuth = () => {
             onClick={() => null}
             disabled={false}
             icon={Icon}
-            size="sm"
-            sizeIcon={35}
-            className={`
-              ${provider.textColor}
-            `}
+            sizeIcon={24}
+            disableHoverScale
+            className={provider.textColor}
           ></Button>
         );
       })}

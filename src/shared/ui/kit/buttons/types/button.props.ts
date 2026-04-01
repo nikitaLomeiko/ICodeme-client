@@ -12,4 +12,6 @@ export interface BaseButtonProps extends Omit<
   iconPosition?: "left" | "right";
   children?: React.ReactNode;
   sizeIcon?: number;
+  /** Отключить анимацию масштабирования при наведении */
+  disableHoverScale?: boolean;
 }

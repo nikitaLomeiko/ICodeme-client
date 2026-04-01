@@ -18,6 +18,7 @@ export const Button: React.FC<BaseButtonProps> = ({
   type = "button",
   sizeIcon,
   disabled,
+  disableHoverScale = false,
 }) => {
   const widthStyle = fullWidth ? "w-full" : "";
 
@@ -31,6 +32,8 @@ export const Button: React.FC<BaseButtonProps> = ({
   `;
 
   const isDisabled = disabled || isLoading;
+  const hoverScale = disableHoverScale ? 1 : 1.02;
+  const tapScale = disableHoverScale ? 1 : 0.98;
 
   return (
     <motion.button
@@ -38,8 +41,8 @@ export const Button: React.FC<BaseButtonProps> = ({
       className={buttonStyles}
       disabled={isDisabled}
       onClick={onClick}
-      whileHover={{ scale: isDisabled ? 1 : 1.02 }}
-      whileTap={{ scale: isDisabled ? 1 : 0.98 }}
+      whileHover={{ scale: hoverScale }}
+      whileTap={{ scale: tapScale }}
     >
       {isLoading ? (
         <div className="flex items-center justify-center gap-2">
