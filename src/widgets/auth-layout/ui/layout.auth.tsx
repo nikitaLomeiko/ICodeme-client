@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useAnimation } from "../model/hooks/use.animation";
-import { Background } from "./components/background";
 import { SphereGradient } from "./components/sphere.gradient";
 import { CardLiquid } from "./components/card.liquid";
 import { Particals } from "./components/particals";
@@ -12,12 +11,17 @@ interface IProps {
 }
 
 export const AuthLayout: React.FC<IProps> = ({ children }) => {
-  const { rotateX, rotateY, translateX, translateY } = useAnimation();
+  const { rotateX, rotateY } = useAnimation();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden">
-      <Background />
-
+    <div
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        backgroundColor: "var(--ui-background)",
+        backgroundImage:
+          "linear-gradient(to bottom right, var(--ui-background-secondary), var(--ui-background), var(--ui-background-tertiary))",
+      }}
+    >
       <SphereGradient />
 
       <Particals />
@@ -26,8 +30,6 @@ export const AuthLayout: React.FC<IProps> = ({ children }) => {
         <CardLiquid
           rotateX={rotateX}
           rotateY={rotateY}
-          translateX={translateX}
-          translateY={translateY}
           title="ICodeMe"
           subtitle="Learn programming with AI"
         >

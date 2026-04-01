@@ -9,8 +9,6 @@ import { useEffect } from "react";
 interface IUseAnimationReturn {
   rotateX: MotionValue<number>;
   rotateY: MotionValue<number>;
-  translateX: MotionValue<number>;
-  translateY: MotionValue<number>;
 }
 
 export const useAnimation = (): IUseAnimationReturn => {
@@ -19,24 +17,14 @@ export const useAnimation = (): IUseAnimationReturn => {
 
   const rotateX = useSpring(useTransform(mouseY, [-1, 1], [2, -2]), {
     stiffness: 100,
-    damping: 30,
+    damping: 20,
     mass: 0.8,
   });
 
   const rotateY = useSpring(useTransform(mouseX, [-1, 1], [-2, 2]), {
     stiffness: 100,
-    damping: 30,
+    damping: 20,
     mass: 0.8,
-  });
-
-  const translateX = useSpring(useTransform(mouseX, [-1, 1], [5, -5]), {
-    stiffness: 80,
-    damping: 25,
-  });
-
-  const translateY = useSpring(useTransform(mouseY, [-1, 1], [5, -5]), {
-    stiffness: 80,
-    damping: 25,
   });
 
   useEffect(() => {
@@ -55,7 +43,5 @@ export const useAnimation = (): IUseAnimationReturn => {
   return {
     rotateX,
     rotateY,
-    translateX,
-    translateY,
   };
 };

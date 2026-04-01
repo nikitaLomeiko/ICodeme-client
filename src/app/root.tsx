@@ -28,7 +28,7 @@ export function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <UIThemeProvider theme={ThemeEnum.LIGHT}>{children}</UIThemeProvider>
+        <UIThemeProvider theme={ThemeEnum.DARK}>{children}</UIThemeProvider>
       </body>
     </html>
   );

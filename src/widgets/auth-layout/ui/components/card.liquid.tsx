@@ -5,22 +5,12 @@ interface IProps {
   children: React.ReactNode;
   rotateX: MotionValue<number>;
   rotateY: MotionValue<number>;
-  translateX: MotionValue<number>;
-  translateY: MotionValue<number>;
   title: string;
   subtitle: string;
 }
 
 export const CardLiquid: React.FC<IProps> = (props) => {
-  const {
-    rotateX,
-    rotateY,
-    translateX,
-    translateY,
-    children,
-    title,
-    subtitle,
-  } = props;
+  const { rotateX, rotateY, children, title, subtitle } = props;
 
   return (
     <motion.div
@@ -39,9 +29,7 @@ export const CardLiquid: React.FC<IProps> = (props) => {
         transition={{ duration: 0.5 }}
         className="relative"
       >
-        <div className="absolute inset-0 bg-white/70 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-2xl" />
-
-        <div className="absolute inset-0 rounded-3xl shadow-[inset_0_1px_2px_rgba(255,255,255,0.8),inset_0_-1px_2px_rgba(0,0,0,0.1)] pointer-events-none" />
+        <div className="bg-black-500/70 backdrop-blur-2xl shadow-sm" />
 
         <motion.div
           animate={{
@@ -82,41 +70,6 @@ export const CardLiquid: React.FC<IProps> = (props) => {
             backgroundSize: "200% 200%",
           }}
         />
-
-        <motion.div
-          style={{
-            x: translateX,
-            y: translateY,
-          }}
-          className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none"
-        >
-          <div
-            className="absolute inset-0 opacity-40"
-            style={{
-              background:
-                "radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 30%, transparent 70%)",
-            }}
-          />
-
-          <motion.div
-            animate={{
-              x: ["-100%", "100%"],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-              repeatDelay: 2,
-            }}
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
-              width: "50%",
-              height: "100%",
-            }}
-          />
-        </motion.div>
 
         <div className="relative p-8 overflow-hidden">
           <div className="text-center mb-8">
