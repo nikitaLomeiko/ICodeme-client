@@ -55,7 +55,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         variant="underline"
         autoComplete="off"
       />
-
       <PasswordField
         id="password"
         label="Пароль"
@@ -66,7 +65,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         disabled={isLoading}
         autoComplete="off"
       />
-
       <div className="flex justify-end">
         <Button
           type="button"
@@ -78,7 +76,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           Забыли пароль?
         </Button>
       </div>
-
       <Button
         className="mt-2"
         type="submit"

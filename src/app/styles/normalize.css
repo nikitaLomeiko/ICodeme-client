@@ -276,3 +276,11 @@ template {
 [hidden] {
   display: none;
 }
+
+input {
+  caret-color: transparent;
+}
+
+input:focus {
+  caret-color: auto;
+}

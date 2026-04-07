@@ -102,6 +102,23 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
           ${required ? "after:content-['*'] after:ml-0.5 after:text-[var(--ui-error)]" : ""}
         `}
         >
+          <input
+            type="text"
+            name={`${id}_honeypot`}
+            style={{
+              position: "absolute",
+              left: "-9999px",
+              top: "-9999px",
+              height: 0,
+              width: 0,
+              opacity: 0,
+              pointerEvents: "none",
+            }}
+            tabIndex={-1}
+            aria-hidden="true"
+            readOnly
+          />
+
           {label}
         </label>
       </div>
