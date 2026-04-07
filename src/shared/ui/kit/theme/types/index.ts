@@ -1,1 +1,1 @@
-export * from "./theme.typs";
+export { ThemeEnum } from "./theme.typs";

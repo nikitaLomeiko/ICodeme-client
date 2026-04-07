@@ -1,37 +1,38 @@
 "use client";
 
-import React, { createContext, useContext, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles/theme.css";
 import { ThemeEnum } from "./types/theme.typs";
+import { ThemeContext } from "./context/theme.context";
+import { getAvailableThemes } from "./lib/utils/getAvailableThemes";
 
-interface ThemeContextType {
-  theme: ThemeEnum;
-}
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within ThemeProvider");
-  }
-  return context;
-};
-
-interface ThemeProviderProps {
+interface UIThemeProviderProps {
   children: React.ReactNode;
   theme: ThemeEnum;
+  limit?: number;
+  availableThemes?: ThemeEnum[];
 }
 
-export const UIThemeProvider: React.FC<ThemeProviderProps> = ({
+export const UIThemeProvider: React.FC<UIThemeProviderProps> = ({
   children,
-  theme,
+  theme: initialTheme,
+  limit,
+  availableThemes: customThemes,
 }) => {
+  const [theme, setThemeState] = useState<ThemeEnum>(initialTheme);
+  const availableThemes = customThemes || getAvailableThemes(limit);
+
+  const setTheme = (newTheme: ThemeEnum) => {
+    setThemeState(newTheme);
+  };
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme }}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={{ theme, setTheme, availableThemes }}>
+      {children}
+    </ThemeContext.Provider>
   );
 };
