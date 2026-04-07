@@ -35,7 +35,6 @@ export const Title: React.FC<TitleProps> = ({
     ${alignStyles[align]}
     ${lineClampStyles}
     ${className}
-    cursor-default
   `.trim();
 
   return <Component className={combinedClassName}>{children}</Component>;

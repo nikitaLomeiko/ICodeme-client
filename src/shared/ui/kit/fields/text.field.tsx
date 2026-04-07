@@ -91,6 +91,9 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
             disabled={disabled}
             className={inputStyles}
             placeholder={placeholder}
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
             {...restProps}
           />
         </div>
