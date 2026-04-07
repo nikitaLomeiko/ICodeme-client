@@ -277,10 +277,10 @@ template {
   display: none;
 }
 
-input {
+* {
   caret-color: transparent;
 }
 
-input:focus {
+*:focus {
   caret-color: auto;
 }

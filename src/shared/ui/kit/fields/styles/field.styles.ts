@@ -1,8 +1,8 @@
 export const baseStyles = `
   w-full rounded-xl outline-none text-sm transition-all duration-200
   bg-[var(--ui-background)]
-  text-black/80
-  placeholder:text-gray-500]
+  text-[var(--ui-text)]
+  placeholder:text-[var(--ui-placeholder)]
 `;
 
 export const sizeStyles = {
