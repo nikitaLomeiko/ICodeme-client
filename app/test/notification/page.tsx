@@ -1,44 +1,66 @@
 "use client";
 
-import {
-  Button,
-  NotificationType,
-  ProgressBar,
-  TextareaField,
-} from "@/shared/ui/kit";
-import { Notification } from "@/shared/ui/kit/notification/notification";
+import { Button, useNotification, NotificationPosition } from "@/shared/ui/kit";
 import { useState } from "react";
 
 export default function NotificationDemo() {
-  const [notifications, setNotifications] = useState<
-    {
-      type: NotificationType;
-      message: string;
-      id: number;
-    }[]
-  >([]);
-  const [lastId, setLastId] = useState(0);
+  const notification = useNotification();
+  const [position, setPosition] = useState<NotificationPosition>("top-right");
+  const [duration, setDuration] = useState(3000);
 
-  const [progress, setProgress] = useState(0);
-
-  const showNotification = (type: NotificationType, message: string) => {
-    const id = lastId + 1;
-    setLastId(id);
-    setNotifications([...notifications, { type, message, id }]);
-  };
-
-  const removeNotification = (id: number) => {
-    setNotifications(notifications.filter((n) => n.id !== id));
-  };
+  const positions: NotificationPosition[] = [
+    "top-left",
+    "top-right",
+    "bottom-left",
+    "bottom-right",
+  ];
 
   return (
     <div className="min-h-screen bg-[var(--ui-background)] p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold text-[var(--ui-text)] mb-8">
-          Компонент уведомлений
+          Глобальные уведомления
         </h1>
 
-        {/* Кнопки для вызова уведомлений */}
+        {/* Позиция */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-[var(--ui-text-secondary)] mb-4">
+            Позиция: {position}
+          </h2>
+          <div className="grid grid-cols-2 gap-2 w-64">
+            {positions.map((pos) => (
+              <Button
+                key={pos}
+                variant={position === pos ? "primary" : "outline"}
+                size="sm"
+                onClick={() => setPosition(pos)}
+              >
+                {pos}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Время жизни */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-[var(--ui-text-secondary)] mb-4">
+            Время жизни: {duration === 0 ? "не закрывается" : `${duration}мс`}
+          </h2>
+          <div className="flex gap-2 flex-wrap">
+            {[1000, 3000, 5000, 10000, 0].map((d) => (
+              <Button
+                key={d}
+                variant={duration === d ? "primary" : "outline"}
+                size="sm"
+                onClick={() => setDuration(d)}
+              >
+                {d === 0 ? "∞" : `${d}ms`}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Типы уведомлений */}
         <div className="mb-8">
           <h2 className="text-lg font-semibold text-[var(--ui-text-secondary)] mb-4">
             Типы уведомлений
@@ -47,247 +69,100 @@ export default function NotificationDemo() {
             <Button
               variant="primary"
               onClick={() =>
-                showNotification("success", "Операция выполнена успешно!")
+                notification.success(
+                  "Операция выполнена успешно!",
+                  duration || undefined,
+                )
               }
             >
-              Успех
+              Success
             </Button>
             <Button
               variant="danger"
               onClick={() =>
-                showNotification("error", "Произошла ошибка! Попробуйте позже.")
-              }
-            >
-              Ошибка
-            </Button>
-            <Button
-              variant="primary"
-              onClick={() =>
-                showNotification("info", "Новая версия приложения доступна.")
-              }
-            >
-              Информация
-            </Button>
-            <Button
-              variant="primary"
-              onClick={() =>
-                showNotification(
-                  "warning",
-                  "Внимание! Заканчивается место на диске.",
+                notification.error(
+                  "Произошла ошибка! Попробуйте позже.",
+                  duration || undefined,
                 )
               }
             >
-              Предупреждение
+              Error
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() =>
+                notification.info(
+                  "Новая версия приложения доступна.",
+                  duration || undefined,
+                )
+              }
+            >
+              Info
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() =>
+                notification.warning(
+                  "Внимание! Заканчивается место на диске.",
+                  duration || undefined,
+                )
+              }
+            >
+              Warning
             </Button>
           </div>
         </div>
 
-        {/* Уведомления с разным временем */}
+        {/* Массовые уведомления */}
         <div className="mb-8">
           <h2 className="text-lg font-semibold text-[var(--ui-text-secondary)] mb-4">
-            Разное время авто-закрытия
+            Массовая отправка
           </h2>
           <div className="flex gap-4 flex-wrap">
             <Button
-              variant="outline"
-              onClick={() =>
-                showNotification("success", "Закроется через 1 секунду")
-              }
-            >
-              1 секунда
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() =>
-                showNotification("success", "Закроется через 5 секунд")
-              }
-            >
-              5 секунд
-            </Button>
-            <Button
-              variant="outline"
+              variant="primary"
               onClick={() => {
-                const id = lastId + 1;
-                setLastId(id);
-                setNotifications([
-                  ...notifications,
-                  {
-                    type: "success",
-                    message: "Не закрывается автоматически (кнопка закрытия)",
-                    id,
-                  },
-                ]);
+                notification.success("Успех 1", duration || undefined);
+                notification.info("Инфо 2", duration || undefined);
+                notification.warning("Предупреждение 3", duration || undefined);
+                notification.error("Ошибка 4", duration || undefined);
               }}
             >
-              Без авто-закрытия
+              4 уведомления сразу
             </Button>
-          </div>
-        </div>
-
-        {/* Длинные сообщения */}
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold text-[var(--ui-text-secondary)] mb-4">
-            Длинные сообщения
-          </h2>
-          <div className="flex gap-4 flex-wrap">
             <Button
-              variant="outline"
-              onClick={() =>
-                showNotification(
-                  "info",
-                  "Это очень длинное информационное сообщение, которое должно демонстрировать, как компонент уведомлений ведет себя с большим количеством текста. Оно должно корректно переноситься и не ломать верстку.",
-                )
-              }
+              variant="danger"
+              onClick={() => {
+                for (let i = 1; i <= 10; i++) {
+                  notification.info(`Уведомление #${i}`, duration || undefined);
+                }
+              }}
             >
-              Длинный текст
+              10 уведомлений
             </Button>
           </div>
         </div>
 
-        {/* Все уведомления */}
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold text-[var(--ui-text-secondary)] mb-4">
-            Активные уведомления ({notifications.length})
-          </h2>
-          <div className="space-y-2">
-            {notifications.length === 0 ? (
-              <p className="text-[var(--ui-text-muted)] text-sm">
-                Нет активных уведомлений. Нажми на любую кнопку выше.
-              </p>
-            ) : (
-              notifications.map((notification) => (
-                <Notification
-                  key={notification.id}
-                  type={notification.type}
-                  message={notification.message}
-                  onClose={() => removeNotification(notification.id)}
-                  autoClose={
-                    notification.message.includes("секунд") ||
-                    !notification.message.includes("закрывается")
-                  }
-                  autoCloseDelay={
-                    notification.message.includes("1 секунд")
-                      ? 1000
-                      : notification.message.includes("5 секунд")
-                        ? 5000
-                        : 3000
-                  }
-                />
-              ))
-            )}
-          </div>
-        </div>
-
-        {/* Документация */}
+        {/* API */}
         <div className="mt-8 p-4 rounded-lg border border-[var(--ui-border)] bg-[var(--ui-background-secondary)]">
           <h3 className="text-sm font-semibold text-[var(--ui-text)] mb-2">
-            API компонента Notification
+            API NotificationProvider
           </h3>
           <div className="space-y-2 text-xs text-[var(--ui-text-secondary)]">
             <div>
-              <code className="text-[var(--ui-primary)]">type</code> - тип
-              уведомления: success | error | info | warning
+              <code className="text-[var(--ui-primary)]">position</code> —
+              позиция: top-left | top-right | bottom-left | bottom-right
             </div>
             <div>
-              <code className="text-[var(--ui-primary)]">message</code> - текст
-              сообщения
+              <code className="text-[var(--ui-primary)]">defaultDuration</code>{" "}
+              — время жизни по умолчанию (мс)
             </div>
             <div>
-              <code className="text-[var(--ui-primary)]">onClose</code> - колбэк
-              при закрытии
-            </div>
-            <div>
-              <code className="text-[var(--ui-primary)]">autoClose</code> -
-              автоматическое закрытие (по умолчанию true)
-            </div>
-            <div>
-              <code className="text-[var(--ui-primary)]">autoCloseDelay</code> -
-              задержка закрытия в мс (по умолчанию 3000)
+              <code className="text-[var(--ui-primary)]">maxNotifications</code>{" "}
+              — макс. кол-во одновременно
             </div>
           </div>
         </div>
-
-        {/* Textarea Field */}
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold text-[var(--ui-text-secondary)] mb-4">
-            Textarea Field
-          </h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* Обычный */}
-            <TextareaField
-              inputMode="floating"
-              id="textarea-default"
-              label="Обычный"
-            />
-
-            {/* С variant */}
-            <TextareaField
-              id="textarea-underlined"
-              label="Underlined"
-              variant="clean"
-            />
-
-            <TextareaField
-              id="textarea-error"
-              label="С ошибкой"
-              error="Поле обязательно для заполнения"
-              variant="square"
-            />
-
-            {/* Disabled */}
-            <TextareaField
-              id="textarea-disabled"
-              label="Disabled"
-              disabled
-              value="Этот текст нельзя редактировать"
-            />
-
-            {/* С maxLength */}
-            <TextareaField
-              id="textarea-maxlength"
-              label="С ограничением длины"
-              maxLength={100}
-            />
-
-            {/* autoExpand */}
-            <TextareaField
-              id="textarea-autoexpand"
-              label="Auto Expand"
-              autoExpand
-              maxRows={100}
-            />
-
-            {/* С label и value */}
-            <TextareaField
-              id="textarea-value"
-              label="С значением"
-              value="Предзаполненный текст"
-              rows={3}
-            />
-
-            {/* Floating label */}
-            <TextareaField id="textarea-floating" label="Floating Label" />
-          </div>
-        </div>
-
-        <ProgressBar
-          showValue
-          value={progress}
-          size="lg"
-          segments={4}
-          state="success"
-          variant="segmented-capsule"
-          trackVariant="solid"
-          label="asdg"
-          labelPosition="top-right"
-          duration={300}
-        />
-
-        <button
-          onClick={() => setProgress((prev) => (prev < 100 ? prev + 10 : 0))}
-        >
-          +
-        </button>
       </div>
     </div>
   );

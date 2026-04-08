@@ -8,6 +8,8 @@ import {
   TextareaField,
   InputWithSuggestions,
   Avatar,
+  Button,
+  useNotification,
 } from "@/shared/ui/kit";
 import {
   FaSearch,
@@ -20,6 +22,7 @@ import {
 } from "react-icons/fa";
 
 export default function Test() {
+  const notification = useNotification();
   const [values, setValues] = useState({
     text: "",
     email: "",
@@ -384,6 +387,33 @@ export default function Test() {
                 />
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Тест уведомлений */}
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-[var(--ui-text-secondary)] mb-4">
+            Тест уведомлений
+          </h2>
+          <div className="flex gap-4 flex-wrap">
+            <Button
+              variant="primary"
+              onClick={() => notification.success("Валидация прошла!")}
+            >
+              Success
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => notification.error("Ошибка валидации")}
+            >
+              Error
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => notification.info("Подсказка")}
+            >
+              Info
+            </Button>
           </div>
         </div>
       </div>

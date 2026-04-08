@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./styles/index.css";
-import { UIThemeProvider, ThemeEnum, ThemeSwitcher } from "@/shared/ui/kit";
+import {
+  UIThemeProvider,
+  ThemeEnum,
+  ThemeSwitcher,
+  NotificationsWrapper,
+  NotificationProvider,
+} from "@/shared/ui/kit";
 import { StoreProvider } from "./providers/store";
 import { AuthProvider } from "./providers/auth";
 
@@ -35,11 +41,18 @@ export function RootLayout({
         <StoreProvider>
           <AuthProvider>
             <UIThemeProvider theme={ThemeEnum.LIGHT}>
-              <ThemeSwitcher
-                availableThemes={availableThemes}
-                className="absolute z-90 right-2 top-2"
-              />
-              {children}
+              <NotificationProvider
+                position="bottom-right"
+                defaultDuration={3500}
+                maxNotifications={3}
+              >
+                <ThemeSwitcher
+                  availableThemes={availableThemes}
+                  className="absolute z-90 right-2 top-2"
+                />
+                {children}
+                <NotificationsWrapper />
+              </NotificationProvider>
             </UIThemeProvider>
           </AuthProvider>
         </StoreProvider>

@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Checkbox } from "@/shared/ui/kit";
+import { Button, Checkbox, useNotification } from "@/shared/ui/kit";
 
 export default function Test() {
+  const notification = useNotification();
   const [checkboxStates, setCheckboxStates] = useState({
     default: false,
     checked: true,
@@ -164,6 +165,39 @@ export default function Test() {
               </Button>
               <Button size="lg" variant="outline" fullWidth>
                 Большая на всю ширину
+              </Button>
+            </div>
+          </div>
+
+          {/* Уведомления */}
+          <div className="mb-8">
+            <h3 className="text-md font-medium text-[var(--ui-text-muted)] mb-3">
+              Тест уведомлений
+            </h3>
+            <div className="flex gap-4 flex-wrap">
+              <Button
+                variant="primary"
+                onClick={() => notification.success("Кнопка работает!")}
+              >
+                Success
+              </Button>
+              <Button
+                variant="danger"
+                onClick={() => notification.error("Что-то пошло не так")}
+              >
+                Error
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => notification.info("Информация")}
+              >
+                Info
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => notification.warning("Предупреждение")}
+              >
+                Warning
               </Button>
             </div>
           </div>
