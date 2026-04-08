@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { BaseButtonProps } from "./types/button.props";
 import { baseStyles, sizeStyles, variantStyles } from "./styles/button.styles";
+import { Loader } from "../loader";
 
 export const Button: React.FC<BaseButtonProps> = ({
   variant = "primary",
@@ -46,7 +47,7 @@ export const Button: React.FC<BaseButtonProps> = ({
     >
       {isLoading ? (
         <div className="flex items-center justify-center gap-2">
-          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+          <Loader size="sm" />
           <span>{children || "Загрузка..."}</span>
         </div>
       ) : (

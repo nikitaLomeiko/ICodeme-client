@@ -6,3 +6,4 @@ export * from "./theme";
 export * from "./progress-bar";
 export * from "./avatar";
 export * from "./title";
+export * from "./loader";

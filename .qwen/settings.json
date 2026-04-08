@@ -5,7 +5,9 @@
       "Bash(taskkill *)",
       "Bash(del *)",
       "Bash(mkdir *)",
-      "Bash(timeout *)"
+      "Bash(timeout *)",
+      "Bash(npx *)",
+      "Bash(findstr *)"
     ]
   },
   "$version": 3
