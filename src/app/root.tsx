@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./styles/index.css";
 import { UIThemeProvider, ThemeEnum, ThemeSwitcher } from "@/shared/ui/kit";
 import { StoreProvider } from "./providers/store";
+import { AuthProvider } from "./providers/auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,19 +25,23 @@ export function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const bodyClassname = `${geistSans.variable} ${geistMono.variable} antialiased`;
+
+  const availableThemes = [ThemeEnum.LIGHT, ThemeEnum.DARK];
+
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={bodyClassname}>
         <StoreProvider>
-          <UIThemeProvider theme={ThemeEnum.LIGHT}>
-            <ThemeSwitcher
-              availableThemes={[ThemeEnum.LIGHT, ThemeEnum.DARK]}
-              className="absolute z-90 right-2 top-2"
-            />
-            {children}
-          </UIThemeProvider>
+          <AuthProvider>
+            <UIThemeProvider theme={ThemeEnum.LIGHT}>
+              <ThemeSwitcher
+                availableThemes={availableThemes}
+                className="absolute z-90 right-2 top-2"
+              />
+              {children}
+            </UIThemeProvider>
+          </AuthProvider>
         </StoreProvider>
       </body>
     </html>

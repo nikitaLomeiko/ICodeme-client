@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { AuthMode } from "../../../model/types/auth.types";
 import { Button, Title } from "@/shared/ui/kit";
 import { FaArrowLeft } from "react-icons/fa";
+import { typeMode } from "../../../model/types/mode.types";
 
 interface AuthModeSwitcherProps {
-  mode: AuthMode;
-  onModeChange: (mode: AuthMode) => void;
+  mode: typeMode;
+  onModeChange: (mode: typeMode) => void;
 }
 
 export const AuthModeSwitcher: React.FC<AuthModeSwitcherProps> = ({

@@ -108,7 +108,7 @@ export const TextareaField = forwardRef<HTMLTextAreaElement, BaseTextareaProps>(
       ${error ? errorStyles : ""}
       ${disabled ? disabledStyles : ""}
       ${fullWidth ? "w-full" : ""}
-      ${hasLeftIcon ? "pl-10" : ""}
+      ${hasLeftIcon ? "pl-10" : "pl-0"}
       ${autoExpand ? "overflow-y-hidden" : ""}
       ${className}
     `;

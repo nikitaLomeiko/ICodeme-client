@@ -1,4 +1,10 @@
-export type typeMode = "login" | "register" | "forgot" | "verify";
+export type typeMode =
+  | "login"
+  | "register"
+  | "forgot"
+  | "verify"
+  | "verify-reset"
+  | "reset";
 
 export interface IModeMeta {
   title: string;

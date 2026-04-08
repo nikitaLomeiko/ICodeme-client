@@ -27,7 +27,18 @@ export const verifySchema = z.object({
   code: z.string().length(6, "Код должен содержать 6 цифр"),
 });
 
+export const resetPasswordSchema = z
+  .object({
+    password: z.string().min(6, "Пароль должен содержать минимум 6 символов"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Пароли не совпадают",
+    path: ["confirmPassword"],
+  });
+
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;
 export type ForgotFormData = z.infer<typeof forgotSchema>;
 export type VerifyFormData = z.infer<typeof verifySchema>;
+export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;

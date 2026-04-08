@@ -10,6 +10,8 @@ import {
   RegisterFormData,
   registerSchema,
 } from "../../model/validate/auth.schema";
+import { IAuthData, saveAuthToken, setAuthData } from "@/entities/auth";
+import { useAppDispatch } from "@/shared/lib/hooks";
 
 export const RegisterForm: React.FC<IBaseFormProps> = ({
   onSuccess,
@@ -31,12 +33,31 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
   const handleRegister = async (data: RegisterFormData) => {
     setIsLoading(true);
     setError(null);
     try {
+      // make a request to the server here ..
       await new Promise((resolve) => setTimeout(resolve, 1500));
+      const token = "mocktoken";
+
+      dispatch(saveAuthToken(token));
+
+      // make a request to the server here ..
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      const mockData: IAuthData = {
+        id: "1",
+        email: "mock@data.com",
+        name: "",
+      };
+
+      dispatch(setAuthData(mockData));
+
+      // можно объединить в один запрос в целом
+
       onSuccess?.();
     } catch (err) {
       setError("Ошибка регистрации");

@@ -1,4 +1,4 @@
-import { useMediaQuery } from "./general/use.media.query";
+import { useMediaQuery } from "./use.media.query";
 
 export const useMobile = (): boolean => {
   return useMediaQuery("(max-width: 767px)");

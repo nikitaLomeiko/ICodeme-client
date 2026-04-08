@@ -10,8 +10,7 @@ import { LevelBar } from "./components/levelbar";
 import { Logotype } from "@/shared/ui/logotype";
 import { levelData } from "../model/data/level.data";
 import { tabs } from "../model/data/tabs.data";
-
-import { useMobile } from "@/shared/hooks/media";
+import { useMobile } from "@/shared/lib/hooks";
 
 interface LayoutProps {
   children: React.ReactNode;

@@ -1,7 +1,10 @@
 "use client";
 
+import { withAccount, withAuth } from "@/app/providers/auth";
 import { Layout } from "@/widgets/layout";
 
-export default function Home() {
+function Home() {
   return <Layout>app</Layout>;
 }
+
+export default withAuth(withAccount(Home));

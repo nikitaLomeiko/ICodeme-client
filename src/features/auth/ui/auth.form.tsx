@@ -1,20 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import { AuthMode } from "../model/types/auth.types";
 import { RegisterForm } from "./forms/register.form";
 import { LoginForm } from "./forms/login.form";
 import { ForgotForm } from "./forms/forgot.form";
 import { VerifyForm } from "./forms/verify.form";
 import { FormWrapper } from "./components/form.wrapper";
 import { AnimatedForm } from "./components/animated.form";
+import { ResetPasswordForm } from "./forms/reset-password.form";
+import { typeMode } from "../model/types/mode.types";
 
 interface AuthFormProps {
   onSuccess?: () => void;
 }
 
 export const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
-  const [mode, setMode] = useState<AuthMode>("login");
+  const [mode, setMode] = useState<typeMode>("login");
   const [error, setError] = useState<string | null>(null);
 
   return (
@@ -42,7 +43,16 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
           <ForgotForm setError={setError} onSuccess={() => setMode("verify")} />
         )}
         {mode === "verify" && (
-          <VerifyForm setError={setError} onSuccess={onSuccess} />
+          <VerifyForm setError={setError} onSuccess={() => setMode("login")} />
+        )}
+        {mode === "verify-reset" && (
+          <VerifyForm setError={setError} onSuccess={() => setMode("reset")} />
+        )}
+        {mode === "reset" && (
+          <ResetPasswordForm
+            setError={setError}
+            onSuccess={() => setMode("register")}
+          />
         )}
       </AnimatedForm>
     </FormWrapper>

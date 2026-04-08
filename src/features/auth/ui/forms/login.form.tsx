@@ -8,6 +8,9 @@ import { PasswordField, TextField, Button } from "@/shared/ui/kit";
 import { FaEnvelope } from "react-icons/fa";
 import { IBaseFormProps } from "../../model/types/form.props";
 import { LoginFormData, loginSchema } from "../../model/validate/auth.schema";
+import { useAppDispatch } from "@/shared/lib/hooks";
+import { IAuthData, saveAuthToken, setAuthData } from "@/entities/auth";
+import { resolve } from "path";
 
 interface LoginFormProps extends IBaseFormProps {
   onForgotClick: () => void;
@@ -27,10 +30,31 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleLogin = async (data: LoginFormData) => {
     setError(null);
     setIsLoading(true);
+
+    // make a request to the server here ..
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const token = "mocktoken";
+
+    dispatch(saveAuthToken(token));
+
+    // make a request to the server here ..
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    const mockData: IAuthData = {
+      id: "1",
+      email: "mock@data.com",
+      name: "Mock User",
+    };
+
+    dispatch(setAuthData(mockData));
+
+    // можно объединить в один запрос в целом
+
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       onSuccess?.();

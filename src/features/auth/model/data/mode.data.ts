@@ -21,4 +21,14 @@ export const ModeData: IModeData = {
     subtitle: "Подтвердите",
     buttonTitle: "Подтвердить",
   },
+  reset: {
+    title: "Сброс пароля",
+    subtitle: "Укажите новый пароль",
+    buttonTitle: "Подтвердить",
+  },
+  "verify-reset": {
+    title: "Сброс пароля",
+    subtitle: "Укажите новый пароль",
+    buttonTitle: "Подтвердить",
+  },
 };
