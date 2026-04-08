@@ -32,7 +32,7 @@ export const AuthProvider: React.FC<IProps> = ({ children }) => {
         const mockData: IAuthData = {
           id: "1",
           email: "mock@data.com",
-          name: "asdf",
+          name: "",
         };
 
         dispatch(setAuthData(mockData));

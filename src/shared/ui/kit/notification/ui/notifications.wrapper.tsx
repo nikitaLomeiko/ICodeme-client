@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import { notificationStyles } from "../styles/notification.styles";
 import { useNotification } from "../hooks/use.notification";
-import { NotificationPosition } from "../context/notification.context";
+import { NotificationPosition } from "../types/notification.types";
 
 const icons = {
   success: <FaCheckCircle size={14} />,
@@ -48,7 +48,7 @@ const positionAnimation = {
 
 export const NotificationsWrapper: React.FC = () => {
   const { notifications, removeNotification, config } = useNotification();
-  const { position, defaultDuration } = config;
+  const { position } = config;
 
   return (
     <div className={`${positionClasses[position]} space-y-2`}>
