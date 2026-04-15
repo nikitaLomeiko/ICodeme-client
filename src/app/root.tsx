@@ -43,7 +43,7 @@ export function RootLayout({
             <UIThemeProvider theme={ThemeEnum.LIGHT}>
               <NotificationProvider
                 position="bottom-right"
-                defaultDuration={3500}
+                defaultDuration={4500}
                 maxNotifications={3}
               >
                 <ThemeSwitcher

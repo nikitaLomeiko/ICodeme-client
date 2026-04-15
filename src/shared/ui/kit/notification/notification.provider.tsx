@@ -4,9 +4,8 @@ import React, { useState, useCallback } from "react";
 import {
   NotificationContext,
   NotificationContextType,
-  NotificationItem,
-  NotificationProviderConfig,
 } from "./context/notification.context";
+import { NotificationItem, NotificationProviderConfig } from "./types/notification.types";
 
 const defaultConfig: Required<NotificationProviderConfig> = {
   maxNotifications: 5,

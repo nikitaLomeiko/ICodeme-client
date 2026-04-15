@@ -1,16 +1,11 @@
 import type { ComponentPropsWithoutRef, ForwardedRef } from "react";
 import { forwardRef } from "react";
+import { sizeMap } from "./styles/loader.style";
 
 export interface LoaderProps extends ComponentPropsWithoutRef<"div"> {
   size?: "sm" | "md" | "lg";
   color?: string;
 }
-
-const sizeMap = {
-  sm: "w-5 h-5 border-2",
-  md: "w-8 h-8 border-3",
-  lg: "w-12 h-12 border-4",
-};
 
 const LoaderComponent = (
   { size = "md", color, className = "", style, ...rest }: LoaderProps,
