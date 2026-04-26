@@ -4,13 +4,19 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { PasswordField, TextField, Button } from "@/shared/ui/kit";
+import {
+  PasswordField,
+  TextField,
+  Button,
+  useNotification,
+} from "@/shared/ui/kit";
 import { FaEnvelope } from "react-icons/fa";
 import { IBaseFormProps } from "../../model/types/form.props";
 import { LoginFormData, loginSchema } from "../../model/validate/auth.schema";
 import { useAppDispatch } from "@/shared/lib/hooks";
-import { IAuthData, saveAuthToken, setAuthData } from "@/entities/auth";
-import { resolve } from "path";
+import { saveAuthToken, setAuthData } from "@/entities/auth/model";
+import { useLoginMutation } from "@/entities/auth";
+import { isApiError } from "@/shared/api";
 
 interface LoginFormProps extends IBaseFormProps {
   onForgotClick: () => void;
@@ -29,39 +35,40 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     resolver: zodResolver(loginSchema),
   });
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [login, { isLoading }] = useLoginMutation();
+  const notification = useNotification();
   const dispatch = useAppDispatch();
 
   const handleLogin = async (data: LoginFormData) => {
     setError(null);
-    setIsLoading(true);
 
-    // make a request to the server here ..
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    const token = "mocktoken";
+    const result = await login(data);
 
-    dispatch(saveAuthToken(token));
+    if (result.error && isApiError(result.error)) {
+      setError(result.error.data.message);
+      return;
+    }
 
-    // make a request to the server here ..
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const resultData = result.data?.data;
 
-    const mockData: IAuthData = {
-      id: "1",
-      email: "mock@data.com",
-      name: "Mock User",
-    };
+    if (resultData) {
+      dispatch(
+        saveAuthToken({
+          refreshToken: resultData.refreshToken,
+          accessToken: resultData.accessToken,
+        }),
+      );
 
-    dispatch(setAuthData(mockData));
+      dispatch(
+        setAuthData({
+          email: resultData.email,
+          id: resultData.userId,
+        }),
+      );
 
-    // можно объединить в один запрос в целом
+      notification.success(result.data?.message || "");
 
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
       onSuccess?.();
-    } catch (err) {
-      setError("Ошибка входа");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -77,7 +84,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         error={errors.email?.message}
         disabled={isLoading}
         variant="underline"
-        autoComplete="off"
       />
       <PasswordField
         id="password"
@@ -87,7 +93,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         error={errors.password?.message}
         variant="underline"
         disabled={isLoading}
-        autoComplete="off"
       />
       <div className="flex justify-end">
         <Button

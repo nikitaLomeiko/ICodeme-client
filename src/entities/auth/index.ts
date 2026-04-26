@@ -1,3 +1,2 @@
-export * from "./auth.slice";
-export * from "./selectors";
-export * from "./types";
+export * from "./model";
+export * from "./api";

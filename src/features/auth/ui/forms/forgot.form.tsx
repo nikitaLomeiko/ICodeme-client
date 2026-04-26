@@ -1,12 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaEnvelope } from "react-icons/fa";
-import { TextField, Button } from "@/shared/ui/kit";
+import { TextField, Button, useNotification } from "@/shared/ui/kit";
 import { IBaseFormProps } from "../../model/types/form.props";
 import { ForgotFormData, forgotSchema } from "../../model/validate/auth.schema";
+import { setUserId, useSendConfirmCodeMutation } from "@/entities/auth";
+import { isApiError } from "@/shared/api";
+import { useAppDispatch } from "@/shared/lib/hooks";
 
 export const ForgotForm: React.FC<IBaseFormProps> = ({
   setError,
@@ -20,18 +23,23 @@ export const ForgotForm: React.FC<IBaseFormProps> = ({
     resolver: zodResolver(forgotSchema),
   });
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [send, { isLoading }] = useSendConfirmCodeMutation();
+  const dispatch = useAppDispatch();
+  const notification = useNotification();
 
   const handleForgot = async (data: ForgotFormData) => {
-    setIsLoading(true);
     setError(null);
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+    const result = await send(data.email);
+
+    if (result.error && isApiError(result.error)) {
+      setError(result.error.data.message);
+      return;
+    }
+
+    if (result.data) {
+      dispatch(setUserId(result.data?.data?.userId || ""));
+      notification.info(result.data.message || "");
       onSuccess?.();
-    } catch (err) {
-      setError("Ошибка отправки");
-    } finally {
-      setIsLoading(false);
     }
   };
 

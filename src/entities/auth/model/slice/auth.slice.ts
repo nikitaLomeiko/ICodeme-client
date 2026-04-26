@@ -1,16 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { IAuthData, IAuthState } from "./types/auth.types";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { IAuthData, IAuthState, IToken } from "../types";
 
 const initialState: IAuthState = {
-  isAuthenticated: false,
+  isAuthenticated: null,
   user: {
     id: "",
-    name: "",
     email: "",
   },
-  token: "",
-  isLoading: false,
+  token: {
+    accessToken: "",
+    refreshToken: "",
+  },
 };
 
 export const AuthSlice = createSlice({
@@ -21,44 +21,49 @@ export const AuthSlice = createSlice({
       state.user = {
         email: action.payload.email,
         id: action.payload.id,
-        name: action.payload.name,
       };
 
       state.isAuthenticated = true;
     },
 
+    setUserId: (state: IAuthState, action: PayloadAction<string>) => {
+      state.user.id = action.payload;
+    },
+
     logout: (state: IAuthState) => {
-      state.isAuthenticated = false;
+      state.isAuthenticated = null;
       state.user = {
         id: "",
-        name: "",
         email: "",
       };
-      state.token = "";
+      state.token = {
+        refreshToken: "",
+        accessToken: "",
+      };
+
+      localStorage.removeItem("auth_token");
     },
 
     loadAuthToken: (state: IAuthState) => {
       const token = localStorage.getItem("auth_token");
       if (token) {
-        state.token = token;
+        state.token = JSON.parse(token) as IToken;
         state.isAuthenticated = true;
+      } else {
+        state.isAuthenticated = false;
       }
     },
 
-    saveAuthToken: (state: IAuthState, action: PayloadAction<string>) => {
-      localStorage.setItem("auth_token", action.payload);
+    saveAuthToken: (state: IAuthState, action: PayloadAction<IToken>) => {
+      localStorage.setItem("auth_token", JSON.stringify(action.payload));
 
       state.token = action.payload;
       state.isAuthenticated = true;
     },
-
-    setLoading: (state: IAuthState, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
-    },
   },
 });
 
-export const { setAuthData, logout, loadAuthToken, saveAuthToken, setLoading } =
+export const { setAuthData, logout, loadAuthToken, saveAuthToken, setUserId } =
   AuthSlice.actions;
 
 export const authSliceReducer = AuthSlice.reducer;

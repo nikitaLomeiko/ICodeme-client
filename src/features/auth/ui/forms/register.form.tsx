@@ -1,16 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaEnvelope } from "react-icons/fa";
-import { PasswordField, TextField, Button, Checkbox } from "@/shared/ui/kit";
+import {
+  PasswordField,
+  TextField,
+  Button,
+  Checkbox,
+  useNotification,
+} from "@/shared/ui/kit";
 import { IBaseFormProps } from "../../model/types/form.props";
 import {
   RegisterFormData,
   registerSchema,
 } from "../../model/validate/auth.schema";
-import { IAuthData, saveAuthToken, setAuthData } from "@/entities/auth";
+import { setUserId, useRegisterMutation } from "@/entities/auth";
+import { isApiError } from "@/shared/api";
 import { useAppDispatch } from "@/shared/lib/hooks";
 
 export const RegisterForm: React.FC<IBaseFormProps> = ({
@@ -22,6 +29,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -32,37 +40,28 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
     },
   });
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [reg, { isLoading }] = useRegisterMutation();
+  const notification = useNotification();
+
   const dispatch = useAppDispatch();
 
   const handleRegister = async (data: RegisterFormData) => {
-    setIsLoading(true);
     setError(null);
-    try {
-      // make a request to the server here ..
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      const token = "mocktoken";
 
-      dispatch(saveAuthToken(token));
+    const result = await reg({
+      password: data.password,
+      email: data.email,
+    });
 
-      // make a request to the server here ..
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+    if (result.error && isApiError(result.error)) {
+      setError(result.error.data.message);
+      return;
+    }
 
-      const mockData: IAuthData = {
-        id: "1",
-        email: "mock@data.com",
-        name: "",
-      };
-
-      dispatch(setAuthData(mockData));
-
-      // можно объединить в один запрос в целом
-
+    if (result.data) {
+      dispatch(setUserId(result.data?.data?.userId || ""));
+      notification.info(result.data.message || "");
       onSuccess?.();
-    } catch (err) {
-      setError("Ошибка регистрации");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -103,9 +102,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
       <Checkbox
         id="terms"
         checked={watch("agreedToTerms")}
-        onChange={(checked) =>
-          register("agreedToTerms").onChange({ target: { value: checked } })
-        }
+        onChange={(checked) => setValue("agreedToTerms", checked)}
         disabled={isLoading}
         error={errors.agreedToTerms?.message}
         label={

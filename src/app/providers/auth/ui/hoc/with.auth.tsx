@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/shared/lib/hooks";
-import { selectIsAuthenticated, selectLoading } from "@/entities/auth";
+import { selectIsAuthenticated } from "@/entities/auth";
 import { Loader, useNotification } from "@/shared/ui/kit";
 
 export function withAuth<P extends object>(
@@ -13,28 +13,23 @@ export function withAuth<P extends object>(
   return function AuthenticatedComponent(props: P) {
     const router = useRouter();
     const isAuth = useAppSelector(selectIsAuthenticated);
-    const isLoading = useAppSelector(selectLoading);
     const notification = useNotification();
 
     useEffect(() => {
-      if (!isLoading && !isAuth) {
+      if (isAuth === false) {
         router.replace(redirectTo);
         notification.warning("Authorization is required");
       }
-    }, [isAuth, isLoading, router]);
+    }, [isAuth, router]);
 
-    if (isLoading) {
-      return (
-        <div className="flex items-center justify-center min-h-screen">
-          <Loader size="lg" />
-        </div>
-      );
+    if (isAuth === true) {
+      return <WrappedComponent {...props} />;
     }
 
-    if (!isAuth) {
-      return null;
-    }
-
-    return <WrappedComponent {...props} />;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader size="lg" />
+      </div>
+    );
   };
 }

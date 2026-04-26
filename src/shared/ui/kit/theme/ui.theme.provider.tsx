@@ -23,11 +23,13 @@ export const UIThemeProvider: React.FC<UIThemeProviderProps> = ({
   const availableThemes = customThemes || getAvailableThemes(limit);
 
   const setTheme = (newTheme: ThemeEnum) => {
+    localStorage.setItem("data-theme", newTheme);
     setThemeState(newTheme);
   };
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    const storageTheme = localStorage.getItem("data-theme") || theme;
+    document.documentElement.setAttribute("data-theme", storageTheme);
   }, [theme]);
 
   return (

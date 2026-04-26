@@ -1,14 +1,15 @@
 "use client";
 
-import {
-  IAuthData,
-  loadAuthToken,
-  setAuthData,
-  setLoading,
-} from "@/entities/auth";
-import { useAppDispatch } from "@/shared/lib/hooks";
 import { useEffect } from "react";
-import { store } from "../../store/model/store";
+import {
+  loadAuthToken,
+  logout,
+  selectToken,
+  setAuthData,
+  useLazyVerifyTokenQuery,
+} from "@/entities/auth";
+import { useAppDispatch, useAppSelector } from "@/shared/lib/hooks";
+import { isApiError } from "@/shared/api";
 
 interface IProps {
   children: React.ReactNode;
@@ -16,33 +17,33 @@ interface IProps {
 
 export const AuthProvider: React.FC<IProps> = ({ children }) => {
   const dispatch = useAppDispatch();
-
-  dispatch(setLoading(true));
+  const [verify] = useLazyVerifyTokenQuery();
+  const token = useAppSelector(selectToken);
 
   useEffect(() => {
-    const fetch = async () => {
-      dispatch(loadAuthToken());
-
-      const token = store.getState().auth.token;
-
-      if (token) {
-        // make a request token
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-
-        const mockData: IAuthData = {
-          id: "1",
-          email: "mock@data.com",
-          name: "",
-        };
-
-        dispatch(setAuthData(mockData));
-      }
-
-      dispatch(setLoading(false));
-    };
-
-    fetch();
+    dispatch(loadAuthToken());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (token.accessToken !== "") {
+      fetch();
+      return;
+    }
+
+    async function fetch() {
+      const result = await verify(null);
+
+      if (result.error && isApiError(result.error)) dispatch(logout());
+
+      if (result.data?.success && result.data.data)
+        dispatch(
+          setAuthData({
+            email: result.data.data.email,
+            id: result.data.data.userId,
+          }),
+        );
+    }
+  }, [token.accessToken]);
 
   return children;
 };

@@ -2,9 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/shared/lib/hooks";
-import { selectUserName } from "@/entities/auth";
-import { useNotification } from "@/shared/ui/kit";
+import { Loader, useNotification } from "@/shared/ui/kit";
+import { useGetProfileQuery } from "@/entities/profile";
 
 export function withAccount<P extends object>(
   WrappedComponent: React.ComponentType<P>,
@@ -12,24 +11,26 @@ export function withAccount<P extends object>(
 ) {
   return function AuthenticatedComponent(props: P) {
     const router = useRouter();
-    const isName = useAppSelector(selectUserName) !== "";
     const notification = useNotification();
     const hasWarnedRef = useRef(false);
+    const { isError, isLoading } = useGetProfileQuery(null);
 
     useEffect(() => {
-      if (!isName && !hasWarnedRef.current) {
+      if (isError && !hasWarnedRef.current) {
         hasWarnedRef.current = true;
         router.replace(redirectTo);
         notification.warning(
           "It is necessary to fill in the users primary information",
         );
       }
-    }, [isName, router]);
+    }, [router, isError]);
 
-    if (!isName) {
-      return null;
-    }
+    if (!isLoading && !isError) return <WrappedComponent {...props} />;
 
-    return <WrappedComponent {...props} />;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader size="lg" />
+      </div>
+    );
   };
 }

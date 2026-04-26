@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { OAuth } from "./ouath";
 import { Notification, Title } from "@/shared/ui/kit";
 import { AuthModeSwitcher } from "./ui/auth.mode.switcher";
@@ -14,18 +14,11 @@ interface IProps {
   onMode: (mode: typeMode) => void;
   mode: typeMode;
   error?: string | null;
-  onClearError: () => void;
 }
 
 export const FormWrapper: React.FC<IProps> = (props) => {
-  const { children, mode, onMode, error, onClearError } = props;
+  const { children, mode, onMode, error } = props;
 
-  const [showError, setShowError] = useState(true);
-
-  const handleCloseError = () => {
-    setShowError(false);
-    onClearError();
-  };
   return (
     <div>
       <div className="text-center mb-4">
@@ -45,13 +38,12 @@ export const FormWrapper: React.FC<IProps> = (props) => {
         </Title>
       </div>
 
-      {error && showError && (
+      {error && (
         <Notification
+          className="bg-transparent border-none mb-10"
+          autoClose={false}
           type="error"
           message={error}
-          onClose={handleCloseError}
-          autoClose
-          autoCloseDelay={5000}
         />
       )}
 

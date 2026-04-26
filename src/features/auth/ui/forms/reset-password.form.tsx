@@ -1,14 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PasswordField, Button } from "@/shared/ui/kit";
+import { PasswordField, Button, useNotification } from "@/shared/ui/kit";
 import { IBaseFormProps } from "../../model/types/form.props";
 import {
   ResetPasswordFormData,
   resetPasswordSchema,
 } from "../../model/validate/auth.schema";
+import { selectUserId, useResetPasswordMutation } from "@/entities/auth";
+import { useAppSelector } from "@/shared/lib/hooks";
+import { isApiError } from "@/shared/api";
 
 export const ResetPasswordForm: React.FC<IBaseFormProps> = ({
   setError,
@@ -26,19 +29,23 @@ export const ResetPasswordForm: React.FC<IBaseFormProps> = ({
     },
   });
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [reset, { isLoading }] = useResetPasswordMutation();
+  const userId = useAppSelector(selectUserId);
+  const notification = useNotification();
 
   const handleResetPassword = async (data: ResetPasswordFormData) => {
-    setIsLoading(true);
     setError(null);
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      onSuccess?.();
-    } catch (err) {
-      setError("Ошибка сброса пароля");
-    } finally {
-      setIsLoading(false);
+
+    const result = await reset({ userId, newPassword: data.password });
+
+    if (result.error && isApiError(result.error)) {
+      setError(result.error.data.message);
+      return;
     }
+
+    notification.success(result.data?.message || "");
+
+    onSuccess?.();
   };
 
   return (

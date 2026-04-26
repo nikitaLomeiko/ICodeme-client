@@ -110,3 +110,12 @@ body {
 .perspective-1000 {
   perspective: 1000px;
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--ui-background) inset !important;
+  -webkit-text-fill-color: var(--ui-text) !important;
+  caret-color: var(--ui-text);
+}

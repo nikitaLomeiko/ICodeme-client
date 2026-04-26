@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, useNotification, NotificationPosition } from "@/shared/ui/kit";
+import { Button, useNotification } from "@/shared/ui/kit";
+import { NotificationPosition } from "@/shared/ui/kit/notification/types/notification.types";
 import { useState } from "react";
 
 export default function NotificationDemo() {

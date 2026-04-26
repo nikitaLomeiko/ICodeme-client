@@ -1,6 +1,6 @@
 "use client";
 
 import { withAuth } from "@/app/providers/auth";
-import { ProfilePage } from "@/pages-root/auth/profile.page";
+import { AuthProfilePage } from "@/pages-root/auth";
 
-export default withAuth(ProfilePage);
+export default withAuth(AuthProfilePage);

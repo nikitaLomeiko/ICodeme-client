@@ -54,7 +54,7 @@ export const Notification: React.FC<NotificationProps> = ({
           `}
           role="alert"
         >
-          <span className="flex-shrink-0">icons[type]</span>
+          <span className="flex-shrink-0">{icons[type]}</span>
           <span className="flex-1">{message}</span>
           {onClose && (
             <button

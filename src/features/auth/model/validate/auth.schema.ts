@@ -24,12 +24,12 @@ export const forgotSchema = z.object({
 });
 
 export const verifySchema = z.object({
-  code: z.string().length(6, "Код должен содержать 6 цифр"),
+  code: z.string().length(5, "Код должен содержать 5 цифр"),
 });
 
 export const resetPasswordSchema = z
   .object({
-    password: z.string().min(6, "Пароль должен содержать минимум 6 символов"),
+    password: z.string().min(5, "Пароль должен содержать минимум 5 символов"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {

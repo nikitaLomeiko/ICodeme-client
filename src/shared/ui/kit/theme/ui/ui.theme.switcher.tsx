@@ -20,7 +20,6 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
 }) => {
   const { theme, setTheme, availableThemes } = useTheme();
 
-  // Используем кастомный список тем или ограниченный по limit
   const effectiveThemes =
     customThemes || getAvailableThemes(limit, availableThemes);
 
