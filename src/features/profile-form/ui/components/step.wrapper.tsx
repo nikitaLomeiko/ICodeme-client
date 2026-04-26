@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Button, ProgressBar, Title } from "@/shared/ui/kit";
+import { Button, Notification, ProgressBar, Title } from "@/shared/ui/kit";
 
 interface IProps {
   currentStep: number;
@@ -9,6 +9,8 @@ interface IProps {
   handleBack: () => void;
   handleSubmit: () => void;
   title: string;
+  error?: string | null;
+  isLoading?: boolean;
   children: React.ReactNode;
 }
 
@@ -22,6 +24,8 @@ export const StepWrapper: React.FC<IProps> = (props) => {
     progress,
     title,
     children,
+    isLoading = false,
+    error,
   } = props;
 
   return (
@@ -37,6 +41,15 @@ export const StepWrapper: React.FC<IProps> = (props) => {
           duration={300}
         />
       </div>
+
+      {error && (
+        <Notification
+          className="bg-transparent border-none mb-10"
+          autoClose={false}
+          type="error"
+          message={error}
+        />
+      )}
 
       <AnimatePresence mode="wait">
         <motion.div
@@ -76,6 +89,8 @@ export const StepWrapper: React.FC<IProps> = (props) => {
       <div className="flex gap-3">
         {currentStep > 0 ? (
           <Button
+            isLoading={isLoading}
+            disabled={isLoading}
             variant="outline"
             size="md"
             onClick={handleBack}
@@ -89,6 +104,8 @@ export const StepWrapper: React.FC<IProps> = (props) => {
 
         {currentStep < totalSteps - 1 ? (
           <Button
+            isLoading={isLoading}
+            disabled={isLoading}
             variant="primary"
             size="md"
             onClick={handleNext}
@@ -98,6 +115,8 @@ export const StepWrapper: React.FC<IProps> = (props) => {
           </Button>
         ) : (
           <Button
+            isLoading={isLoading}
+            disabled={isLoading}
             variant="primary"
             size="md"
             onClick={handleSubmit}

@@ -1,6 +1,7 @@
 import { fetchBase, IResponse } from "@/shared/api";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { IProfile } from "../model";
+import { ICreateProfileParams } from "./types";
 
 export const profileApi = createApi({
   reducerPath: "profileApi",
@@ -12,7 +13,21 @@ export const profileApi = createApi({
         method: "GET",
       }),
     }),
+    createProfile: build.mutation<IResponse<IProfile>, ICreateProfileParams>({
+      query: ({ about, avatar, languageProgram, name }) => ({
+        url: "profiles/me",
+        method: "POST",
+        body: {
+          profile: { about, avatar, name },
+          programmingLanguage: languageProgram,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetProfileQuery, useLazyGetProfileQuery } = profileApi;
+export const {
+  useGetProfileQuery,
+  useLazyGetProfileQuery,
+  useCreateProfileMutation,
+} = profileApi;

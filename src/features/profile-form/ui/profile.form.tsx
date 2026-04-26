@@ -10,15 +10,19 @@ import {
   ProfileFormData,
   profileSchema,
 } from "../model/validate/profile.schema";
+import { useProfileForm } from "../model/hooks/use.profile.form";
+import { useCreateProfileMutation } from "@/entities/profile";
+import { isApiError } from "@/shared/api";
+import { useRouter } from "next/navigation";
+import { useNotification } from "@/shared/ui/kit";
+
+const TOTAL_STEPS = 4;
 
 interface ProfileFormProps {
   onSubmit?: (data: ProfileFormData) => void;
 }
 
 export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const totalSteps = 4;
-
   const methods = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     mode: "onBlur",
@@ -30,55 +34,39 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
     },
   });
 
-  const { handleSubmit, trigger, getFieldState, formState, setError } = methods;
+  const router = useRouter();
+  const notification = useNotification();
+  const [create, { isLoading }] = useCreateProfileMutation();
+  const [error, setError] = useState<string | null>(null);
 
-  const validateCurrentStep = async (): Promise<boolean> => {
-    const fieldNames: Record<number, keyof ProfileFormData> = {
-      0: "name",
-      1: "avatar",
-      2: "bio",
-      3: "language",
-    };
+  const { handleSubmit, getFieldState } = methods;
+  const manageProfileForm = useProfileForm({
+    methods,
+    totalSteps: TOTAL_STEPS,
+  });
 
-    const field = fieldNames[currentStep];
-    const isValid = await trigger(field);
+  const onSubmitForm = async (data: ProfileFormData) => {
+    setError(null);
 
-    if (!isValid) {
-      setError(field, {
-        type: "manual",
-        message: formState.errors[field]?.message || "Invalid field",
-      });
+    const result = await create({
+      about: data.bio,
+      avatar: data.avatar,
+      languageProgram: data.language,
+      name: data.name,
+    });
 
-      const element = document.querySelector(
-        `[name="${field}"]`,
-      ) as HTMLElement | null;
-      element?.focus();
+    if (result.error && isApiError(result.error)) {
+      setError(result.error.data.message);
+      return;
     }
 
-    return isValid;
-  };
+    notification.success("The profile was successfully created");
 
-  const handleNext = async () => {
-    const isValid = await validateCurrentStep();
-    if (isValid && currentStep < totalSteps - 1) {
-      setCurrentStep((prev) => prev + 1);
-    }
+    router.push("/");
   };
-
-  const handleBack = () => {
-    if (currentStep > 0) {
-      setCurrentStep((prev) => prev - 1);
-    }
-  };
-
-  const onSubmitForm = (data: ProfileFormData) => {
-    onSubmit?.(data);
-  };
-
-  const progress = ((currentStep + 1) / totalSteps) * 100;
 
   const renderStep = () => {
-    switch (currentStep) {
+    switch (manageProfileForm.currentStep) {
       case 0:
         return (
           <NameStep
@@ -123,13 +111,13 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
   return (
     <FormProvider {...methods}>
       <StepWrapper
-        currentStep={currentStep}
-        totalSteps={totalSteps}
-        progress={progress}
-        handleNext={handleNext}
-        handleBack={handleBack}
+        {...manageProfileForm}
+        totalSteps={TOTAL_STEPS}
+        progress={((manageProfileForm.currentStep + 1) / TOTAL_STEPS) * 100}
         handleSubmit={handleSubmit(onSubmitForm)}
-        title={stepTitles[currentStep]}
+        title={stepTitles[manageProfileForm.currentStep]}
+        error={error}
+        isLoading={isLoading}
       >
         {renderStep()}
       </StepWrapper>
