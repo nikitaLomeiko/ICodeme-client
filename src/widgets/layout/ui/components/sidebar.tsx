@@ -22,11 +22,18 @@ export const Sidebar: React.FC<IProps> = (props) => {
 
   return (
     <aside className="fixed left-4 top-4 bottom-4 w-64 z-40">
-      <div className="bg-white/95 backdrop-blur-md shadow-xl rounded-2xl border border-emerald-100/50 h-full">
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3 }}
+        className="bg-[var(--ui-background-secondary)] backdrop-blur-md shadow-xl rounded-2xl border border-[var(--ui-border)] h-full transition-colors duration-300"
+      >
         <div className="flex flex-col h-full">
-          <Logotype />
+          <div className="p-4 border-b border-[var(--ui-border-light)]">
+            <Logotype />
+          </div>
 
-          <nav className="space-y-2 flex-1">
+          <nav className="flex-1 p-3 space-y-1.5">
             {tabs.map((tab) => (
               <motion.div
                 key={tab.id}
@@ -41,8 +48,12 @@ export const Sidebar: React.FC<IProps> = (props) => {
               </motion.div>
             ))}
           </nav>
+
+          <div className="p-4 border-t border-[var(--ui-border-light)] text-xs text-[var(--ui-text-muted)]">
+            <p>© 2024 Your App</p>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </aside>
   );
 };
