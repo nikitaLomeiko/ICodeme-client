@@ -7,3 +7,6 @@ export * from "./progress-bar";
 export * from "./avatar";
 export * from "./title";
 export * from "./loader";
+export * from "./carousel";
+export * from "./card";
+export * from "./modal";
