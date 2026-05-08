@@ -1,12 +1,19 @@
 "use client";
 
-import { Button, InputWithSuggestions, Title } from "@/shared/ui/kit";
+import {
+  Button,
+  InputWithSuggestions,
+  Notification,
+  Title,
+} from "@/shared/ui/kit";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
 import { LanguageAddFormData, languageAddSchema } from "../model/validate";
 import { programmingLanguages } from "../model/data/language.data";
+import { useAddNewLanguageMutation } from "@/entities/study";
+import { isApiError } from "@/shared/api";
 
 interface IProps {
   initLanguage?: string;
@@ -16,6 +23,9 @@ interface IProps {
 
 export const LanguageAddForm: React.FC<IProps> = (props) => {
   const { initLanguage = "", onCancel, onSuccess } = props;
+
+  const [create] = useAddNewLanguageMutation();
+  const [error, setError] = useState<string | null>(null);
 
   const {
     handleSubmit,
@@ -41,7 +51,15 @@ export const LanguageAddForm: React.FC<IProps> = (props) => {
 
   const onSubmit = async (data: LanguageAddFormData) => {
     try {
-      await onSuccess(data.language);
+      setError(null);
+      const result = await create(data.language);
+
+      if (result.error && isApiError(result.error)) {
+        setError(result.error.data.message);
+        return;
+      }
+
+      onSuccess(data.language);
     } catch (error) {
       console.error("Failed to add language:", error);
     }
@@ -50,9 +68,13 @@ export const LanguageAddForm: React.FC<IProps> = (props) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <div>
-        <Title size="sm" weight="semibold" className="mb-3">
-          Язык программирования
-        </Title>
+        {error && (
+          <Notification
+            message={error}
+            autoClose={false}
+            className="border-none bg-transparent"
+          />
+        )}
         <InputWithSuggestions
           id="language"
           name="language"

@@ -1,4 +1,4 @@
-import { CardPadding, CardRadius, CardSize, CardVariant } from "../types";
+import { CardPadding, CardRadius, CardVariant } from "../types";
 
 export const paddingStyles: Record<CardPadding, string> = {
   none: "p-0",

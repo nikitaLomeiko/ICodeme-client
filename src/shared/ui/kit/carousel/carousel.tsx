@@ -37,72 +37,77 @@ export const Carousel = forwardRef<CarouselApi, CarouselProps>(
       isAnimating,
     } = useCarousel(options);
 
-    // Передаем API через ref
-    if (ref) {
+    // ref sync (без лишнего if внутри render)
+    useEffect(() => {
+      if (!ref) return;
+
       if (typeof ref === "function") {
         ref(api);
       } else {
         ref.current = api;
       }
-    }
+    }, [api, ref]);
 
     useEffect(() => {
-      if (onApiInit) {
-        onApiInit(api);
-      }
+      onApiInit?.(api);
     }, [onApiInit, api]);
 
+    /**
+     * 🔥 FIXED INIT (главное исправление)
+     * - убрали setTimeout
+     * - ждём реальный layout через 2 rAF
+     */
     useEffect(() => {
-      if (viewportRef.current && containerRef.current) {
-        reInit();
-        setTimeout(() => {
+      if (!viewportRef.current || !containerRef.current) return;
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const width = viewportRef.current?.getBoundingClientRect().width;
+
+          // защита от мусорного layout (типа 27px)
+          if (!width || width < 50) return;
+
+          reInit();
           scrollTo(options.startIndex || 0);
-        }, 0);
-      }
+        });
+      });
     }, [reInit, scrollTo, options.startIndex]);
 
+    /**
+     * resize
+     */
     useEffect(() => {
-      const handleResize = () => {
-        reInit();
-      };
+      const handleResize = () => reInit();
+
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }, [reInit]);
 
+    /**
+     * children change
+     */
     useEffect(() => {
-      if (containerRef.current) {
-        reInit();
-      }
+      if (!containerRef.current) return;
+      reInit();
     }, [children, reInit]);
 
-    // Wheel scroll handler - immediate scroll without debounce
     const handleWheel = useCallback(
       (e: WheelEvent) => {
         if (!enableWheelScroll) return;
         if (isAnimating) return;
 
         const target = e.target as HTMLElement;
-        const isInsideViewport = viewportRef.current?.contains(target);
+        if (!viewportRef.current?.contains(target)) return;
 
-        if (!isInsideViewport) return;
-
-        // Prevent page scroll when scrolling carousel
         e.preventDefault();
 
         const delta =
           Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
 
-        // Scroll immediately based on wheel direction
         if (delta > 0) {
-          // Scroll down/right - next slide
-          if (canScrollNext) {
-            api.scrollNext();
-          }
+          if (canScrollNext) api.scrollNext();
         } else {
-          // Scroll up/left - previous slide
-          if (canScrollPrev) {
-            api.scrollPrev();
-          }
+          if (canScrollPrev) api.scrollPrev();
         }
       },
       [
@@ -119,7 +124,6 @@ export const Carousel = forwardRef<CarouselApi, CarouselProps>(
       const viewport = viewportRef.current;
       if (!viewport || !enableWheelScroll) return;
 
-      // Use passive: false to allow preventDefault
       viewport.addEventListener("wheel", handleWheel, { passive: false });
 
       return () => {
@@ -140,10 +144,10 @@ export const Carousel = forwardRef<CarouselApi, CarouselProps>(
         }}
       >
         <div className={`relative ${className}`}>
-          {/* Viewport */}
+          {/* VIEWPORT */}
           <div
             ref={viewportRef}
-            className={`overflow-hidden cursor-grab active:cursor-grabbing ${viewportClassName}`}
+            className={`overflow-hidden min-w-0 w-full cursor-grab active:cursor-grabbing ${viewportClassName}`}
             onMouseDown={onDragStart}
             onMouseMove={onDragMove}
             onMouseUp={onDragEnd}
@@ -155,7 +159,10 @@ export const Carousel = forwardRef<CarouselApi, CarouselProps>(
             <div
               ref={containerRef}
               className={`flex will-change-transform ${containerClassName}`}
-              style={{ transition: "none" }}
+              style={{
+                transition: "none",
+                boxSizing: "border-box",
+              }}
             >
               {Children.map(children, (child, index) => (
                 <div key={index} className={`shrink-0 ${slideClassName}`}>
@@ -165,7 +172,7 @@ export const Carousel = forwardRef<CarouselApi, CarouselProps>(
             </div>
           </div>
 
-          {/* Стрелки - показываем только если showArrows = true */}
+          {/* ARROWS */}
           {showArrows && (
             <div className="absolute inset-0 pointer-events-none">
               {renderArrows ? (
@@ -180,14 +187,14 @@ export const Carousel = forwardRef<CarouselApi, CarouselProps>(
                   <button
                     onClick={api.scrollPrev}
                     disabled={!canScrollPrev && !loop}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-auto bg-white/80 hover:bg-white rounded-full p-2 shadow-lg disabled:opacity-30 transition-all z-10"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-auto bg-white/80 hover:bg-white rounded-full p-2 shadow-lg disabled:opacity-30"
                   >
                     ←
                   </button>
                   <button
                     onClick={api.scrollNext}
                     disabled={!canScrollNext && !loop}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-auto bg-white/80 hover:bg-white rounded-full p-2 shadow-lg disabled:opacity-30 transition-all z-10"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-auto bg-white/80 hover:bg-white rounded-full p-2 shadow-lg disabled:opacity-30"
                   >
                     →
                   </button>
@@ -196,7 +203,7 @@ export const Carousel = forwardRef<CarouselApi, CarouselProps>(
             </div>
           )}
 
-          {/* Точки - показываем только если showDots = true */}
+          {/* DOTS */}
           {showDots && (
             <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
               {renderDots ? (

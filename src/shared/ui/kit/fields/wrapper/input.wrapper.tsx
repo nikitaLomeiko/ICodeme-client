@@ -110,7 +110,7 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
           <motion.p
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-[10px] text-[var(--ui-error)] mt-1 ml-1"
+            className="text-[10px] text-[var(--ui-error)] mt-3 ml-1"
           >
             {error}
           </motion.p>

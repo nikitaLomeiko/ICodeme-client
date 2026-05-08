@@ -1,9 +1,11 @@
+import { IAchievement } from "./achievement.types";
+
 export interface IProfile {
   _id: string;
   userId: string;
   data: IProfileData;
-  level: IPosition;
-  stats: IStats;
+  level: ILevel;
+  achievements: IAchievement[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -14,10 +16,10 @@ export interface IProfileData {
   about: string;
 }
 
-export interface IPosition {
+export interface ILevel {
+  experience: number;
   experienceToNextLevel: number;
-  positionCount: number;
-  positionName: string;
+  currentLevel: number;
 }
 
 export interface IStats {

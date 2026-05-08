@@ -1,44 +1,56 @@
 "use client";
 
-import { Button, TextareaField, Title } from "@/shared/ui/kit";
+import { Button, Notification, TextareaField } from "@/shared/ui/kit";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaSave } from "react-icons/fa";
 import { AboutEditFormData, aboutEditSchema } from "../model/validate";
+import { IProfileData, useUpdateProfileDataMutation } from "@/entities/profile";
+import { isApiError } from "@/shared/api";
 
 interface IProps {
-  initAbout: string;
+  profileData: IProfileData;
   onSuccess: () => void;
   onCancel: () => void;
 }
 
 export const AboutEditForm: React.FC<IProps> = (props) => {
-  const { initAbout, onCancel, onSuccess } = props;
+  const { profileData, onCancel, onSuccess } = props;
 
+  const [update] = useUpdateProfileDataMutation();
+  const [error, setError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
+    watch,
     reset,
     formState: { errors, isSubmitting, isDirty, isValid },
   } = useForm<AboutEditFormData>({
     resolver: zodResolver(aboutEditSchema),
     defaultValues: {
-      about: initAbout || "",
+      about: profileData.about || "",
     },
     mode: "onChange",
   });
 
   useEffect(() => {
     reset({
-      about: initAbout || "",
+      about: profileData.about || "",
     });
-  }, [initAbout, reset]);
+  }, [profileData, reset]);
 
   const onSubmit = async (data: AboutEditFormData) => {
     try {
-      console.log(data.about);
-      // Запрос
+      setError(null);
+
+      const result = await update({ ...profileData, about: data.about });
+
+      if (result.error && isApiError(result.error)) {
+        setError(result.error.data.message);
+        return;
+      }
+
       onSuccess();
     } catch (error) {
       console.error("Failed to save about:", error);
@@ -48,11 +60,16 @@ export const AboutEditForm: React.FC<IProps> = (props) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <div>
-        <Title size="sm" weight="semibold" className="mb-3">
-          О себе
-        </Title>
+        {error && (
+          <Notification
+            message={error}
+            autoClose={false}
+            className="bg-transparent border-none"
+          />
+        )}
         <TextareaField
           {...register("about")}
+          value={watch("about")}
           id="about"
           placeholder="Расскажите о себе..."
           error={errors.about?.message}

@@ -1,4 +1,4 @@
-import { ProfileForm } from "@/features/profile-form";
+import { ProfileForm } from "@/features/profile";
 import { AuthLayout } from "@/widgets/auth-layout";
 
 export const AuthProfilePage = () => {

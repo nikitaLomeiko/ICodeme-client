@@ -1,18 +1,43 @@
-import { AchievementCard, IAchievement } from "@/entities/achievement";
+import { AchievementCard, IAchievementUI } from "@/entities/profile";
 import { Button, Card, Carousel, CarouselApi } from "@/shared/ui/kit";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 
 interface IProps {
-  achievements: IAchievement[];
+  achievements: IAchievementUI[];
   onAllAchievementsLink: () => void;
 }
 
 export const AchievementCarousel: React.FC<IProps> = (props) => {
   const { achievements, onAllAchievementsLink } = props;
   const carouselRef = useRef<CarouselApi>(null);
+  const [slidesToShow, setSlidesToShow] = useState(4);
+
+  useEffect(() => {
+    const updateSlidesToShow = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setSlidesToShow(2);
+      } else if (width < 1024) {
+        setSlidesToShow(2);
+      } else {
+        setSlidesToShow(3);
+      }
+    };
+
+    updateSlidesToShow();
+    window.addEventListener("resize", updateSlidesToShow);
+    return () => window.removeEventListener("resize", updateSlidesToShow);
+  }, []);
 
   return (
-    <Card title="Достижения">
+    <Card
+      title="Достижения"
+      headerAction={
+        <Button variant="outline" size="sm" onClick={onAllAchievementsLink}>
+          Все достижения
+        </Button>
+      }
+    >
       <div className="flex justify-between items-center mb-4">
         <div className="flex gap-2">
           <button
@@ -28,16 +53,13 @@ export const AchievementCarousel: React.FC<IProps> = (props) => {
             →
           </button>
         </div>
-        <Button variant="primary" size="sm" onClick={onAllAchievementsLink}>
-          Все достижения
-        </Button>
       </div>
 
       <Carousel
         ref={carouselRef}
         options={{
-          slidesToShow: 4,
-          slidesToScroll: 4,
+          slidesToShow: slidesToShow,
+          slidesToScroll: slidesToShow,
           gap: 4,
           speed: 0.4,
         }}

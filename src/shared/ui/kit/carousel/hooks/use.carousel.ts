@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
 import { CarouselApi, CarouselOptions } from "../types";
 
 export const useCarousel = (options: CarouselOptions = {}) => {
@@ -78,9 +78,12 @@ export const useCarousel = (options: CarouselOptions = {}) => {
     const newSlideWidth = (viewportWidth - totalGapWidth) / slidesToShow;
     setSlideWidth(newSlideWidth);
 
+    console.log(viewportWidth);
+
     slideElements.forEach((slide, idx) => {
       slide.style.flex = `0 0 ${newSlideWidth}px`;
       slide.style.minWidth = "0";
+      slide.style.boxSizing = "border-box";
       if (gap > 0 && idx < slideElements.length - 1) {
         slide.style.marginRight = `${gap}px`;
       } else if (gap > 0) {
@@ -94,6 +97,11 @@ export const useCarousel = (options: CarouselOptions = {}) => {
 
     updateButtonsState();
   }, [updateSlides, slidesToShow, gap, updateButtonsState]);
+
+  // Re-initialize carousel when responsive options change
+  useEffect(() => {
+    reInit();
+  }, [slidesToShow, gap, reInit]);
 
   const animateTo = useCallback(
     (targetX: number, callback?: () => void) => {

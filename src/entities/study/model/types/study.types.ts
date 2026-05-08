@@ -30,14 +30,12 @@ export interface IModule {
   title: string;
   description: string;
   levels: ILevel[];
-  //experience: number;
 }
 
 export interface ILevel {
   title: string;
   description: string;
   steps: IStep[];
-  //experience: number;
 }
 
 export interface IStep {
@@ -48,5 +46,5 @@ export interface IStep {
   code?: string;
   quiz?: IQuiz;
   exam?: IQuiz;
-  //experience: number;
+  // experience: number;
 }

@@ -17,6 +17,7 @@ export const AvatarList: React.FC<IProps> = (props) => {
           <button
             key={avatar.label}
             onClick={() => handleSelect(avatar.label)}
+            type="button"
             className={`
                 cursor-pointer
                 relative transition-all duration-300

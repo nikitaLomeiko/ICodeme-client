@@ -1,4 +1,5 @@
-import { AboutEditForm } from "@/features/profile-form";
+import { IProfileData } from "@/entities/profile";
+import { AboutEditForm } from "@/features/profile";
 import {
   Button,
   Card,
@@ -11,10 +12,10 @@ import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 
 interface IProps {
-  about: string;
+  profileData: IProfileData;
 }
 
-export const AboutView: React.FC<IProps> = ({ about }) => {
+export const AboutView: React.FC<IProps> = ({ profileData }) => {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const notification = useNotification();
@@ -49,7 +50,7 @@ export const AboutView: React.FC<IProps> = ({ about }) => {
           color="default"
           className="leading-relaxed"
         >
-          {about || "Информация о себе пока не заполнена"}
+          {profileData.about || "Информация о себе не заполнена"}
         </Title>
       </Card>
 
@@ -64,9 +65,9 @@ export const AboutView: React.FC<IProps> = ({ about }) => {
         showCloseButton={true}
         withAnimation={true}
       >
-        <ModalBody>
+        <ModalBody className="min-w-140">
           <AboutEditForm
-            initAbout={about}
+            profileData={profileData}
             onCancel={() => setOpen(false)}
             onSuccess={handleSuccess}
           />

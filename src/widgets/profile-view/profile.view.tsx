@@ -2,7 +2,7 @@ import {
   ProfileDetails,
   IProps as IProfileDetailsProps,
 } from "@/entities/profile";
-import { ProfileEditForm } from "@/features/profile-form";
+import { ProfileEditForm } from "@/features/profile";
 import { Modal, ModalBody, useNotification } from "@/shared/ui/kit";
 import { useState } from "react";
 
@@ -42,11 +42,9 @@ export const ProfileView: React.FC<IProps> = (props) => {
       >
         <ModalBody>
           <ProfileEditForm
-            initAvatar={profileDetails.profile.data.avatar}
-            initName={profileDetails.profile.data.name}
+            profileData={profileDetails.profile.data}
             onCancel={() => setOpen(false)}
             onSuccess={handleSuccess}
-            userId={profileDetails.profile.userId}
           />
         </ModalBody>
       </Modal>

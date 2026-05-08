@@ -1,24 +1,30 @@
 "use client";
 
-import { Button, TextField, Title } from "@/shared/ui/kit";
+import { Button, Notification, TextField, Title } from "@/shared/ui/kit";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaSave } from "react-icons/fa";
 import { ProfileEditFormData, profileEditSchema } from "../model/validate";
 import { AvatarList } from "./components/avatar.list";
-import { illustratedAvatars } from "@/entities/profile";
+import {
+  illustratedAvatars,
+  IProfileData,
+  useUpdateProfileDataMutation,
+} from "@/entities/profile";
+import { isApiError } from "@/shared/api";
 
 interface IProps {
-  initName: string;
-  initAvatar: string;
-  userId: string;
+  profileData: IProfileData;
   onSuccess: () => void;
   onCancel: () => void;
 }
 
 export const ProfileEditForm: React.FC<IProps> = (props) => {
-  const { initAvatar, initName, onCancel, onSuccess, userId } = props;
+  const { profileData, onCancel, onSuccess } = props;
+
+  const [update] = useUpdateProfileDataMutation();
+  const [error, setError] = useState<string | null>(null);
 
   const {
     register,
@@ -30,8 +36,8 @@ export const ProfileEditForm: React.FC<IProps> = (props) => {
   } = useForm<ProfileEditFormData>({
     resolver: zodResolver(profileEditSchema),
     defaultValues: {
-      name: initName,
-      avatar: initAvatar,
+      name: profileData.name,
+      avatar: profileData.avatar,
     },
     mode: "onChange",
   });
@@ -40,13 +46,26 @@ export const ProfileEditForm: React.FC<IProps> = (props) => {
 
   useEffect(() => {
     reset({
-      name: initName,
-      avatar: initAvatar,
+      name: profileData.name,
+      avatar: profileData.avatar,
     });
-  }, [initName, initAvatar, reset]);
+  }, [profileData, reset]);
 
   const onSubmit = async (data: ProfileEditFormData) => {
     try {
+      setError(null);
+
+      const result = await update({
+        ...profileData,
+        avatar: data.avatar,
+        name: data.name,
+      });
+
+      if (result.error && isApiError(result.error)) {
+        setError(result.error.data.message);
+        return;
+      }
+
       onSuccess();
     } catch (error) {
       console.error("Failed to save profile:", error);
@@ -56,11 +75,20 @@ export const ProfileEditForm: React.FC<IProps> = (props) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <div>
-        <Title size="sm" weight="semibold" className="mb-3">
+        {error && (
+          <Notification
+            message={error}
+            autoClose={false}
+            className="bg-transparent border-none"
+          />
+        )}
+        <Title size="sm" weight="semibold" className=" !text-[var(--ui-text)]">
           Имя пользователя
         </Title>
         <TextField
+          className="-my-2"
           {...register("name")}
+          value={watch("name")}
           id="name"
           placeholder="Ваше имя пользователя"
           error={errors.name?.message}
@@ -74,7 +102,11 @@ export const ProfileEditForm: React.FC<IProps> = (props) => {
       </div>
 
       <div>
-        <Title size="sm" weight="semibold" className="mb-3">
+        <Title
+          size="sm"
+          weight="semibold"
+          className="!mb-5 !mt-7 !text-[var(--ui-text)]"
+        >
           Аватар
         </Title>
         <AvatarList

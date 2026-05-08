@@ -1,9 +1,8 @@
 "use client";
 
-import { Card } from "@/shared/ui/kit";
-import { Title } from "@/shared/ui/kit";
-import { IProfile } from "../model";
 import { LanguageList, AvatarLevel, LevelBar, Rating } from "./components";
+import { Card, Title } from "@/shared/ui/kit";
+import { IProfile } from "../model";
 import { FiEdit2 } from "react-icons/fi";
 import { FaSignOutAlt } from "react-icons/fa";
 
@@ -34,7 +33,7 @@ export const ProfileDetails: React.FC<IProps> = (props) => {
           <div className="flex flex-col items-center sm:flex-row sm:items-start gap-3 sm:gap-5">
             <AvatarLevel
               avatar={profile.data.avatar}
-              experience={profile.stats.experience}
+              experience={profile.level.experience}
             />
 
             <div className="text-center sm:text-left">
@@ -72,7 +71,7 @@ export const ProfileDetails: React.FC<IProps> = (props) => {
         </div>
 
         <div className="flex flex-col lg:flex-row justify-between w-full border-t border-[var(--ui-border)] mt-4 sm:mt-6 pt-4 sm:pt-6 gap-4 sm:gap-6">
-          <LevelBar experience={profile.stats.experience} />
+          <LevelBar experience={profile.level.experience} />
           <Rating totalUser={totalUser} globalRank={globalRank} />
         </div>
       </div>

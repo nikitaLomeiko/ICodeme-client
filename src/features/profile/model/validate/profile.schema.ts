@@ -18,10 +18,7 @@ export const profileEditSchema = z.object({
     )
     .trim()
     .transform((val) => val.replace(/\s+/g, " ")),
-  avatar: z
-    .string()
-    .url("Некорректный URL аватара")
-    .min(1, "Аватар обязателен"),
+  avatar: z.string().min(1, "Выберите аватар"),
 });
 
 export const aboutEditSchema = z.object({
