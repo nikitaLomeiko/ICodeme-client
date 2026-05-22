@@ -16,6 +16,7 @@ interface InputWrapperProps {
   labelPosition?: "center" | "top";
   isIcon?: boolean;
   labelSize?: "xs" | "sm" | "md" | "lg";
+  fullWidh?: boolean;
 }
 
 export const InputWrapper: React.FC<InputWrapperProps> = ({
@@ -30,6 +31,7 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
   labelPosition = "center",
   isIcon = false,
   labelSize = "sm",
+  fullWidh = false,
 }) => {
   if (mode === "placeholder") {
     return (
@@ -83,7 +85,7 @@ export const InputWrapper: React.FC<InputWrapperProps> = ({
   };
 
   return (
-    <div className="my-6">
+    <div className={`${fullWidh ? "w-full" : ""}`}>
       <div className="relative">
         {children}
         <label

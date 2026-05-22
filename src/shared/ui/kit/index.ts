@@ -10,3 +10,4 @@ export * from "./loader";
 export * from "./carousel";
 export * from "./card";
 export * from "./modal";
+export * from './markdown'

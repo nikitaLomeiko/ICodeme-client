@@ -73,7 +73,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(handleLogin)} className="space-y-2 mb-5">
+    <form
+      onSubmit={handleSubmit(handleLogin)}
+      className="space-y-2 mb-5 flex flex-col gap-6"
+    >
       <TextField
         id="email"
         label="Email"

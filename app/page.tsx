@@ -4,7 +4,7 @@ import { withAccount, withAuth } from "@/app/providers/auth";
 import { Layout } from "@/widgets/layout";
 
 function Home() {
-  return <Layout>test</Layout>;
+  return <Layout>хуй</Layout>;
 }
 
 export default withAuth(withAccount(Home));

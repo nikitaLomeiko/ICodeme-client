@@ -18,13 +18,13 @@
   --ui-info-hover: #2563eb;
 
   --ui-background: #ffffff;
-  --ui-background-secondary: #f9fafb;
-  --ui-background-tertiary: #f3f4f6;
+  --ui-background-secondary: #f6f6f6;
+  --ui-background-tertiary: #858585;
   --ui-text: #111827;
   --ui-text-secondary: #374151;
   --ui-text-muted: #6b7280;
   --ui-text-inverse: #ffffff;
-  --ui-border: #e5e7eb;
+  --ui-border: #c5c5c5;
   --ui-border-focus: #10b981;
   --ui-border-light: #f3f4f6;
   --ui-placeholder: #9ca3af;
@@ -57,7 +57,7 @@
 
   --ui-background: #111827;
   --ui-background-secondary: #1f2937;
-  --ui-background-tertiary: #374151;
+  --ui-background-tertiary: #9a9a9a79;
   --ui-text: #f9fafb;
   --ui-text-secondary: #e5e7eb;
   --ui-text-muted: #9ca3af;

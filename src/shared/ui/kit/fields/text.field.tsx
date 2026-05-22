@@ -75,6 +75,7 @@ export const TextField = forwardRef<HTMLInputElement, BaseInputProps>(
         mode={inputMode}
         isIcon={!!Icon || !!iconRight}
         labelSize={size}
+        fullWidh={fullWidth}
       >
         <div className="relative">
           {hasLeftIcon && <FieldIcon icon={Icon} position="left" />}

@@ -51,7 +51,7 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
     const result = await create({
       about: data.bio,
       avatar: data.avatar,
-      languageProgram: data.language,
+      //languageProgram: data.language,
       name: data.name,
     });
 

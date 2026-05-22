@@ -37,7 +37,7 @@ export const CardHeader: React.FC<{
           </p>
         )}
       </div>
-      {action && <div className="flex-shrink-0 ml-4 mt-3 mr-2">{action}</div>}
+      {action && <div className="flex-shrink-0 ml-4 mr-2">{action}</div>}
     </div>
   );
 };

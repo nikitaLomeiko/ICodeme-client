@@ -3,6 +3,7 @@ import { authSliceReducer } from "@/entities/auth";
 import { authApi } from "@/entities/auth";
 import { profileApi } from "@/entities/profile";
 import { studyApi } from "@/entities/study";
+import { documentApi } from "@/entities/document";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [studyApi.reducerPath]: studyApi.reducer,
+    [documentApi.reducerPath]: documentApi.reducer,
   },
 
   devTools: process.env.NODE_ENV !== "production",
@@ -19,6 +21,7 @@ export const store = configureStore({
       authApi.middleware,
       profileApi.middleware,
       studyApi.middleware,
+      documentApi.middleware,
     ]),
 });
 

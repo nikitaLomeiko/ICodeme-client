@@ -8,7 +8,7 @@ import {
   NotificationsWrapper,
   NotificationProvider,
 } from "@/shared/ui/kit";
-import { StoreProvider } from "./providers/store";
+import { StoreProvider } from "./providers/redux-store";
 import { AuthProvider } from "./providers/auth";
 
 const geistSans = Geist({

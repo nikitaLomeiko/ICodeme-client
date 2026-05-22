@@ -6,7 +6,7 @@ import {
 } from "@reduxjs/toolkit/query";
 import { ApiError, IBodyError } from "./types/error.types";
 import { BASE_URL } from "./consts";
-import { RootState } from "@/app/providers/store";
+import { RootState } from "@/app/providers/redux-store";
 import { refreshTokens } from "./request/refresh.request";
 
 export const fetchBase: BaseQueryFn<
