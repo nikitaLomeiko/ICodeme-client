@@ -25,11 +25,7 @@ export const AuthModeSwitcher: React.FC<AuthModeSwitcherProps> = ({
           className="light:text-gray-500 dark:text-slate-400 transition-colors duration-500"
         >
           Нет аккаунта?{" "}
-          <Button
-            variant="ghost"
-            onClick={() => onModeChange("register")}
-            className="light:!text-emerald-600 dark:!text-emerald-400 p-0 align-baseline hover:light:bg-emerald-50 hover:dark:bg-emerald-900/20 transition-colors duration-500"
-          >
+          <Button variant="ghost" onClick={() => onModeChange("register")}>
             Создать
           </Button>
         </Title>
@@ -43,21 +39,13 @@ export const AuthModeSwitcher: React.FC<AuthModeSwitcherProps> = ({
           className="light:text-gray-500 dark:text-slate-400 transition-colors duration-500"
         >
           Уже есть?{" "}
-          <Button
-            variant="ghost"
-            onClick={() => onModeChange("login")}
-            className="light:!text-emerald-600 dark:!text-emerald-400 p-0 align-baseline hover:light:bg-emerald-50 hover:dark:bg-emerald-900/20 transition-colors duration-500"
-          >
+          <Button variant="ghost" onClick={() => onModeChange("login")}>
             Войти
           </Button>
         </Title>
       )}
       {(mode === "forgot" || mode === "verify") && (
-        <Button
-          variant="ghost"
-          onClick={() => onModeChange("login")}
-          className="light:!text-emerald-600 dark:!text-emerald-400 p-0 d-inline-flex align-items-center gap-1 hover:light:bg-emerald-50 hover:dark:bg-emerald-900/20 transition-colors duration-500"
-        >
+        <Button variant="ghost" onClick={() => onModeChange("login")}>
           <FaArrowLeft className="small" />
           <span className="small">Назад</span>
         </Button>

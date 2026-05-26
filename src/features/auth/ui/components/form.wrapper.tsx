@@ -23,18 +23,14 @@ export const FormWrapper: React.FC<IProps> = (props) => {
     <div>
       <div className="text-center mb-4">
         <Logotype className="flex justify-center" />
-        <Title size="base" weight="bold" color="emerald-800" align="center">
-          {ModeData[mode].title}
-        </Title>
         <Title
           as="p"
           size="xs"
           weight="normal"
-          color="gray-600"
           align="center"
-          className="mt-0.5"
+          className="mt-3 !text-[var(--ui-text)]/50"
         >
-          {ModeData[mode].subtitle}
+          {ModeData[mode].title}
         </Title>
       </div>
 

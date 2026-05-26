@@ -2,33 +2,27 @@ import { IModeData } from "../types/mode.types";
 
 export const ModeData: IModeData = {
   login: {
-    title: "Вход",
-    subtitle: "Войдите в аккаунт",
+    title: "Войдите в аккаунт",
     buttonTitle: "Войти",
   },
   register: {
-    title: "Регистрация",
-    subtitle: "Создайте аккаунт",
+    title: "Создайте аккаунт",
     buttonTitle: "Зарегистрироваться",
   },
   forgot: {
-    title: "Востановление",
-    subtitle: "Востановите доступ",
+    title: "Востановите доступ",
     buttonTitle: "Отправить",
   },
   verify: {
-    title: "Подтверждение",
-    subtitle: "Подтвердите",
+    title: "Подтвердите",
     buttonTitle: "Подтвердить",
   },
   reset: {
-    title: "Сброс пароля",
-    subtitle: "Укажите новый пароль",
+    title: "Укажите новый пароль",
     buttonTitle: "Подтвердить",
   },
   "verify-reset": {
-    title: "Сброс пароля",
-    subtitle: "Укажите новый пароль",
+    title: "Укажите новый пароль",
     buttonTitle: "Подтвердить",
   },
 };

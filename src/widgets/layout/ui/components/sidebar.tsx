@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Logotype } from "@/shared/ui/logotype";
 import { Tab } from "./ui/tab";
 import { ITab } from "../../model/types/tab.type";
+import { Title } from "@/shared/ui/kit";
 
 interface IProps {
   tabs: ITab[];
@@ -29,7 +30,7 @@ export const Sidebar: React.FC<IProps> = (props) => {
         className="bg-[var(--ui-background-secondary)] backdrop-blur-md shadow-xl rounded-2xl border border-[var(--ui-border)] h-full transition-colors duration-300"
       >
         <div className="flex flex-col h-full">
-          <div className="p-4 border-b border-[var(--ui-border-light)]">
+          <div className="p-4 border-b border-[var(--ui-border)]">
             <Logotype />
           </div>
 
@@ -49,8 +50,10 @@ export const Sidebar: React.FC<IProps> = (props) => {
             ))}
           </nav>
 
-          <div className="p-4 border-t border-[var(--ui-border-light)] text-xs text-[var(--ui-text-muted)]">
-            <p>© 2024 Your App</p>
+          <div className="p-4 border-t border-[var(--ui-border)] text-xs text-[var(--ui-text)]">
+            <Title size="xs" as="p">
+              © 2026 Your App
+            </Title>
           </div>
         </div>
       </motion.div>

@@ -40,7 +40,7 @@ export const StudyList: React.FC<IProps> = ({ list }) => {
         headerAction={
           <button
             onClick={() => setAddModalOpen(true)}
-            className="p-1 rounded-lg text-[var(--ui-primary)] hover:bg-[var(--ui-primary)]/10 transition-all"
+            className="p-1 rounded-lg text-[var(--ui-primary)] hover:bg-[var(--ui-primary)]/10 transition-all mt-2"
           >
             <FaPlus size={18} />
           </button>

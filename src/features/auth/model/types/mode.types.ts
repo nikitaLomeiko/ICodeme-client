@@ -8,7 +8,6 @@ export type typeMode =
 
 export interface IModeMeta {
   title: string;
-  subtitle: string;
   buttonTitle?: string;
 }
 

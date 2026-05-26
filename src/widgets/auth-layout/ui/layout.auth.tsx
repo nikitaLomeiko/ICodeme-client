@@ -17,22 +17,17 @@ export const AuthLayout: React.FC<IProps> = ({ children }) => {
     <div
       className="min-h-screen relative overflow-hidden"
       style={{
-        backgroundColor: "var(--ui-background)",
+        backgroundColor: "var(--bg-layout)",
         backgroundImage:
-          "linear-gradient(to bottom right, var(--ui-background-secondary), var(--ui-background), var(--ui-background-tertiary))",
+          "linear-gradient(to bottom right, var(--bg-layout-to), var(--bg-layout-bottom), var(--bg-layout-right))",
       }}
     >
-      <SphereGradient />
+      {/* <SphereGradient /> */}
 
       <Particals />
 
       <div className="relative min-h-screen flex items-center justify-center p-4 perspective-1000">
-        <CardLiquid
-          rotateX={rotateX}
-          rotateY={rotateY}
-          title="ICodeMe"
-          subtitle="Learn programming with AI"
-        >
+        <CardLiquid rotateX={rotateX} rotateY={rotateY}>
           {children}
         </CardLiquid>
       </div>

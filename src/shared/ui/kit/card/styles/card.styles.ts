@@ -18,11 +18,11 @@ export const radiusStyles: Record<CardRadius, string> = {
 
 export const variantStyles: Record<CardVariant, string> = {
   default: `
-    bg-[var(--ui-background)] 
+    bg-[var(--ui-background-secondary)] 
     border border-[var(--ui-border)]
   `,
   elevated: `
-    bg-[var(--ui-background)] 
+    bg-[var(--ui-background-secondary)] 
     border border-[var(--ui-border)]
     shadow-lg 
     hover:shadow-xl 

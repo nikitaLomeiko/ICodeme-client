@@ -36,6 +36,7 @@ export const AboutView: React.FC<IProps> = ({ profileData }) => {
             icon={FiEdit2}
             onClick={() => setOpen(true)}
             disableHoverScale
+            className="mt-2"
           />
         }
         variant="default"

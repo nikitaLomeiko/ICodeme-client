@@ -20,14 +20,12 @@ export const ProfileDetails: React.FC<IProps> = (props) => {
 
   return (
     <Card
-      variant="gradient"
+      variant="default"
       padding="md"
       radius="md"
       hoverable={false}
       className="relative overflow-hidden"
     >
-      <div className="absolute top-0 right-0 w-32 h-32 sm:w-64 sm:h-64 bg-[var(--ui-primary)] opacity-5 rounded-full blur-3xl pointer-events-none" />
-
       <div className="relative z-10">
         <div className="flex flex-col items-center sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-0">
           <div className="flex flex-col items-center sm:flex-row sm:items-start gap-3 sm:gap-5">

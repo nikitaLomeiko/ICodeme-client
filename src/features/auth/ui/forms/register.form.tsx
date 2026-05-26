@@ -67,39 +67,42 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit(handleRegister)} className="space-y-2">
-      <TextField
-        id="email"
-        label="Email"
-        type="email"
-        variant="underline"
-        {...register("email")}
-        icon={FaEnvelope}
-        required
-        error={errors.email?.message}
-        disabled={isLoading}
-      />
+      <div className="flex flex-col gap-7">
+        <TextField
+          id="email"
+          label="Email"
+          type="email"
+          variant="underline"
+          {...register("email")}
+          icon={FaEnvelope}
+          required
+          error={errors.email?.message}
+          disabled={isLoading}
+        />
 
-      <PasswordField
-        id="password"
-        label="Пароль"
-        variant="underline"
-        {...register("password")}
-        required
-        error={errors.password?.message}
-        disabled={isLoading}
-      />
+        <PasswordField
+          id="password"
+          label="Пароль"
+          variant="underline"
+          {...register("password")}
+          required
+          error={errors.password?.message}
+          disabled={isLoading}
+        />
 
-      <PasswordField
-        id="confirmPassword"
-        label="Подтвердите пароль"
-        variant="underline"
-        {...register("confirmPassword")}
-        required
-        error={errors.confirmPassword?.message}
-        disabled={isLoading}
-      />
+        <PasswordField
+          id="confirmPassword"
+          label="Подтвердите пароль"
+          variant="underline"
+          {...register("confirmPassword")}
+          required
+          error={errors.confirmPassword?.message}
+          disabled={isLoading}
+        />
+      </div>
 
       <Checkbox
+        className="mt-5"
         id="terms"
         checked={watch("agreedToTerms")}
         onChange={(checked) => setValue("agreedToTerms", checked)}
@@ -108,7 +111,10 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
         label={
           <>
             Согласен с{" "}
-            <a href="#" className="text-emerald-600 hover:text-emerald-700">
+            <a
+              href="#"
+              className="text-[var(--ui-primary)] hover:text-[var(--ui-primary-hover)]"
+            >
               условиями
             </a>
           </>
@@ -122,6 +128,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
         fullWidth
         isLoading={isLoading}
         disabled={isLoading}
+        className="mt-4"
       >
         Создать аккаунт
       </Button>

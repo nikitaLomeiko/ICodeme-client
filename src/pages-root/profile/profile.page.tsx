@@ -13,6 +13,8 @@ export const ProfilePage = () => {
 
   if (!profile?.data || !study?.data) {
     return null;
+
+    // исправить
   }
 
   return (

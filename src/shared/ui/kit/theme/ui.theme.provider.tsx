@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./styles/theme.css";
+import "@/app/styles/themes.css";
 import { ThemeEnum } from "./types/theme.typs";
 import { ThemeContext } from "./context/theme.context";
 import { getAvailableThemes } from "./lib/utils/getAvailableThemes";

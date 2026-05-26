@@ -100,25 +100,25 @@ export const OptionMenu: React.FC<IProps> = observer((props) => {
           <div className="space-y-1">
             <button
               onClick={handleDownloadPdf}
-              className="w-full text-left px-2 py-1.5 text-sm text-[var(--ui-text)]/50 hover:bg-[var(--ui-background-tertiary)]/10 rounded transition-colors cursor-pointer"
+              className="w-full text-left px-2 py-1.5 text-sm text-[var(--ui-text)]/50 hover:bg-[var(--ui-background-tertiary)]/50 rounded transition-colors cursor-pointer"
             >
               PDF
             </button>
             <button
               onClick={handleDownloadTxt}
-              className="w-full text-left px-2 py-1.5 text-sm text-[var(--ui-text)]/50 hover:bg-[var(--ui-background-tertiary)]/10 rounded transition-colors cursor-pointer"
+              className="w-full text-left px-2 py-1.5 text-sm text-[var(--ui-text)]/50 hover:bg-[var(--ui-background-tertiary)]/50 rounded transition-colors cursor-pointer"
             >
               TXT
             </button>
             <button
               onClick={handleDownloadHtml}
-              className="w-full text-left px-2 py-1.5 text-sm text-[var(--ui-text)]/50 hover:bg-[var(--ui-background-tertiary)]/10 rounded transition-colors cursor-pointer"
+              className="w-full text-left px-2 py-1.5 text-sm text-[var(--ui-text)]/50 hover:bg-[var(--ui-background-tertiary)]/50 rounded transition-colors cursor-pointer"
             >
               HTML
             </button>
             <button
               onClick={handleDownloadMd}
-              className="w-full text-left px-2 py-1.5 text-sm text-[var(--ui-text)]/50 hover:bg-[var(--ui-background-tertiary)]/10 rounded transition-colors cursor-pointer"
+              className="w-full text-left px-2 py-1.5 text-sm text-[var(--ui-text)]/50 hover:bg-[var(--ui-background-tertiary)]/50 rounded transition-colors cursor-pointer"
             >
               Markdown
             </button>

@@ -18,7 +18,7 @@ export const Tab: React.FC<IProps> = (props) => {
         w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200
         ${
           isActive
-            ? "bg-[var(--ui-primary)] text-[var(--ui-text-inverse)] shadow-md"
+            ? "bg-[var(--ui-primary)] text-[var(--ui-text)] shadow-md"
             : "text-[var(--ui-text-secondary)] hover:bg-[var(--ui-primary)]/10"
         }
       `}
@@ -26,7 +26,7 @@ export const Tab: React.FC<IProps> = (props) => {
       <IconComponent
         className={`text-xl transition-colors duration-200 ${
           isActive
-            ? "text-[var(--ui-text-inverse)]"
+            ? "text-[var(--ui-text)]"
             : "text-[var(--ui-text-muted)] group-hover:text-[var(--ui-primary)]"
         }`}
       />
@@ -34,7 +34,7 @@ export const Tab: React.FC<IProps> = (props) => {
       {isActive && (
         <motion.div
           layoutId="desktopActive"
-          className="ml-auto w-2 h-2 rounded-full bg-[var(--ui-text-inverse)]"
+          className="ml-auto w-2 h-2 rounded-full bg-[var(--ui-text)]"
         />
       )}
     </button>

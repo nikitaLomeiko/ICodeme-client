@@ -46,7 +46,7 @@ export const ReadProgrss = () => {
   }, [content]);
 
   return (
-    <div className="sticky top-0 z-10 bg-[var(--ui-background)] border-b border-[var(--ui-border)] backdrop-blur-sm -mt-6 -mx-4 px-6 pt-6 pb-4">
+    <div className="sticky top-0 z-10 bg-[var(--ui-background-secondary)] border-b border-[var(--ui-border)] backdrop-blur-sm -mt-6 -mx-4 px-6 pt-6 pb-4">
       <div className="flex items-center justify-between gap-4 mb-3">
         <span className="text-sm text-[var(--ui-text)]">Прогресс чтения</span>
         <span className="text-sm font-medium">

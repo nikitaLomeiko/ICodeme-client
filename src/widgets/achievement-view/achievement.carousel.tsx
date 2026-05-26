@@ -33,7 +33,12 @@ export const AchievementCarousel: React.FC<IProps> = (props) => {
     <Card
       title="Достижения"
       headerAction={
-        <Button variant="outline" size="sm" onClick={onAllAchievementsLink}>
+        <Button
+          variant="outline"
+          size="sm"
+          className="mt-2"
+          onClick={onAllAchievementsLink}
+        >
           Все достижения
         </Button>
       }
@@ -42,13 +47,13 @@ export const AchievementCarousel: React.FC<IProps> = (props) => {
         <div className="flex gap-2">
           <button
             onClick={() => carouselRef.current?.scrollPrev()}
-            className="bg-[var(--ui-background-secondary)] text-[var(--ui-text)] hover:bg-[var(--ui-primary)] hover:text-white w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center transition-all text-sm"
+            className="bg-[var(--ui-background)] text-[var(--ui-text)] hover:bg-[var(--ui-primary)] hover:text-white w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center transition-all text-sm"
           >
             ←
           </button>
           <button
             onClick={() => carouselRef.current?.scrollNext()}
-            className="bg-[var(--ui-background-secondary)] text-[var(--ui-text)] hover:bg-[var(--ui-primary)] hover:text-white w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center transition-all text-sm"
+            className="bg-[var(--ui-background)] text-[var(--ui-text)] hover:bg-[var(--ui-primary)] hover:text-white w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center transition-all text-sm"
           >
             →
           </button>

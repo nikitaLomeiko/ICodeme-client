@@ -75,29 +75,31 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   return (
     <form
       onSubmit={handleSubmit(handleLogin)}
-      className="space-y-2 mb-5 flex flex-col gap-6"
+      className="space-y-2 mb-5 flex flex-col"
     >
-      <TextField
-        id="email"
-        label="Email"
-        type="email"
-        {...register("email")}
-        icon={FaEnvelope}
-        required
-        error={errors.email?.message}
-        disabled={isLoading}
-        variant="underline"
-      />
-      <PasswordField
-        id="password"
-        label="Пароль"
-        {...register("password")}
-        required
-        error={errors.password?.message}
-        variant="underline"
-        disabled={isLoading}
-      />
-      <div className="flex justify-end">
+      <div className="flex flex-col gap-10">
+        <TextField
+          id="email"
+          label="Email"
+          type="email"
+          {...register("email")}
+          icon={FaEnvelope}
+          required
+          error={errors.email?.message}
+          disabled={isLoading}
+          variant="underline"
+        />
+        <PasswordField
+          id="password"
+          label="Пароль"
+          {...register("password")}
+          required
+          error={errors.password?.message}
+          variant="underline"
+          disabled={isLoading}
+        />
+      </div>
+      <div className="flex justify-end mt-4">
         <Button
           type="button"
           variant="ghost"

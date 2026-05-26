@@ -101,7 +101,7 @@ export const Markdown: React.FC<IProps> = memo((props) => {
       if (!isInline && language) {
         return (
           <div className="relative group my-6 rounded-xl overflow-hidden shadow-lg transition-all duration-200 hover:shadow-2xl hover:ring-2 hover:ring-[var(--ui-primary)]/50">
-            <div className="flex items-center justify-between px-4 py-2 border-[var(--ui-border)] border-b bg-[var(--ui-background-tertiary)]/30">
+            <div className="flex items-center justify-between px-4 py-2 border-[var(--ui-border)] border-b bg-[var(--ui-background-tertiary)]/50">
               <div className="flex items-center gap-2">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -237,7 +237,7 @@ export const Markdown: React.FC<IProps> = memo((props) => {
       return (
         <blockquote
           {...props}
-          className={`relative border-l-4 border-[var(--ui-primary)] text-[var(--ui-text-secondary)] pl-5 my-6 p-3 bg-[var(--ui-background-secondary)]/30 rounded-r-lg overflow-hidden transition-all duration-200 hover:shadow-lg hover:bg-[var(--ui-background-secondary)]/50 cursor-pointer`}
+          className={`relative border-l-4 border-[var(--ui-primary)] text-[var(--ui-text-secondary)] pl-5 my-6 p-3 bg-[var(--ui-background-tertiary)]/30 rounded-r-lg overflow-hidden transition-all duration-200 hover:shadow-lg hover:bg-[var(--ui-background-tertiary)]/50 cursor-pointer`}
         >
           <div className="absolute left-0 top-0 bottom-0 w-1"></div>
           {children}

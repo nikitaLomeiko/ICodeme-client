@@ -35,9 +35,9 @@ export const Tab: React.FC<IProps> = (props) => {
               : "var(--ui-background-secondary)",
             border: `2px solid var(--ui-background)`,
             boxShadow: isActive
-              ? `0 8px 20px var(--ui-brand-shadow)`
+              ? `0 2px 5px var(--ui-brand-shadow)`
               : `0 2px 8px rgba(0,0,0,0.1)`,
-            transform: isActive ? "scale(0.95)" : "scale(1) translateY(0)",
+            transform: isActive ? "scale(0.99)" : "scale(1) translateY(0)",
           }}
         >
           <IconComponent

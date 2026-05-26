@@ -1,6 +1,8 @@
 :root {
-  --ui-primary: #10b981;
-  --ui-primary-hover: #059669;
+  /* + */
+  --ui-primary: #8d2de7;
+  --ui-primary-hover: #ab55fc;
+
   --ui-primary-active: #047857;
   --ui-secondary: #8b5cf6;
   --ui-secondary-hover: #7c3aed;
@@ -12,24 +14,31 @@
   --ui-success-hover: #059669;
   --ui-warning: #f59e0b;
   --ui-warning-hover: #d97706;
+
+  /* + */
   --ui-error: #ef4444;
   --ui-error-hover: #dc2626;
   --ui-info: #3b82f6;
   --ui-info-hover: #2563eb;
 
-  --ui-background: #ffffff;
-  --ui-background-secondary: #f6f6f6;
-  --ui-background-tertiary: #858585;
+  /* + */
+  --ui-background: #dad4cf;
+  --ui-background-secondary: #f3f0e7;
+  --ui-background-tertiary: rgb(228, 228, 228);
+
   --ui-text: #111827;
   --ui-text-secondary: #374151;
   --ui-text-muted: #6b7280;
+
+  /* + */
   --ui-text-inverse: #ffffff;
-  --ui-border: #c5c5c5;
+  --ui-border: #5858584b;
+
   --ui-border-focus: #10b981;
   --ui-border-light: #f3f4f6;
   --ui-placeholder: #9ca3af;
   --ui-disabled: #f3f4f6;
-  --ui-fill: #e5e7eb;
+  --ui-fill: #9a9a9a78;
 
   --ui-brand-gradient-start: #10b981;
   --ui-brand-gradient-end: #14b8a6;
@@ -37,10 +46,9 @@
 }
 
 [data-theme="dark"] {
-  --ui-primary: #10b981;
-  --ui-primary-hover: #34d399;
+  --ui-primary: #8d2de7;
+  --ui-primary-hover: #ab55fc;
   --ui-primary-active: #6ee7b7;
-  --ui-secondary: #a78bfa;
   --ui-secondary-hover: #c4b5fd;
   --ui-secondary-active: #ddd6fe;
   --ui-accent: #fbbf24;
@@ -57,7 +65,7 @@
 
   --ui-background: #111827;
   --ui-background-secondary: #1f2937;
-  --ui-background-tertiary: #9a9a9a79;
+  --ui-background-tertiary: #0a0e16;
   --ui-text: #f9fafb;
   --ui-text-secondary: #e5e7eb;
   --ui-text-muted: #9ca3af;

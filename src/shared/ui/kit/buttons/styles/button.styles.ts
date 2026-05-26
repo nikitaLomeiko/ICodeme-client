@@ -18,14 +18,6 @@ export const variantStyles = {
     hover:scale-[1.02] 
     active:scale-[0.98]
   `,
-  secondary: `
-    bg-[var(--ui-secondary)] 
-    text-white 
-    hover:opacity-90 
-    active:opacity-80
-    hover:scale-[1.02] 
-    active:scale-[0.98]
-  `,
   outline: `
     border-2 
     border-[var(--ui-primary)] 

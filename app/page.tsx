@@ -7,4 +7,4 @@ function Home() {
   return <Layout>хуй</Layout>;
 }
 
-export default withAuth(withAccount(Home));
+export default Home;

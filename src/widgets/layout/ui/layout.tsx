@@ -24,7 +24,7 @@ export const Layout: React.FC<LayoutProps> = ({
 
   return (
     <div className="min-h-screen bg-[var(--ui-background)] transition-colors duration-300">
-      {isMobile && <Logotype />}
+      {isMobile && <Logotype isMobile />}
 
       <main
         className="min-h-screen transition-all duration-300 ease-in-out"

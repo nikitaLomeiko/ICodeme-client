@@ -158,7 +158,7 @@ export const SearchPanel = observer(() => {
   }, [currentResultIndex, totalResults, scrollToResult]);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-90 bg-[var(--ui-background-secondary)] border-[var(--ui-border)] border-gray-700 shadow-lg p-4">
+    <div className="fixed top-0 left-0 right-0 z-90 bg-[var(--ui-background-tertiary)] border-[var(--ui-border)] border-gray-700 shadow-lg p-4">
       <div className="max-w-4xl mx-auto flex gap-3">
         <TextField
           id="search"
