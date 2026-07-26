@@ -10,10 +10,8 @@ interface UseExplorerReturn extends IStateProvider {
 export const useEnviroment = (): UseExplorerReturn => {
   const context = useContext(enviromentContext);
 
-  const [enviroment, dispatch] = useReducer(
-    enviromentReducer,
-    null,
-    initEnviroment,
+  const [enviroment, dispatch] = useReducer(enviromentReducer, null, () =>
+    initEnviroment(12, 300),
   );
 
   if (!context) {

@@ -1,12 +1,15 @@
 import { EnviromentAction, IStateProvider } from "./types";
 
-export function initEnviroment(): IStateProvider {
+export function initEnviroment(
+  fontSize: number = 12,
+  sidebarWidth: number = 300,
+): IStateProvider {
   return {
     copied: false,
-    fontSize: 12,
+    fontSize: fontSize,
     showSearch: false,
     sidebarOpen: true,
-    sidebarWidth: 300,
+    sidebarWidth: sidebarWidth,
   };
 }
 

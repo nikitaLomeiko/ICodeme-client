@@ -9,17 +9,19 @@ interface UseEnviromentReturn {
 
 interface IProps {
   children: React.ReactNode;
+  fontSize?: number;
+  sidebarWidth?: number;
 }
 
 export const enviromentContext = createContext<UseEnviromentReturn | null>(
   null,
 );
 
-export const EnviromentProvider: React.FC<IProps> = ({ children }) => {
-  const [enviroment, dispatch] = useReducer(
-    enviromentReducer,
-    null,
-    initEnviroment,
+export const EnviromentProvider: React.FC<IProps> = (props) => {
+  const { children, fontSize, sidebarWidth } = props;
+
+  const [enviroment, dispatch] = useReducer(enviromentReducer, null, () =>
+    initEnviroment(fontSize, sidebarWidth),
   );
 
   return (
