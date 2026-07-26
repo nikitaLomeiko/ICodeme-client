@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { int } from "zod";
 
 interface UseFocusedProps {
   onFocus?: (e: any) => void;

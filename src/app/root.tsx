@@ -46,10 +46,10 @@ export function RootLayout({
                 defaultDuration={4500}
                 maxNotifications={3}
               >
-                <ThemeSwitcher
+                {/* <ThemeSwitcher
                   availableThemes={availableThemes}
                   className="absolute z-90 right-2 top-2"
-                />
+                /> */}
                 {children}
                 <NotificationsWrapper />
               </NotificationProvider>
