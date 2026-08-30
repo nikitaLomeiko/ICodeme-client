@@ -4,6 +4,7 @@ import { authApi } from "@/entities/auth";
 import { profileApi } from "@/entities/profile";
 import { studyApi } from "@/entities/study";
 import { documentApi } from "@/entities/document";
+import { ideApi } from "@/entities/ide";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     [profileApi.reducerPath]: profileApi.reducer,
     [studyApi.reducerPath]: studyApi.reducer,
     [documentApi.reducerPath]: documentApi.reducer,
+    [ideApi.reducerPath]: ideApi.reducer,
   },
 
   devTools: process.env.NODE_ENV !== "production",
@@ -22,6 +24,7 @@ export const store = configureStore({
       profileApi.middleware,
       studyApi.middleware,
       documentApi.middleware,
+      ideApi.middleware,
     ]),
 });
 

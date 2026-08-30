@@ -11,6 +11,7 @@ export const ModalContent: React.FC<{
   <div
     className={`
       relative
+      mx-auto my-0
       w-full ${sizeStyles[size]}
       rounded-xl
       shadow-2xl

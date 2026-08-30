@@ -11,3 +11,5 @@ export * from "./carousel";
 export * from "./card";
 export * from "./modal";
 export * from './markdown'
+export * from "./quiz";
+export * from "./terminal";

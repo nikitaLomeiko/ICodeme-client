@@ -1,13 +1,19 @@
 "use client";
-import { CodeEnviroment, FileProvider } from "@/shared/ui/kit/code";
-import { EnviromentProvider } from "@/shared/ui/kit/code/store/enviroment";
+import { IDE } from "@/entities/ide";
+import { Layout } from "@/widgets/layout";
 
 export const DevPage = () => {
   return (
-    <FileProvider>
-      <EnviromentProvider>
-        <CodeEnviroment />
-      </EnviromentProvider>
-    </FileProvider>
+    <Layout>
+      <IDE
+        userId="4"
+        meta={{
+          language: "",
+          name: "test",
+          subtitle: "title",
+          title: "title",
+        }}
+      />
+    </Layout>
   );
 };

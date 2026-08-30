@@ -6,14 +6,20 @@ import {
   FiMinus,
   FiPlus,
   FiSearch,
+  FiPlay,
 } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { useExplorer } from "../store/file/use.explorer";
 import { useEffect } from "react";
 import { useEnviroment } from "../store/enviroment";
+import { FileNode } from "../types/types";
 
-export const CodeHeader = () => {
-  const { activeFile } = useExplorer();
+interface IProps {
+  onRun: (Files: FileNode[]) => void;
+}
+
+export const CodeHeader: React.FC<IProps> = ({ onRun }) => {
+  const { activeFile, allFiles } = useExplorer();
 
   const { copied, fontSize, sidebarOpen, dispatch } = useEnviroment();
 
@@ -30,7 +36,7 @@ export const CodeHeader = () => {
   }, [copied]);
 
   return (
-    <header className="flex items-center gap-3 px-4 py-2 bg-[var(--ui-background)] border-b border-[var(--ui-primary)]/20 shrink-0">
+    <header className="flex items-center gap-3 px-4 py-2 bg-[var(--ui-background-secondary)] rounded-t-lg border-b border-[var(--ui-primary)]/20 shrink-0">
       <button
         onClick={() => router.back()}
         className="rounded-lg hover:bg-[var(--ui-text)]/5 text-[var(--ui-text-muted)] hover:text-[var(--ui-primary)] transition-all"
@@ -108,6 +114,16 @@ export const CodeHeader = () => {
             title="Search in code"
           >
             <FiSearch className="w-3.5 h-3.5" />
+          </button>
+        )}
+
+        {activeFile && (
+          <button
+            onClick={() => onRun(allFiles)}
+            className="rounded-lg p-1.5 hover:bg-[var(--ui-text)]/5 text-[var(--ui-text-muted)] hover:text-[var(--ui-primary)] transition-all"
+            title="Search in code"
+          >
+            <FiPlay className="w-3.5 h-3.5" />
           </button>
         )}
       </div>

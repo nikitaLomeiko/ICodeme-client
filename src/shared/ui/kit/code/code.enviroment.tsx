@@ -6,8 +6,13 @@ import { CodeEditor } from "./components/code.editor";
 import { EmptyMessage } from "./components/empty.message";
 import { CodeHeader } from "./components/code.header";
 import { useExplorer } from "./store/file/use.explorer";
+import { FileNode } from "./types/types";
 
-export const CodeEnviroment = () => {
+interface IProps {
+  onRun: (Files: FileNode[]) => void;
+}
+
+export const CodeEnviroment: React.FC<IProps> = ({ onRun }) => {
   const { activeFileId, allFiles, setActiveFileId, activeFile } = useExplorer();
 
   useEffect(() => {
@@ -17,13 +22,13 @@ export const CodeEnviroment = () => {
   }, [allFiles, activeFileId]);
 
   return (
-    <div className="h-screen flex flex-col bg-[var(--ui-background-tertiary)]">
-      <CodeHeader />
+    <div className="h-screen flex flex-col bg-[var(--ui-background-tertiary)] rounded-lg">
+      <CodeHeader onRun={(files) => onRun(files)} />
 
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden ronded-lg">
         <FileExplorer />
 
-        <main className="flex-1 flex flex-col overflow-hidden relative">
+        <main className="flex-1 flex flex-col overflow-hidden relative rounded-lg">
           {activeFile ? <CodeEditor /> : <EmptyMessage />}
         </main>
       </div>

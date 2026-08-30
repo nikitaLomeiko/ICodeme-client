@@ -83,6 +83,20 @@
   animation: bounce-custom 2s ease infinite;
 }
 
+@keyframes terminal-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-terminal-blink {
+  animation: terminal-blink 1.1s steps(1) infinite;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

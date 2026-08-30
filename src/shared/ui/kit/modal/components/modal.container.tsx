@@ -46,6 +46,7 @@ export const ModalContainer: React.FC<{
   >
     <div
       className={`
+        w-full
         pointer-events-auto
         transition-all duration-300 ease-out
         ${getPositionAnimation(isVisible, position)}

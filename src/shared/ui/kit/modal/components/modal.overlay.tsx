@@ -12,6 +12,7 @@ export const ModalOverlay: React.FC<{
   isVisible: boolean;
   onClose: () => void;
   closeOnOverlayClick: boolean;
+  blurBackground?: boolean;
   className?: string;
   zIndex?: number;
 }> = ({
@@ -19,6 +20,7 @@ export const ModalOverlay: React.FC<{
   isVisible,
   onClose,
   closeOnOverlayClick,
+  blurBackground = false,
   className,
   zIndex = 50,
 }) => {
@@ -34,6 +36,7 @@ export const ModalOverlay: React.FC<{
       className={`
         fixed inset-0 z-${zIndex}
         ${overlayVariantStyles[variant]}
+        ${blurBackground ? "backdrop-blur-md" : ""}
         transition-all duration-300 ease-out
         ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}
         ${className || ""}

@@ -25,6 +25,7 @@ export const Modal: React.FC<ModalProps> = ({
   overlayClassName = "",
   contentClassName = "",
   withAnimation = true,
+  blurBackground = false,
   zIndex = 50,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -32,7 +33,6 @@ export const Modal: React.FC<ModalProps> = ({
   const [currentTheme, setCurrentTheme] = useState<string>("light");
 
   useEffect(() => {
-    // Получаем текущую тему из html или body
     const getCurrentTheme = () => {
       const htmlTheme = document.documentElement.getAttribute("data-theme");
       const bodyClass = document.body.className;
@@ -41,12 +41,11 @@ export const Modal: React.FC<ModalProps> = ({
       if (bodyClass.includes("dark")) return "dark";
       if (bodyClass.includes("light")) return "light";
 
-      return "light"; // по умолчанию светлая
+      return "light";
     };
 
     setCurrentTheme(getCurrentTheme());
 
-    // Наблюдаем за изменением темы
     const observer = new MutationObserver(() => {
       setCurrentTheme(getCurrentTheme());
     });
@@ -59,11 +58,9 @@ export const Modal: React.FC<ModalProps> = ({
     return () => observer.disconnect();
   }, []);
 
-  // Добавить этот useEffect сразу после объявления состояний
   useEffect(() => {
     if (isOpen) {
       setShouldRender(true);
-      // Небольшая задержка для запуска анимации
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           setIsVisible(true);
@@ -71,7 +68,6 @@ export const Modal: React.FC<ModalProps> = ({
       });
     } else {
       setIsVisible(false);
-      // Ждем завершения анимации перед удалением из DOM
       const timer = setTimeout(() => {
         setShouldRender(false);
       }, 300);
@@ -109,6 +105,7 @@ export const Modal: React.FC<ModalProps> = ({
         onClose={onClose}
         closeOnOverlayClick={closeOnOverlayClick}
         className={overlayClassName}
+        blurBackground={blurBackground}
         zIndex={90}
       />
       <ModalContainer
@@ -135,7 +132,6 @@ export const Modal: React.FC<ModalProps> = ({
   );
 
   if (typeof document !== "undefined") {
-    // Создаем или находим контейнер для модалки с правильной темой
     let modalContainer = document.getElementById("modal-root");
     if (!modalContainer) {
       modalContainer = document.createElement("div");
@@ -143,11 +139,7 @@ export const Modal: React.FC<ModalProps> = ({
       document.body.appendChild(modalContainer);
     }
 
-    // Устанавливаем атрибут темы на контейнер
-
-    console.log(currentTheme);
     modalContainer.setAttribute("data-theme", currentTheme);
-
     return createPortal(content, modalContainer);
   }
 

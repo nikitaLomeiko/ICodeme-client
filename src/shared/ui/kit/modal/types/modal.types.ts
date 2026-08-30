@@ -28,5 +28,6 @@ export interface ModalProps {
   overlayClassName?: string;
   contentClassName?: string;
   withAnimation?: boolean;
+  blurBackground?: boolean;
   zIndex?: number;
 }
