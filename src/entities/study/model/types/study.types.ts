@@ -26,25 +26,41 @@ export interface IPlan {
   step: number;
 }
 
-export interface IModule {
-  title: string;
-  description: string;
+export interface IModule extends INotation {
+  id: string;
+  isCompleted: boolean;
+  isCurrent: boolean;
   levels: ILevel[];
 }
 
-export interface ILevel {
-  title: string;
-  description: string;
+export interface ILevel extends INotation {
+  id: string;
+  isCompleted: boolean;
+  isCurrent: boolean;
   steps: IStep[];
 }
 
-export interface IStep {
-  title: string;
-  description: string;
+export interface IStep extends INotation {
+  id: string;
+  isCompleted: boolean;
+  isCurrent: boolean;
   type: "document" | "code" | "quiz" | "exam";
+  position: { x: number; y: number };
   document?: string;
   code?: string;
   quiz?: IQuiz;
   exam?: IQuiz;
-  // experience: number;
+}
+
+export interface IStepByLevel {
+  step: IStep;
+  levelId: string;
+  stepIndexInLevel: number;
+}
+
+export type StepType = "document" | "code" | "quiz" | "exam";
+
+export interface INotation {
+  title: string;
+  description: string;
 }

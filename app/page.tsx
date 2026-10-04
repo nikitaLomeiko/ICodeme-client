@@ -1,10 +1,6 @@
 "use client";
 
 import { withAccount, withAuth } from "@/app/providers/auth";
-import { Layout } from "@/widgets/layout";
+import { HomePage } from "@/pages-root/home";
 
-function Home() {
-  return <Layout>хуй</Layout>;
-}
-
-export default Home;
+export default HomePage;

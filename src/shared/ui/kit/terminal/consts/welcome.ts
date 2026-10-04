@@ -1,6 +1,6 @@
-const TITLE = "ICODEME — ИНТЕРАКТИВНЫЙ ТЕРМИНАЛ";
-const SUBTITLE = "Welcome to the interactive terminal";
-const WIDTH = 46;
+export const TITLE = "ICODEME — ИНТЕРАКТИВНЫЙ ТЕРМИНАЛ";
+export const SUBTITLE = "Welcome to the interactive terminal";
+export const WIDTH = 46;
 
 const fill = (text: string) => {
   const padTotal = Math.max(0, WIDTH - text.length);
