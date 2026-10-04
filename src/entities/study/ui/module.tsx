@@ -1,56 +1,86 @@
-import { FaBook } from "react-icons/fa";
+import Link from "next/link";
+import { FaArrowRight, FaBook, FaCheck, FaLock } from "react-icons/fa";
 import { IModule } from "../model";
 
 interface IProps extends Omit<IModule, "levels"> {
-  children: React.ReactNode;
+  levelsCount: number;
+  index: number;
 }
 
 export const Module: React.FC<IProps> = (props) => {
-  const { description, title, children, isCompleted, isCurrent } = props;
+  const { description, title, isCompleted, isCurrent, levelsCount, index } =
+    props;
+
+  const isLocked = !isCurrent && !isCompleted;
 
   return (
-    <div className="relative max-w-[1400px] mx-auto px-8">
-      <div className="absolute inset-0 pointer-events-none overflow-hidden"></div>
-
+    <div
+      className={`group flex items-start gap-5 rounded-2xl border p-5 shadow-sm transition-all duration-200 ${isCurrent ? "border-[var(--ui-primary)] bg-[var(--ui-background-secondary)] shadow-md" : "border-[var(--ui-border)] bg-[var(--ui-background-secondary)]"} ${isCompleted ? "border-[var(--ui-primary)]/30" : ""} ${isLocked ? "opacity-60" : "hover:-translate-y-0.5 hover:shadow-lg"}`}
+    >
       <div
-        className="
-          relative px-8 py-8 rounded-3xl border mb-12 overflow-hidden
-          bg-[color-mix(in_srgb,var(--ui-background-secondary)_60%,transparent)]
-          border-[var(--ui-border)]
-          shadow-[0_12px_40px_-12px_rgba(0,0,0,0.25)]
-          backdrop-blur-[10px]
-        "
+        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border text-sm font-black transition-colors ${isCompleted ? "border-[var(--ui-primary)] bg-[var(--ui-primary)] text-white" : isCurrent ? "border-[var(--ui-primary)] bg-[var(--ui-primary)]/10 text-[var(--ui-primary)]" : "border-[var(--ui-border)] bg-[var(--ui-background)] text-[var(--ui-accent)]"}`}
       >
-        <div className="relative flex items-start gap-5">
-          <div
-            className="
-              w-16 h-16 rounded-2xl flex items-center justify-center
-              text-white shadow-lg relative overflow-hidden shrink-0
-              bg-[linear-gradient(135deg,var(--ui-primary),var(--ui-secondary))]
-              shadow-[var(--ui-brand-shadow)]
-            "
-          >
-            <FaBook className="text-3xl" />
-          </div>
-          <div className="min-w-0">
-            <h2
-              className="
-                text-2xl font-bold leading-tight mt-1
-                text-[var(--ui-text)]
-                bg-[linear-gradient(135deg,var(--ui-primary),var(--ui-secondary))]
-                bg-clip-text text-transparent
-              "
-            >
-              {title}
-            </h2>
-            <p className="text-sm mt-1.5 max-w-lg text-[var(--ui-text-muted)]">
-              {description}
-            </p>
-          </div>
+        {isCompleted ? <FaCheck size={16} /> : String(index).padStart(2, "0")}
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-center gap-2">
+          <h2 className="text-base font-bold">{title}</h2>
+
+          {isCurrent && (
+            <span className="rounded-full bg-[var(--ui-primary)]/10 px-2 py-0.5 text-xs font-medium text-[var(--ui-primary)]">
+              Сейчас
+            </span>
+          )}
+
+          {isCompleted && (
+            <span className="rounded-full bg-[var(--ui-primary)]/10 px-2 py-0.5 text-xs font-medium text-[var(--ui-primary)]">
+              Завершён
+            </span>
+          )}
+
+          {isLocked && (
+            <span className="rounded-full bg-[var(--ui-background)] px-2 py-0.5 text-xs font-medium text-[var(--ui-text-muted)]">
+              Заблокирован
+            </span>
+          )}
+        </div>
+
+        <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-[var(--ui-text-muted)]">
+          {description}
+        </p>
+
+        <div className="mt-3 flex items-center gap-2 text-xs text-[var(--ui-text-muted)]">
+          <FaBook size={12} />
+          <span>
+            {levelsCount}{" "}
+            {levelsCount === 1
+              ? "уровень"
+              : levelsCount < 5
+                ? "уровня"
+                : "уровней"}
+          </span>
         </div>
       </div>
 
-      {children}
+      {isLocked ? (
+        <button
+          type="button"
+          disabled
+          className="flex h-10 shrink-0 cursor-not-allowed items-center gap-2 rounded-xl border border-[var(--ui-border)] bg-[var(--ui-background)] px-4 text-sm font-medium text-[var(--ui-text-muted)]"
+        >
+          <FaLock size={12} />
+          Закрыт
+        </button>
+      ) : (
+        <Link
+          href={`/`}
+          className="flex h-10 shrink-0 items-center gap-2 rounded-xl border border-[var(--ui-border)] bg-[var(--ui-background)] px-4 text-sm font-medium text-[var(--ui-text)] transition-all hover:border-[var(--ui-primary)] hover:bg-[var(--ui-primary)] hover:text-white"
+        >
+          Открыть
+          <FaArrowRight size={12} />
+        </Link>
+      )}
     </div>
   );
 };

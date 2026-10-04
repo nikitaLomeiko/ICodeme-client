@@ -30,14 +30,13 @@ export const Step: React.FC<IProps> = (props) => {
   const isLocked = !isCompleted && !isCurrent;
 
   const containerStyle: React.CSSProperties = {
-    left: pos.x,
+    left: `${pos.x}%`,
     top: pos.y,
     zIndex: isCurrent ? 4 : 2,
   };
 
   const cardStyle = getCardStyle(isCompleted, isCurrent, palette);
 
-  // Цвет свечения: для завершённых — зелёный, для остальных — цвет шага
   const glowColor = isCompleted ? "rgba(16,185,129,0.75)" : palette.dot;
   const glowSoft = isCompleted ? "rgba(16,185,129,0.35)" : palette.bg;
 
@@ -45,7 +44,7 @@ export const Step: React.FC<IProps> = (props) => {
     <div
       key={id}
       className={`
-        absolute group w-[120px] h-[120px] transition-transform duration-300
+        absolute group w-[150px] h-[150px] transition-transform duration-300
         ${
           isLocked
             ? "pointer-events-none cursor-default opacity-55 grayscale"
@@ -54,10 +53,8 @@ export const Step: React.FC<IProps> = (props) => {
       `}
       style={containerStyle}
     >
-      {/* Постоянная пульсация для текущего шага */}
       {isCurrent && (
         <>
-          {/* Расходящееся кольцо */}
           <span
             aria-hidden
             className="
@@ -68,7 +65,6 @@ export const Step: React.FC<IProps> = (props) => {
               background: `radial-gradient(circle, ${glowSoft} 40%, transparent 70%)`,
             }}
           />
-          {/* Мягкий постоянный ореол */}
           <span
             aria-hidden
             className="
@@ -95,7 +91,6 @@ export const Step: React.FC<IProps> = (props) => {
         `}
         style={cardStyle}
       >
-        {/* Слой свечения при ховере */}
         {!isLocked && (
           <div
             aria-hidden
@@ -116,7 +111,7 @@ export const Step: React.FC<IProps> = (props) => {
             {isLocked ? (
               <div
                 className="
-                  w-12 h-12 rounded-2xl flex items-center justify-center
+                  w-16 h-16 rounded-2xl flex items-center justify-center
                   bg-[color-mix(in_srgb,var(--ui-background-tertiary)_60%,transparent)]
                 "
               >
@@ -125,7 +120,7 @@ export const Step: React.FC<IProps> = (props) => {
             ) : (
               <div
                 className="
-                  w-12 h-12 rounded-2xl flex items-center justify-center
+                  w-16 h-16 rounded-2xl flex items-center justify-center
                   transition-all duration-300
                   group-hover:scale-110 group-hover:rotate-6
                 "
@@ -140,7 +135,7 @@ export const Step: React.FC<IProps> = (props) => {
 
             <span
               className="
-                text-[9px] font-bold uppercase tracking-wider
+                mt-2 text-[12px] font-bold uppercase tracking-wider
                 px-2 py-0.5 rounded-full
               "
               style={{
@@ -159,7 +154,7 @@ export const Step: React.FC<IProps> = (props) => {
           <div className="flex flex-col items-center gap-1">
             <span
               className="
-                w-12 h-12 rounded-full flex items-center justify-center
+                w-16 h-16 rounded-full flex items-center justify-center
                 text-white text-2xl
                 bg-white/20
                 shadow-[inset_0_2px_8px_rgba(255,255,255,0.25)]
@@ -168,7 +163,7 @@ export const Step: React.FC<IProps> = (props) => {
             >
               ✓
             </span>
-            <span className="text-[9px] font-bold uppercase tracking-wider text-white/90">
+            <span className="mt-2 text-[12px] font-bold uppercase tracking-wider text-white/90">
               Пройдено
             </span>
           </div>
@@ -189,7 +184,6 @@ export const Step: React.FC<IProps> = (props) => {
         </span>
       </div>
 
-      {/* Tooltip: появляется только при наведении/фокусе на карточке */}
       <div
         className="
           absolute left-full top-1/2 ml-4 w-[200px] pointer-events-none

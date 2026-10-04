@@ -1,10 +1,4 @@
-import { ILevel } from "@/entities/study";
-
-export const currentModule = {
-  id: "mod-1",
-  title: "Основы JavaScript",
-  description: "Базовый синтаксис и концепции",
-};
+import { ILevel, IModule } from "@/entities/study";
 
 export const mockLevels: ILevel[] = [
   {
@@ -22,7 +16,7 @@ export const mockLevels: ILevel[] = [
         description:
           "Устанавливаем и настраиваем рабочее окружение для комфортной работы",
         type: "document",
-        position: { x: 140, y: 60 },
+        position: { x: 10, y: 60 },
       },
       {
         id: "s-2",
@@ -32,7 +26,7 @@ export const mockLevels: ILevel[] = [
         description:
           "Изучаем основу, на которой строится любой язык программирования",
         type: "code",
-        position: { x: 700, y: 380 },
+        position: { x: 60, y: 280 },
       },
       {
         id: "s-3",
@@ -41,7 +35,7 @@ export const mockLevels: ILevel[] = [
         title: "Типы данных",
         description: "Важный аспект для понимания данных и как они разделяются",
         type: "quiz",
-        position: { x: 200, y: 760 },
+        position: { x: 20, y: 460 },
       },
       {
         id: "s-4",
@@ -50,7 +44,7 @@ export const mockLevels: ILevel[] = [
         title: "Операторы",
         description: "Главные операции над данными",
         type: "exam",
-        position: { x: 680, y: 1140 },
+        position: { x: 50, y: 740 },
       },
       {
         id: "s-4-1",
@@ -59,7 +53,7 @@ export const mockLevels: ILevel[] = [
         title: "Условия и ветвления",
         description: "if / else, switch и тернарный оператор на практике",
         type: "code",
-        position: { x: 220, y: 1520 },
+        position: { x: 15, y: 1020 },
       },
       {
         id: "s-4-2",
@@ -68,7 +62,7 @@ export const mockLevels: ILevel[] = [
         title: "Практика: калькулятор",
         description: "Собираем мини-калькулятор на изученных конструкциях",
         type: "quiz",
-        position: { x: 700, y: 1900 },
+        position: { x: 60, y: 1300 },
       },
     ],
   },
@@ -87,7 +81,7 @@ export const mockLevels: ILevel[] = [
         description:
           "Объявляем обыкновенные функции и учимся вызывать. Какие бывают функции",
         type: "document",
-        position: { x: 160, y: 60 },
+        position: { x: 60, y: 60 },
       },
       {
         id: "s-6",
@@ -96,7 +90,7 @@ export const mockLevels: ILevel[] = [
         title: "Стрелочные функции",
         description: "Особый вид функции, используемый в 90% случаев",
         type: "code",
-        position: { x: 680, y: 440 },
+        position: { x: 10, y: 240 },
       },
       {
         id: "s-7",
@@ -105,7 +99,7 @@ export const mockLevels: ILevel[] = [
         title: "Замыкания",
         description: "Важное свойство функций",
         type: "exam",
-        position: { x: 220, y: 840 },
+        position: { x: 70, y: 480 },
       },
       {
         id: "s-7-1",
@@ -114,7 +108,7 @@ export const mockLevels: ILevel[] = [
         title: "Параметры и аргументы",
         description: "Разбираем default-параметры, rest и spread-операторы",
         type: "document",
-        position: { x: 700, y: 1220 },
+        position: { x: 10, y: 620 },
       },
       {
         id: "s-7-2",
@@ -123,7 +117,7 @@ export const mockLevels: ILevel[] = [
         title: "Callback-функции",
         description: "Передаём функции как значения и вызываем их позже",
         type: "code",
-        position: { x: 220, y: 1600 },
+        position: { x: 70, y: 850 },
       },
       {
         id: "s-7-3",
@@ -132,7 +126,7 @@ export const mockLevels: ILevel[] = [
         title: "Тест по функциям",
         description: "Проверяем понимание области видимости и this",
         type: "quiz",
-        position: { x: 700, y: 1980 },
+        position: { x: 20, y: 1180 },
       },
     ],
   },
@@ -151,7 +145,7 @@ export const mockLevels: ILevel[] = [
         description:
           "На этом строится 90% языка. Эти знания приблизят вас к истине!",
         type: "document",
-        position: { x: 160, y: 60 },
+        position: { x: 50, y: 60 },
       },
       {
         id: "s-9",
@@ -160,7 +154,7 @@ export const mockLevels: ILevel[] = [
         title: "Методы объектов",
         description: "Научимся вертеть и крутить объектами так, как хотим мы",
         type: "code",
-        position: { x: 680, y: 460 },
+        position: { x: 70, y: 270 },
       },
       {
         id: "s-9-1",
@@ -169,7 +163,7 @@ export const mockLevels: ILevel[] = [
         title: "Деструктуризация",
         description: "Достаём поля объектов в переменные кратко и элегантно",
         type: "code",
-        position: { x: 200, y: 880 },
+        position: { x: 10, y: 480 },
       },
       {
         id: "s-9-2",
@@ -178,7 +172,7 @@ export const mockLevels: ILevel[] = [
         title: "Spread и rest в объектах",
         description: "Копируем, объединяем и переопределяем свойства",
         type: "document",
-        position: { x: 700, y: 1280 },
+        position: { x: 60, y: 650 },
       },
       {
         id: "s-9-3",
@@ -187,7 +181,7 @@ export const mockLevels: ILevel[] = [
         title: "Практика: профиль",
         description: "Собираем объект пользователя с вложенными полями",
         type: "quiz",
-        position: { x: 220, y: 1680 },
+        position: { x: 10, y: 880 },
       },
     ],
   },
@@ -205,7 +199,7 @@ export const mockLevels: ILevel[] = [
         title: "Основы массивов",
         description: "Создание, доступ по индексу, длина и базовые операции",
         type: "document",
-        position: { x: 160, y: 60 },
+        position: { x: 10, y: 60 },
       },
       {
         id: "s-11",
@@ -214,7 +208,7 @@ export const mockLevels: ILevel[] = [
         title: "Методы push/pop/shift",
         description: "Добавляем и удаляем элементы с обоих концов массива",
         type: "code",
-        position: { x: 680, y: 460 },
+        position: { x: 40, y: 460 },
       },
       {
         id: "s-12",
@@ -223,7 +217,7 @@ export const mockLevels: ILevel[] = [
         title: "map, filter, reduce",
         description: "Три кита функциональной работы с массивами",
         type: "code",
-        position: { x: 200, y: 900 },
+        position: { x: 80, y: 900 },
       },
       {
         id: "s-13",
@@ -232,7 +226,7 @@ export const mockLevels: ILevel[] = [
         title: "Поиск элементов",
         description: "find, findIndex, includes и некоторые",
         type: "quiz",
-        position: { x: 700, y: 1300 },
+        position: { x: 30, y: 1300 },
       },
       {
         id: "s-14",
@@ -241,7 +235,7 @@ export const mockLevels: ILevel[] = [
         title: "Сортировка массивов",
         description: "sort с компаратором и стабильность сортировки",
         type: "exam",
-        position: { x: 220, y: 1700 },
+        position: { x: 20, y: 1700 },
       },
       {
         id: "s-15",
@@ -251,7 +245,7 @@ export const mockLevels: ILevel[] = [
         description:
           "Считаем сумму, фильтруем товары и группируем по категориям",
         type: "quiz",
-        position: { x: 700, y: 2100 },
+        position: { x: 50, y: 2100 },
       },
     ],
   },
@@ -269,7 +263,7 @@ export const mockLevels: ILevel[] = [
         title: "Event Loop",
         description: "Как устроен цикл событий и почему это важно",
         type: "document",
-        position: { x: 160, y: 60 },
+        position: { x: 10, y: 60 },
       },
       {
         id: "s-17",
@@ -278,7 +272,7 @@ export const mockLevels: ILevel[] = [
         title: "setTimeout и setInterval",
         description: "Отложенные и периодические вызовы функций",
         type: "code",
-        position: { x: 680, y: 480 },
+        position: { x: 90, y: 480 },
       },
       {
         id: "s-18",
@@ -287,7 +281,7 @@ export const mockLevels: ILevel[] = [
         title: "Промисы",
         description: "then / catch / finally и цепочки промисов",
         type: "code",
-        position: { x: 200, y: 940 },
+        position: { x: 20, y: 940 },
       },
       {
         id: "s-19",
@@ -296,7 +290,7 @@ export const mockLevels: ILevel[] = [
         title: "async / await",
         description: "Синтаксический сахар над промисами",
         type: "document",
-        position: { x: 700, y: 1360 },
+        position: { x: 80, y: 1360 },
       },
       {
         id: "s-20",
@@ -305,7 +299,7 @@ export const mockLevels: ILevel[] = [
         title: "Обработка ошибок",
         description: "try / catch и типичные ошибки асинхронного кода",
         type: "quiz",
-        position: { x: 220, y: 1780 },
+        position: { x: 30, y: 1780 },
       },
       {
         id: "s-21",
@@ -314,8 +308,35 @@ export const mockLevels: ILevel[] = [
         title: "Экзамен по модулю",
         description: "Итоговая проверка знаний по всему модулю",
         type: "exam",
-        position: { x: 700, y: 2200 },
+        position: { x: 70, y: 2200 },
       },
     ],
+  },
+];
+
+export const modules: IModule[] = [
+  {
+    id: "mod-1",
+    title: "Основы JavaScript",
+    description: "Базовый синтаксис и концепции",
+    isCompleted: true,
+    isCurrent: false,
+    levels: mockLevels,
+  },
+  {
+    id: "mod-2",
+    title: "продвинутый JavaScript",
+    description: "Продвинутые механизмы и синтаксис языка",
+    isCompleted: false,
+    isCurrent: true,
+    levels: mockLevels,
+  },
+  {
+    id: "mod-3",
+    title: "Senior JavaScript",
+    description: "JavaScript для Senior-специалистов и ваще самых крутых типов",
+    isCompleted: false,
+    isCurrent: false,
+    levels: mockLevels,
   },
 ];

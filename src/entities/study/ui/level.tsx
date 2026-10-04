@@ -33,7 +33,7 @@ export const Level: React.FC<IProps> = (props) => {
           transition-all duration-300
           ${
             isCurrent
-              ? "bg-[color-mix(in_srgb,var(--ui-primary)_8%,transparent)]"
+              ? "bg-[color-mix(in_srgb,var(--ui-primary)_4%,transparent)]"
               : isCompleted
                 ? "bg-[color-mix(in_srgb,var(--ui-primary)_4%,transparent)]"
                 : ""
@@ -41,22 +41,8 @@ export const Level: React.FC<IProps> = (props) => {
           ${isLocked ? "opacity-70 grayscale-[35%]" : ""}
         `}
       >
-        {/* Градиентная рамка — только для текущего уровня */}
-        {isCurrent && (
-          <div
-            aria-hidden
-            className="
-              pointer-events-none absolute inset-0 rounded-2xl
-              bg-[linear-gradient(135deg,var(--ui-primary),var(--ui-secondary))]
-              opacity-40 blur-[6px]
-            "
-          />
-        )}
-
         <div className="relative flex items-center gap-4 px-6 py-4 rounded-2xl">
-          {/* Номер уровня / статус */}
           <div className="relative shrink-0">
-            {/* Пульсирующий ореол — только для текущего */}
             {isCurrent && (
               <>
                 <span
@@ -124,7 +110,6 @@ export const Level: React.FC<IProps> = (props) => {
           <div className="flex-1" />
 
           <div className="flex items-center gap-2">
-            {/* Бейдж состояния */}
             {isCurrent && (
               <span
                 className="

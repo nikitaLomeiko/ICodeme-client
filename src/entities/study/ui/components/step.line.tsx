@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { IStepByLevel } from "../../model";
 
 interface IProps {
@@ -5,6 +6,44 @@ interface IProps {
 }
 
 export const StepLine: React.FC<IProps> = ({ levelSteps }) => {
+  const containerRef = useRef<SVGSVGElement | null>(null);
+  const [width, setWidth] = useState(0);
+
+  // Следим за шириной родителя, чтобы переводить % в px
+  const [lineColor, setLineColor] = useState("rgba(100,116,139,0.35)");
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const parent = el.parentElement;
+    if (!parent) return;
+
+    const update = () => setWidth(parent.clientWidth);
+
+    update();
+
+    const ro = new ResizeObserver(update);
+    ro.observe(parent);
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", update);
+    }
+
+    if (typeof document !== "undefined") {
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      setLineColor(
+        isDark ? "rgba(148,163,184,0.35)" : "rgba(100,116,139,0.35)",
+      );
+    }
+
+    return () => {
+      ro.disconnect();
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", update);
+      }
+    };
+  }, []);
+
   if (levelSteps.length < 2) return null;
 
   const sortedSteps = [...levelSteps].sort(
@@ -13,16 +52,13 @@ export const StepLine: React.FC<IProps> = ({ levelSteps }) => {
 
   const points = sortedSteps.map((item) => {
     const pos = item.step.position || { x: 100, y: 100 };
+    // x приходит в процентах → переводим в пиксели
+    const xPx = (pos.x / 100) * width;
     return {
-      x: pos.x + 60,
-      y: pos.y + 60,
+      x: xPx + 60, // + половина ширины карточки
+      y: pos.y + 60, // + половина высоты карточки
     };
   });
-
-  const lineColor =
-    document.documentElement.getAttribute("data-theme") === "dark"
-      ? "rgba(148,163,184,0.35)"
-      : "rgba(100,116,139,0.35)";
 
   let d = `M ${points[0].x} ${points[0].y}`;
   for (let i = 1; i < points.length; i++) {
@@ -39,6 +75,7 @@ export const StepLine: React.FC<IProps> = ({ levelSteps }) => {
 
   return (
     <svg
+      ref={containerRef}
       className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-visible"
       style={{ zIndex: 1 }}
     >
