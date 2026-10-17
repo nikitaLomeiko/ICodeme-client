@@ -23,15 +23,9 @@ export const HomePage = () => {
               (item) => (item.step.position?.y || 0) + 130,
             ),
           );
-          const maxX = Math.max(
-            600,
-            ...stepsGroupedByLevel[level.id].map(
-              (item) => (item.step.position?.x || 0) + 340,
-            ),
-          );
 
           return (
-            <Level {...level} maxX={maxX} maxY={maxY} index={lvlIdx + 1}>
+            <Level {...level} maxY={maxY} index={lvlIdx + 1}>
               <StepLine levelSteps={stepsGroupedByLevel[level.id]} />
 
               {level.steps.map((item, index) => (

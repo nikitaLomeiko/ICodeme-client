@@ -44,7 +44,7 @@ export const Step: React.FC<IProps> = (props) => {
     <div
       key={id}
       className={`
-        absolute group w-[150px] h-[150px] transition-transform duration-300
+        absolute group h-[100px] w-[100px] transition-transform duration-300 2xl:h-[150px] 2xl:w-[150px]
         ${
           isLocked
             ? "pointer-events-none cursor-default opacity-55 grayscale"
@@ -111,7 +111,7 @@ export const Step: React.FC<IProps> = (props) => {
             {isLocked ? (
               <div
                 className="
-                  w-16 h-16 rounded-2xl flex items-center justify-center
+                  w-8 h-8 2xl:w-16 2xl:h-16 rounded-2xl flex items-center justify-center
                   bg-[color-mix(in_srgb,var(--ui-background-tertiary)_60%,transparent)]
                 "
               >
@@ -120,7 +120,7 @@ export const Step: React.FC<IProps> = (props) => {
             ) : (
               <div
                 className="
-                  w-16 h-16 rounded-2xl flex items-center justify-center
+                  w-8 h-8 2xl:w-16 2xl:h-16 rounded-2xl flex items-center justify-center
                   transition-all duration-300
                   group-hover:scale-110 group-hover:rotate-6
                 "
@@ -154,8 +154,8 @@ export const Step: React.FC<IProps> = (props) => {
           <div className="flex flex-col items-center gap-1">
             <span
               className="
-                w-16 h-16 rounded-full flex items-center justify-center
-                text-white text-2xl
+                w-8 h-8 2xl:w-16 2xl:h-16 rounded-full flex items-center justify-center
+                text-white text-[14px] 2xl:text-2xl
                 bg-white/20
                 shadow-[inset_0_2px_8px_rgba(255,255,255,0.25)]
                 backdrop-blur-[4px]
@@ -163,7 +163,7 @@ export const Step: React.FC<IProps> = (props) => {
             >
               ✓
             </span>
-            <span className="mt-2 text-[12px] font-bold uppercase tracking-wider text-white/90">
+            <span className="mt-2 text-[10px] 2xl:text-[12px] font-bold uppercase tracking-wider text-white/90">
               Пройдено
             </span>
           </div>

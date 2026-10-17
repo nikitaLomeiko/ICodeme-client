@@ -6,7 +6,6 @@ interface IProps extends ILevel {
   index: number;
   children: React.ReactNode;
   maxY: number;
-  maxX: number;
 }
 
 export const Level: React.FC<IProps> = (props) => {
@@ -16,7 +15,6 @@ export const Level: React.FC<IProps> = (props) => {
     id,
     index,
     children,
-    maxX,
     maxY,
     isCompleted,
     isCurrent,
@@ -136,7 +134,6 @@ export const Level: React.FC<IProps> = (props) => {
               </span>
             )}
 
-            {/* Счётчик шагов */}
             <span
               className={`
                 text-xs px-3 py-1.5 rounded-full border font-medium
@@ -176,18 +173,16 @@ export const Level: React.FC<IProps> = (props) => {
         />
       </div>
 
-      {/* Контент уровня */}
       <div
         className={`
           relative rounded-[2rem] w-full
           transition-all duration-500
           ${isLocked ? "opacity-45 grayscale-[60%] pointer-events-none" : ""}
         `}
-        style={{ minHeight: maxY, minWidth: maxX }}
+        style={{ minHeight: maxY }}
       >
         {children}
 
-        {/* Оверлей для закрытого уровня */}
         {isLocked && (
           <div
             aria-hidden

@@ -35,7 +35,7 @@ export const WorkZone: React.FC<IProps> = ({ children }) => {
   return (
     <div className="relative h-full min-h-0 w-full">
       <div
-        className="h-full min-h-0 pr-[440px]"
+        className="h-full min-h-0 lg:pr-[440px] pr-[0px]"
         style={{
           backgroundImage: `
             linear-gradient(rgba(128, 128, 128, 0.06) 1px, transparent 1px),
@@ -50,7 +50,7 @@ export const WorkZone: React.FC<IProps> = ({ children }) => {
         {children}
       </div>
 
-      <div className="fixed right-[432px] bottom-8 z-50 flex flex-col gap-3">
+      <div className="fixed lg:right-[432px] right-[20px] lg:bottom-8 bottom-24 z-50 flex flex-col gap-3">
         <motion.button
           type="button"
           whileHover={{ scale: 1.08 }}

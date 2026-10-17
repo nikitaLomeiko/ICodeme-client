@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export const SideBar = () => {
   return (
-    <aside className="fixed right-4 top-4 bottom-4 z-40 flex w-[400px] flex-col gap-4 overflow-y-auto pr-1">
+    <aside className="lg:flex hidden fixed right-4 top-4 bottom-4 z-40 w-[400px] flex-col gap-4 overflow-y-auto pr-1">
       <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
