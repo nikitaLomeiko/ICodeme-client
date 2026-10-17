@@ -80,8 +80,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       <div className="flex flex-col gap-10">
         <TextField
           id="email"
-          label="Email"
+          label="Почта"
           type="email"
+          size="lg"
           {...register("email")}
           icon={FaEnvelope}
           required
@@ -92,6 +93,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         <PasswordField
           id="password"
           label="Пароль"
+          size="lg"
           {...register("password")}
           required
           error={errors.password?.message}
@@ -103,7 +105,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         <Button
           type="button"
           variant="ghost"
-          size="sm"
+          size="lg"
           onClick={onForgotClick}
           disabled={isLoading}
         >
@@ -114,7 +116,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         className="mt-2"
         type="submit"
         variant="outline"
-        size="md"
+        size="lg"
         fullWidth
         isLoading={isLoading}
         disabled={isLoading}

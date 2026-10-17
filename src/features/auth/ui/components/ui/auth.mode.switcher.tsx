@@ -19,7 +19,7 @@ export const AuthModeSwitcher: React.FC<AuthModeSwitcherProps> = ({
       {mode === "login" && (
         <Title
           as="p"
-          size="sm"
+          size="lg"
           weight="normal"
           align="center"
           className="light:text-gray-500 dark:text-slate-400 transition-colors duration-500"
@@ -33,7 +33,7 @@ export const AuthModeSwitcher: React.FC<AuthModeSwitcherProps> = ({
       {mode === "register" && (
         <Title
           as="p"
-          size="sm"
+          size="lg"
           weight="normal"
           align="center"
           className="light:text-gray-500 dark:text-slate-400 transition-colors duration-500"

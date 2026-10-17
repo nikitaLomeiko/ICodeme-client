@@ -3,7 +3,9 @@ import { useState, useEffect, useRef } from "react";
 interface IProps {
   className?: string;
   isMobile?: boolean;
-  intervalMs?: number; // интервал между анимациями (по умолчанию 30 секунд)
+  intervalMs?: number;
+  showSiteName?: boolean;
+  showLogotype?: boolean;
 }
 
 const anims = [
@@ -24,6 +26,8 @@ export const Logotype: React.FC<IProps> = ({
   className,
   isMobile = false,
   intervalMs = 30000,
+  showSiteName = true,
+  showLogotype = true,
 }) => {
   const [anim, setAnim] = useState("logo.gif");
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -46,7 +50,6 @@ export const Logotype: React.FC<IProps> = ({
     }, ANIMATION_DURATION_MS);
   };
 
-  // Очистка всех таймеров
   const clearAllTimers = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -89,24 +92,29 @@ export const Logotype: React.FC<IProps> = ({
     <div
       className={`p-2 flex ${!isMobile && "flex-col"} items-center gap-1 ${className}`}
     >
-      <img
-        onClick={handleClickLogo}
-        src={`logo/${anim}`}
-        alt="logotype"
-        className={`${isMobile ? "w-14 h-14" : "w-38 h-38"} cursor-pointer`}
-      />
-      <div className="flex items-center">
-        <p
-          className={`${isMobile ? "text-3xl" : "text-4xl"} font-mono font-black text-[var(--logo-text-color)]`}
-        >
-          Octo
-        </p>
-        <p
-          className={`${isMobile ? "text-3xl" : "text-4xl"} font-mono font-black text-[var(--ui-primary)] ml-1`}
-        >
-          Me
-        </p>
-      </div>
+      {showLogotype ? (
+        <img
+          onClick={handleClickLogo}
+          src={`logo/${anim}`}
+          alt="logotype"
+          className={`${isMobile ? "w-14 h-14" : "w-38 h-38"} cursor-pointer`}
+        />
+      ) : null}
+
+      {showSiteName ? (
+        <div className="flex items-center">
+          <p
+            className={`${isMobile ? "text-3xl" : "text-6xl"} font-mono font-black text-[var(--logo-text-color)]`}
+          >
+            Octo
+          </p>
+          <p
+            className={`${isMobile ? "text-3xl" : "text-6xl"} font-mono font-black text-[var(--ui-primary)] ml-1`}
+          >
+            Me
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 };

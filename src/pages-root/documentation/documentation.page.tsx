@@ -2,7 +2,6 @@
 
 import { Document } from "@/entities/document";
 import { Button } from "@/shared/ui/kit";
-import { Layout } from "@/widgets/layout";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
 
@@ -244,22 +243,20 @@ export const DocumentationPage = () => {
   const router = useRouter();
 
   return (
-    <Layout isRenderSideBar={false} isCentered={false}>
-      <div className="w-screen h-full relative">
-        <Button
-          className="fixed top-4 left-5"
-          icon={FaArrowLeft}
-          iconPosition="left"
-          onClick={() => router.back()}
-          variant="ghost"
-        ></Button>
-        <Document
-          className="px-20"
-          documentId="test"
-          title="Documentation"
-          content={markdown}
-        />
-      </div>
-    </Layout>
+    <div className="w-screen h-full relative">
+      <Button
+        className="fixed top-4 left-5"
+        icon={FaArrowLeft}
+        iconPosition="left"
+        onClick={() => router.back()}
+        variant="ghost"
+      ></Button>
+      <Document
+        className="px-20"
+        documentId="test"
+        title="Documentation"
+        content={markdown}
+      />
+    </div>
   );
 };

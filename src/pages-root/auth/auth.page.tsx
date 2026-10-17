@@ -1,15 +1,10 @@
 "use client";
 
 import { AuthForm } from "@/features/auth";
-import { AuthLayout } from "@/widgets/auth-layout";
 import { useRouter } from "next/navigation";
 
 export const AuthPage = () => {
   const router = useRouter();
 
-  return (
-    <AuthLayout>
-      <AuthForm onSuccess={() => router.push("/auth/profile")} />
-    </AuthLayout>
-  );
+  return <AuthForm onSuccess={() => router.push("/auth/profile")} />;
 };

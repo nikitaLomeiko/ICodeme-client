@@ -32,10 +32,7 @@ export const Tab: React.FC<IProps> = (props) => {
       />
       <span className="font-medium">{label}</span>
       {isActive && (
-        <motion.div
-          layoutId="desktopActive"
-          className="ml-auto w-2 h-2 rounded-full bg-[var(--ui-text)]"
-        />
+        <span className="ml-auto w-2 h-2 rounded-full bg-[var(--ui-text)]" />
       )}
     </button>
   );

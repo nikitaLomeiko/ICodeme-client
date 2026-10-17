@@ -35,7 +35,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
             checked={checked}
             onChange={(e) => onChange(e.target.checked)}
             disabled={disabled}
-            className="absolute opacity-0 w-4 h-4 cursor-pointer"
+            className="absolute opacity-0 w-6 h-6 cursor-pointer"
           />
           <motion.div
             whileTap={{ scale: 0.95 }}

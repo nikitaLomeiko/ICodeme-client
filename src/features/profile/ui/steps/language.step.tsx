@@ -20,7 +20,7 @@ export const LanguageStep: React.FC<LanguageStepProps> = ({
       onChange={(e) => onChange(e.target.value)}
       onSelectSuggestion={(value) => onChange(value)}
       suggestions={programmingLanguages}
-      placeholder="Language"
+      placeholder="JavaScript"
       error={error}
       variant="underline"
       size="lg"

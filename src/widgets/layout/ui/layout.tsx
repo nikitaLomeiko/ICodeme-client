@@ -34,7 +34,7 @@ export const Layout: React.FC<LayoutProps> = ({
         }}
       >
         <div
-          className={`text-[var(--ui-text)] ${isCentered ? "container mx-auto px-4" : ""} pt-4 pb-28`}
+          className={`text-[var(--ui-text)] ${isCentered ? "container mx-auto md:pl-20 md:pr-6 px-5" : ""} pt-4 pb-28`}
         >
           {children}
         </div>

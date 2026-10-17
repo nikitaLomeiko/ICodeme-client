@@ -1,7 +1,6 @@
 import { AchievementsData, useGetProfileQuery } from "@/entities/profile";
 import { useGetMyStudyQuery } from "@/entities/study";
 import { AchievementCarousel } from "@/widgets/achievement-view";
-import { Layout } from "@/widgets/layout";
 import { AboutView, ProfileView } from "@/widgets/profile-view";
 import { StudyList } from "@/widgets/study-view";
 import { useRouter } from "next/navigation";
@@ -18,7 +17,7 @@ export const ProfilePage = () => {
   }
 
   return (
-    <Layout>
+    <>
       <ProfileView
         profileDetails={{
           globalRank: 42,
@@ -46,6 +45,6 @@ export const ProfilePage = () => {
           <StudyList list={study.data} />
         </div>
       </div>
-    </Layout>
+    </>
   );
 };

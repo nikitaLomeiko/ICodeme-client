@@ -31,6 +31,9 @@ export const StepWrapper: React.FC<IProps> = (props) => {
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="mb-8">
+        <h2 className="text-white/80 text-2xl font-bold mb-8">
+          Осталось совсем немного
+        </h2>
         <ProgressBar
           value={progress}
           size="md"
@@ -62,7 +65,7 @@ export const StepWrapper: React.FC<IProps> = (props) => {
         >
           <Title
             as="p"
-            size="sm"
+            size="2xl"
             weight="medium"
             color="gray-600"
             align="center"

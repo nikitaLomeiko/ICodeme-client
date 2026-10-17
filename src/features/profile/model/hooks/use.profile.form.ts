@@ -26,7 +26,8 @@ export const useProfileForm = (props: IProps) => {
     if (!isValid) {
       methods.setError(field, {
         type: "manual",
-        message: methods.formState.errors[field]?.message || "Invalid field",
+        message:
+          methods.formState.errors[field]?.message || "Неверно указанное поле",
       });
 
       const element = document.querySelector(

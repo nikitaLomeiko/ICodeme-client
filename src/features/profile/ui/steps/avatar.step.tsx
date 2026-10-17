@@ -46,15 +46,6 @@ export const AvatarStep: React.FC<AvatarStepProps> = ({
             />
           </div>
         </div>
-        <Title
-          as="p"
-          size="xs"
-          weight="normal"
-          align="center"
-          className="light:text-gray-500 dark:text-gray-400 transition-colors duration-500"
-        >
-          choose an avatar
-        </Title>
       </div>
 
       <AvatarList

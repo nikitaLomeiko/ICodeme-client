@@ -17,7 +17,7 @@ export const AboutStep: React.FC<AboutStepProps> = ({
       name="bio"
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      placeholder="about"
+      placeholder="О себе..."
       error={error}
       variant="underline"
       size="lg"

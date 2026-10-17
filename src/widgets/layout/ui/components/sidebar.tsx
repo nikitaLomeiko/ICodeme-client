@@ -4,6 +4,7 @@ import { Logotype } from "@/shared/ui/logotype";
 import { Tab } from "./ui/tab";
 import { ITab } from "../../model/types/tab.type";
 import { Title } from "@/shared/ui/kit";
+import { useRouter } from "next/navigation";
 
 interface IProps {
   tabs: ITab[];
@@ -16,13 +17,16 @@ export const Sidebar: React.FC<IProps> = (props) => {
 
   const [tabSelectedId, setTabSelectedId] = useState(defaultSelectedId);
 
+  const router = useRouter();
+
   const handleTabSetSelectedId = (id: string) => {
+    router.push(id);
     setTabSelectedId(id);
     onSelectTab(id);
   };
 
   return (
-    <aside className="fixed left-4 top-4 bottom-4 w-64 z-40">
+    <aside className="fixed left-4 top-4 bottom-4 w-80 z-40">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}

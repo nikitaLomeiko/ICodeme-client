@@ -68,7 +68,7 @@ export default function Test() {
 
             <TextField
               id="email"
-              label="Email"
+              label="Почта"
               type="email"
               value={values.email}
               onChange={handleChange("email")}

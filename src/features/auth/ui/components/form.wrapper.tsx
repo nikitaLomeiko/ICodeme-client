@@ -21,11 +21,11 @@ export const FormWrapper: React.FC<IProps> = (props) => {
 
   return (
     <div>
-      <div className="text-center mb-4">
+      <div className="text-center mb-8">
         <Logotype className="flex justify-center" />
         <Title
           as="p"
-          size="xs"
+          size="2xl"
           weight="normal"
           align="center"
           className="mt-3 !text-[var(--ui-text)]/50"

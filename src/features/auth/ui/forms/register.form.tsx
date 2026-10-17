@@ -70,7 +70,8 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
       <div className="flex flex-col gap-7">
         <TextField
           id="email"
-          label="Email"
+          label="Почта"
+          size="lg"
           type="email"
           variant="underline"
           {...register("email")}
@@ -83,6 +84,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
         <PasswordField
           id="password"
           label="Пароль"
+          size="lg"
           variant="underline"
           {...register("password")}
           required
@@ -92,6 +94,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
 
         <PasswordField
           id="confirmPassword"
+          size="lg"
           label="Подтвердите пароль"
           variant="underline"
           {...register("confirmPassword")}
@@ -109,7 +112,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
         disabled={isLoading}
         error={errors.agreedToTerms?.message}
         label={
-          <>
+          <span className="text-sm">
             Согласен с{" "}
             <a
               href="#"
@@ -117,7 +120,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
             >
               условиями
             </a>
-          </>
+          </span>
         }
       />
 

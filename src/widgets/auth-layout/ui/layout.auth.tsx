@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useAnimation } from "../model/hooks/use.animation";
-import { SphereGradient } from "./components/sphere.gradient";
 import { CardLiquid } from "./components/card.liquid";
 import { Particals } from "./components/particals";
 
@@ -22,8 +21,6 @@ export const AuthLayout: React.FC<IProps> = ({ children }) => {
           "linear-gradient(to bottom right, var(--bg-layout-to), var(--bg-layout-bottom), var(--bg-layout-right))",
       }}
     >
-      {/* <SphereGradient /> */}
-
       <Particals />
 
       <div className="relative min-h-screen flex items-center justify-center p-4 perspective-1000">

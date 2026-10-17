@@ -1,10 +1,17 @@
-import { FaEllipsisH, FaHome, FaStore, FaTrophy, FaUser } from "react-icons/fa";
+import {
+  FaEllipsisH,
+  FaHome,
+  FaStore,
+  FaTrophy,
+  FaUser,
+  FaCode,
+} from "react-icons/fa";
 import { ITab } from "../types/tab.type";
 
 export const tabs: ITab[] = [
-  { id: "learn", icon: FaHome, label: "Обучение" },
-  { id: "rating", icon: FaTrophy, label: "Рейтинг" },
+  { id: "/", icon: FaHome, label: "Обучение" },
   { id: "profile", icon: FaUser, label: "Профиль" },
+  { id: "dev", icon: FaCode, label: "Тренажеры" },
   { id: "shop", icon: FaStore, label: "Магазин" },
-  { id: "more", icon: FaEllipsisH, label: "Еще" },
+  { id: "Other", icon: FaEllipsisH, label: "Еще" },
 ];

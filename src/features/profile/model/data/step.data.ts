@@ -1,6 +1,6 @@
 export const stepTitles = [
-  "What's your name?",
-  "Choose an avatar",
-  "Tell us about yourself",
-  "What language are we learning?",
+  "Как вас зовут?",
+  "Выберите аватар",
+  "Расскажите немного о себе",
+  "Какой язык будем изучать?",
 ];

@@ -8,8 +8,6 @@ interface IProps {
 export const StepLine: React.FC<IProps> = ({ levelSteps }) => {
   const containerRef = useRef<SVGSVGElement | null>(null);
   const [width, setWidth] = useState(0);
-
-  // Следим за шириной родителя, чтобы переводить % в px
   const [lineColor, setLineColor] = useState("rgba(100,116,139,0.35)");
 
   useEffect(() => {
@@ -30,7 +28,8 @@ export const StepLine: React.FC<IProps> = ({ levelSteps }) => {
     }
 
     if (typeof document !== "undefined") {
-      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      const isDark =
+        document.documentElement.getAttribute("data-theme") === "dark";
       setLineColor(
         isDark ? "rgba(148,163,184,0.35)" : "rgba(100,116,139,0.35)",
       );
@@ -52,11 +51,10 @@ export const StepLine: React.FC<IProps> = ({ levelSteps }) => {
 
   const points = sortedSteps.map((item) => {
     const pos = item.step.position || { x: 100, y: 100 };
-    // x приходит в процентах → переводим в пиксели
     const xPx = (pos.x / 100) * width;
     return {
-      x: xPx + 60, // + половина ширины карточки
-      y: pos.y + 60, // + половина высоты карточки
+      x: xPx + 60,
+      y: pos.y + 60,
     };
   });
 
@@ -93,7 +91,6 @@ export const StepLine: React.FC<IProps> = ({ levelSteps }) => {
         strokeDasharray="6 7"
         strokeLinecap="round"
         fill="none"
-        className="transition-all duration-300"
       />
       {points.map(
         (point, idx) =>

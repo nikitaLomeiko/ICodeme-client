@@ -30,16 +30,6 @@ export const CardLiquid: React.FC<IProps> = (props) => {
         <div className="bg-black-500/70 backdrop-blur-2xl shadow-sm" />
 
         <motion.div
-          animate={
-            {
-              // background: [
-              //   "linear-gradient(45deg, rgba(99,102,241,0.15), rgba(16,185,129,0.1))",
-              //   "linear-gradient(135deg, rgba(16,185,129,0.1), rgba(99,102,241,0.15))",
-              //   "linear-gradient(225deg, rgba(99,102,241,0.15), rgba(16,185,129,0.1))",
-              //   "linear-gradient(315deg, rgba(16,185,129,0.1), rgba(99,102,241,0.15))",
-              // ],
-            }
-          }
           transition={{
             duration: 10,
             repeat: Infinity,
@@ -66,22 +56,13 @@ export const CardLiquid: React.FC<IProps> = (props) => {
           className="absolute inset-0 rounded-3xl overflow-hidden"
           style={{
             background:
-              "radial-gradient(circle at 30% 50%, rgba(99,102,241,0.08), transparent 50%), radial-gradient(circle at 70% 30%, rgba(167,1,236,0.08), transparent 50%)",
+              "radial-gradient(circle at 30% 50%, rgba(99,102,241,0.08), transparent 50%), radial-gradient(circle at 70% 30%, rgba(167,1,236,0.08), transparent 200%)",
             backgroundSize: "200% 200%",
           }}
         />
 
         <div className="relative p-8 overflow-hidden">
           <div className="relative z-10">{children}</div>
-
-          <div className="mt-6 text-center">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ delay: 0.8, duration: 1 }}
-              className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mt-4"
-            />
-          </div>
         </div>
       </motion.div>
     </motion.div>

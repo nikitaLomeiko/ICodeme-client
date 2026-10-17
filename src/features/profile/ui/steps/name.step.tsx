@@ -15,7 +15,7 @@ export const NameStep: React.FC<NameStepProps> = ({
     <TextField
       id="name"
       name="name"
-      placeholder="Name"
+      placeholder="Ваше имя"
       value={value}
       onChange={(e) => onChange(e.target.value)}
       error={error}
