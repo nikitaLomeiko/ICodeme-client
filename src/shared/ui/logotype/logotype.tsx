@@ -95,7 +95,7 @@ export const Logotype: React.FC<IProps> = ({
       {showLogotype ? (
         <img
           onClick={handleClickLogo}
-          src={`logo/${anim}`}
+          src={`/logo/${anim}`}
           alt="logotype"
           className={`${isMobile ? "w-14 h-14" : "w-38 h-38"} cursor-pointer`}
         />

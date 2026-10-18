@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { NameStep, AvatarStep, AboutStep, LanguageStep } from "./steps";
+import { NameStep, AvatarStep, AboutStep, ChatStep } from "./steps";
 import { StepWrapper } from "./components/step.wrapper";
 import { stepTitles } from "../model/data/step.data";
 import {
@@ -96,7 +96,7 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
 
       case 3:
         return (
-          <LanguageStep
+          <ChatStep
             value={methods.watch("language")}
             onChange={(value) => methods.setValue("language", value)}
             error={getFieldState("language").error?.message}

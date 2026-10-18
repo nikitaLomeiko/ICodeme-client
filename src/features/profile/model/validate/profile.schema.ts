@@ -4,7 +4,7 @@ export const profileSchema = z.object({
   name: z.string().min(1, "Введите имя"),
   avatar: z.string().min(1, "Выберите аватарку"),
   bio: z.string().min(1, "Расскажите о себе"),
-  language: z.string().min(1, "Выберите язык программирования"),
+  language: z.string().min(1, "Пройдите опрос до конца"),
 });
 
 export const profileEditSchema = z.object({
