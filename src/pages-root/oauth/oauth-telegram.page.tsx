@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useTelegramVerifiyMutation } from "@/entities/auth";
-import { isApiError } from "@/shared/api";
 import { Loader } from "@/shared/ui/kit";
 
 const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN || "http://127.0.0.1:5173/";
@@ -13,8 +12,12 @@ interface IProps {
 
 export const OAuthTelegramPage: React.FC<IProps> = ({ hash }) => {
   const [verify] = useTelegramVerifiyMutation();
+  const startedRef = useRef(false);
 
   useEffect(() => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+
     const params: Record<string, string> = {};
 
     hash.split("&").forEach(function (p) {
@@ -22,18 +25,24 @@ export const OAuthTelegramPage: React.FC<IProps> = ({ hash }) => {
       params[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || "");
     });
 
-    const fetch = async () => {
-      const result = await verify(JSON.stringify(params));
+    const authorize = async () => {
+      try {
+        const result = await verify(JSON.stringify(params)).unwrap();
 
-      if (result.error && isApiError(result.error)) {
+        if (!result.success || !result.data) {
+          window.location.href = `${DOMAIN}oauth/error`;
+          return;
+        }
+
+        const { token, refreshToken, userId, email } = result.data;
+        window.location.href = `${DOMAIN}oauth/success?token=${encodeURIComponent(token)}&refreshToken=${encodeURIComponent(refreshToken)}&userId=${encodeURIComponent(userId)}&email=${encodeURIComponent(email)}`;
+      } catch {
         window.location.href = `${DOMAIN}oauth/error`;
       }
-
-      window.location.href = `${DOMAIN}oauth/success?token=${result.data?.data?.token}&refreshToken=${result.data?.data?.refreshToken}&userId=${result.data?.data?.userId}&email=${result.data?.data?.email}`;
     };
 
-    fetch();
-  }, []);
+    authorize();
+  }, [hash, verify]);
 
   return (
     <div className="flex justify-center items-center h-screen">

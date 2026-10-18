@@ -25,6 +25,7 @@ export const OAuthSuccessPage = () => {
       const email = searchParams.get("email") || "";
 
       const result = await validate({ accessToken: token, refreshToken });
+
       if (!result.data?.success) {
         router.push("/oauth/error");
         return;
