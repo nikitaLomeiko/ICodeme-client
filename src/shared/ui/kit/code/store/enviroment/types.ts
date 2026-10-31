@@ -3,7 +3,8 @@ export type EnviromentAction =
   | { type: "SET_SIDEBAR_WIDTH"; width: number }
   | { type: "SET_FONT_SIZE"; size: number }
   | { type: "TOGGLE_SEARCH" }
-  | { type: "TOGGLE_COPIED" };
+  | { type: "TOGGLE_COPIED" }
+  | { type: "TOGGLE_PREVIEW" };
 
 export interface IStateProvider {
   sidebarOpen: boolean;
@@ -11,4 +12,5 @@ export interface IStateProvider {
   fontSize: number;
   showSearch: boolean;
   copied: boolean;
+  previewOpen: boolean;
 }

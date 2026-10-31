@@ -7,6 +7,7 @@ export function initEnviroment(
   return {
     copied: false,
     fontSize: fontSize,
+    previewOpen: false,
     showSearch: false,
     sidebarOpen: true,
     sidebarWidth: sidebarWidth,
@@ -26,6 +27,8 @@ export function enviromentReducer(
     }
     case "TOGGLE_COPIED":
       return { ...state, copied: !state.copied };
+    case "TOGGLE_PREVIEW":
+      return { ...state, previewOpen: !state.previewOpen };
     case "SET_FONT_SIZE":
       return { ...state, fontSize: action.size };
     case "SET_SIDEBAR_WIDTH":

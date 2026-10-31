@@ -1,6 +1,7 @@
 import {
   FiArrowLeft,
   FiCopy,
+  FiEye,
   FiMaximize2,
   FiMinimize2,
   FiMinus,
@@ -12,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { useExplorer } from "../store/file/use.explorer";
 import { useEffect } from "react";
 import { useEnviroment } from "../store/enviroment";
+import { isHtmlFile } from "../libs/utils/build-document";
 import { FileNode } from "../types/types";
 
 interface IProps {
@@ -21,7 +23,10 @@ interface IProps {
 export const CodeHeader: React.FC<IProps> = ({ onRun }) => {
   const { activeFile, allFiles } = useExplorer();
 
-  const { copied, fontSize, sidebarOpen, dispatch } = useEnviroment();
+  const { copied, fontSize, sidebarOpen, previewOpen, dispatch } =
+    useEnviroment();
+
+  const hasHtmlFile = allFiles.some(isHtmlFile);
 
   const router = useRouter();
 
@@ -121,9 +126,23 @@ export const CodeHeader: React.FC<IProps> = ({ onRun }) => {
           <button
             onClick={() => onRun(allFiles)}
             className="rounded-lg p-1.5 hover:bg-[var(--ui-text)]/5 text-[var(--ui-text-muted)] hover:text-[var(--ui-primary)] transition-all"
-            title="Search in code"
+            title="Run code"
           >
             <FiPlay className="w-3.5 h-3.5" />
+          </button>
+        )}
+
+        {hasHtmlFile && (
+          <button
+            onClick={() => dispatch?.({ type: "TOGGLE_PREVIEW" })}
+            className={`rounded-lg p-1.5 hover:bg-[var(--ui-text)]/5 transition-all ${
+              previewOpen
+                ? "text-[var(--ui-primary)] bg-[var(--ui-text)]/5"
+                : "text-[var(--ui-text-muted)] hover:text-[var(--ui-primary)]"
+            }`}
+            title="Preview"
+          >
+            <FiEye className="w-3.5 h-3.5" />
           </button>
         )}
       </div>

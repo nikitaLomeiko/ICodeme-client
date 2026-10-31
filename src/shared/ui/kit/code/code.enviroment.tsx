@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { FileExplorer } from "./components/file.explorer";
 import { CodeEditor } from "./components/code.editor";
+import { CodePreview } from "./components/code.preview";
 import { EmptyMessage } from "./components/empty.message";
 import { CodeHeader } from "./components/code.header";
 import { useExplorer } from "./store/file/use.explorer";
@@ -32,6 +33,8 @@ export const CodeEnviroment: React.FC<IProps> = ({ onRun }) => {
           {activeFile ? <CodeEditor /> : <EmptyMessage />}
         </main>
       </div>
+
+      <CodePreview />
     </div>
   );
 };
