@@ -40,7 +40,10 @@ export function RootLayout({
       <body className={bodyClassname}>
         <StoreProvider>
           <AuthProvider>
-            <UIThemeProvider theme={ThemeEnum.LIGHT}>
+            <UIThemeProvider
+              theme={ThemeEnum.LIGHT}
+              availableThemes={availableThemes}
+            >
               <NotificationProvider
                 position="bottom-right"
                 defaultDuration={4500}

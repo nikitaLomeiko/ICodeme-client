@@ -29,9 +29,18 @@ export const UIThemeProvider: React.FC<UIThemeProviderProps> = ({
   };
 
   useEffect(() => {
-    const storageTheme = localStorage.getItem("data-theme") || theme;
-    document.documentElement.setAttribute("data-theme", storageTheme);
-  }, [theme]);
+    const storedTheme = localStorage.getItem("data-theme") as ThemeEnum | null;
+    const activeTheme =
+      storedTheme && availableThemes.includes(storedTheme)
+        ? storedTheme
+        : theme;
+
+    if (activeTheme !== theme) {
+      setThemeState(activeTheme);
+    }
+
+    document.documentElement.setAttribute("data-theme", activeTheme);
+  }, [availableThemes, theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, availableThemes }}>
