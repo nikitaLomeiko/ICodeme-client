@@ -24,7 +24,13 @@ export const Layout: React.FC<LayoutProps> = ({
 
   return (
     <div className="min-h-screen bg-[var(--ui-background)] transition-colors duration-300">
-      {isMobile && <Logotype isMobile />}
+      {isMobile && (
+        <header className="sticky top-0 z-40 border-b border-[var(--ui-border)] bg-[var(--ui-background)]/95 shadow-sm backdrop-blur-md">
+          <div className="mx-auto max-w-screen-lg px-3">
+            <Logotype isMobile />
+          </div>
+        </header>
+      )}
 
       <main
         className="min-h-screen transition-all duration-300 ease-in-out"

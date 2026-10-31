@@ -5,6 +5,7 @@ import { Tab } from "./ui/tab";
 import { ITab } from "../../model/types/tab.type";
 import { Title } from "@/shared/ui/kit";
 import { useRouter } from "next/navigation";
+import { FaCog } from "react-icons/fa";
 
 interface IProps {
   tabs: ITab[];
@@ -16,13 +17,27 @@ export const Sidebar: React.FC<IProps> = (props) => {
   const { tabs, defaultSelectedId, onSelectTab } = props;
 
   const [tabSelectedId, setTabSelectedId] = useState(defaultSelectedId);
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
 
   const router = useRouter();
 
   const handleTabSetSelectedId = (id: string) => {
+    if (id === "Other") {
+      setIsMoreOpen((isOpen) => !isOpen);
+      return;
+    }
+
+    setIsMoreOpen(false);
     router.push(id);
     setTabSelectedId(id);
     onSelectTab(id);
+  };
+
+  const openSettings = () => {
+    setIsMoreOpen(false);
+    setTabSelectedId("Other");
+    router.push("/settings");
+    onSelectTab("/settings");
   };
 
   return (
@@ -48,8 +63,20 @@ export const Sidebar: React.FC<IProps> = (props) => {
                 <Tab
                   {...tab}
                   onActive={() => handleTabSetSelectedId(tab.id)}
-                  isActive={tab.id === tabSelectedId}
+                  isActive={tab.id === tabSelectedId || (tab.id === "Other" && isMoreOpen)}
                 />
+                {tab.id === "Other" && isMoreOpen && (
+                  <div className="ml-4 mt-2 rounded-xl border border-[var(--ui-border)] bg-[var(--ui-background)] p-1 shadow-lg">
+                    <button
+                      type="button"
+                      onClick={openSettings}
+                      className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-[var(--ui-text-secondary)] transition-colors hover:bg-[var(--ui-primary)]/10 hover:text-[var(--ui-primary)]"
+                    >
+                      <FaCog className="text-[var(--ui-text-muted)]" />
+                      <span>Настройки</span>
+                    </button>
+                  </div>
+                )}
               </motion.div>
             ))}
           </nav>
