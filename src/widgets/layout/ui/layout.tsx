@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 import { Sidebar } from "./components/sidebar";
 import { Navbar } from "./components/navbar";
@@ -21,6 +21,7 @@ export const Layout: React.FC<LayoutProps> = ({
   isCentered = true,
 }) => {
   const isMobile = useMobile();
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   return (
     <div className="min-h-screen bg-[var(--ui-background)] transition-colors duration-300">
@@ -35,12 +36,22 @@ export const Layout: React.FC<LayoutProps> = ({
       <main
         className="min-h-screen transition-all duration-300 ease-in-out"
         style={{
-          marginLeft: !isMobile && isRenderSideBar ? "280px" : "0",
-          width: !isMobile && isRenderSideBar ? "calc(100% - 280px)" : "100%",
+          marginLeft:
+            !isMobile && isRenderSideBar
+              ? isSidebarCollapsed
+                ? "104px"
+                : "280px"
+              : "0",
+          width:
+            !isMobile && isRenderSideBar
+              ? isSidebarCollapsed
+                ? "calc(100% - 104px)"
+                : "calc(100% - 280px)"
+              : "100%",
         }}
       >
         <div
-          className={`text-[var(--ui-text)] ${isCentered ? "container mx-auto md:pl-20 md:pr-6 px-5" : ""} pt-4 pb-28`}
+          className={`text-[var(--ui-text)] ${isCentered ? `mx-auto ${isSidebarCollapsed ? "w-full max-w-none md:pl-8" : "container md:pl-20"} md:pr-6 px-5` : ""} pt-4 pb-28`}
         >
           {children}
         </div>
@@ -53,6 +64,8 @@ export const Layout: React.FC<LayoutProps> = ({
               defaultSelectedId={tabs[0].id}
               onSelectTab={console.log}
               tabs={tabs}
+              isCollapsed={isSidebarCollapsed}
+              onToggleCollapsed={() => setIsSidebarCollapsed((collapsed) => !collapsed)}
             />
           )}
         </>

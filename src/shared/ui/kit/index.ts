@@ -14,3 +14,4 @@ export * from './markdown'
 export * from "./quiz";
 export * from "./terminal";
 export * from "./preview";
+export * from "./chat";

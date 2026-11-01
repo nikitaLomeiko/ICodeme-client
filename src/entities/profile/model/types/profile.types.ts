@@ -14,6 +14,7 @@ export interface IProfileData {
   avatar: string;
   name: string;
   about: string;
+  info: string;
 }
 
 export interface ILevel {

@@ -4,18 +4,21 @@ import { ITab } from "../../../model/types/tab.type";
 interface IProps extends Omit<ITab, "id"> {
   onActive: () => void;
   isActive: boolean;
+  isCollapsed?: boolean;
 }
 
 export const Tab: React.FC<IProps> = (props) => {
-  const { isActive, onActive, icon, label } = props;
+  const { isActive, onActive, icon, label, isCollapsed = false } = props;
 
   const IconComponent = icon;
 
   return (
     <button
       onClick={onActive}
+      title={isCollapsed ? label : undefined}
       className={`
-        w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200
+        relative w-full flex items-center rounded-xl py-3 transition-all duration-200
+        ${isCollapsed ? "justify-center px-2" : "space-x-3 px-4"}
         ${
           isActive
             ? "bg-[var(--ui-primary)] text-[var(--ui-text)] shadow-md"
@@ -30,9 +33,11 @@ export const Tab: React.FC<IProps> = (props) => {
             : "text-[var(--ui-text-muted)] group-hover:text-[var(--ui-primary)]"
         }`}
       />
-      <span className="font-medium">{label}</span>
+      <span className={isCollapsed ? "sr-only" : "font-medium"}>{label}</span>
       {isActive && (
-        <span className="ml-auto w-2 h-2 rounded-full bg-[var(--ui-text)]" />
+        <span
+          className={`${isCollapsed ? "absolute right-2" : "ml-auto"} h-2 w-2 rounded-full bg-[var(--ui-text)]`}
+        />
       )}
     </button>
   );

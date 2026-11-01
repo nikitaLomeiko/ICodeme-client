@@ -30,7 +30,7 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
       name: "",
       avatar: "",
       bio: "",
-      language: "",
+      info: "",
     },
   });
 
@@ -51,7 +51,7 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
     const result = await create({
       about: data.bio,
       avatar: data.avatar,
-      //languageProgram: data.language,
+      info: data.info,
       name: data.name,
     });
 
@@ -62,7 +62,7 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
 
     notification.success("The profile was successfully created");
 
-    router.push("/");
+    router.push("/profile");
   };
 
   const renderStep = () => {
@@ -97,9 +97,8 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
       case 3:
         return (
           <ChatStep
-            value={methods.watch("language")}
-            onChange={(value) => methods.setValue("language", value)}
-            error={getFieldState("language").error?.message}
+            onChange={(value) => methods.setValue("info", value)}
+            error={getFieldState("info").error?.message}
           />
         );
 

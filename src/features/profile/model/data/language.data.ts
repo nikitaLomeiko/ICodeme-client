@@ -6,6 +6,5 @@ export const programmingLanguages = [
   "DevOps (Разработка инфраструктуры)",
   "Data Science (Анализ данных, модели)",
   "QA (Ручные и автоматические тесты)",
-  "GameDev (Разработка игр)",
   "Embedded (Системная разработка)",
 ];
