@@ -8,7 +8,6 @@ import { FaSignOutAlt } from "react-icons/fa";
 
 export interface IProps {
   profile: IProfile;
-  languages: string[];
   onEdit: () => void;
   onLogout: () => void;
   totalUser: number;
@@ -16,7 +15,7 @@ export interface IProps {
 }
 
 export const ProfileDetails: React.FC<IProps> = (props) => {
-  const { profile, languages, onEdit, onLogout, totalUser, globalRank } = props;
+  const { profile, onEdit, onLogout, totalUser, globalRank } = props;
 
   return (
     <Card
@@ -56,7 +55,10 @@ export const ProfileDetails: React.FC<IProps> = (props) => {
                 {profile.userId}
               </div>
 
-              <LanguageList languages={languages} />
+              <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-[var(--ui-primary)]/30 bg-[var(--ui-primary)]/10 px-3 py-1 text-xs font-semibold text-[var(--ui-primary)] shadow-sm">
+                <span aria-hidden="true">✦</span>
+                <span>Звание: {profile.data.position}</span>
+              </div>
             </div>
           </div>
 
@@ -66,6 +68,13 @@ export const ProfileDetails: React.FC<IProps> = (props) => {
           >
             <FaSignOutAlt size={20} />
           </button>
+        </div>
+
+        <div className="mt-5 rounded-2xl border border-[var(--ui-border)] bg-[var(--ui-background)]/50 p-4">
+          <div className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-[var(--ui-text-muted)]">
+            Направление и языки программирования
+          </div>
+          <LanguageList languages={profile.data.chips} />
         </div>
 
         <div className="flex flex-col lg:flex-row justify-between w-full border-t border-[var(--ui-border)] mt-4 sm:mt-6 pt-4 sm:pt-6 gap-4 sm:gap-6">

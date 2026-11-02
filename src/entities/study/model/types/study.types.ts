@@ -1,6 +1,6 @@
 import { IQuiz } from "./quiz.types";
 
-export interface IStudy {
+export interface IStudy extends INotation {
   _id: string;
   userId: string;
   levelPlanJSON: IPosition[];
@@ -18,7 +18,7 @@ export interface IPosition {
 }
 
 export interface IPlan {
-  programmingLanguage: string;
+  context: string;
   module: number;
   moduleTitle: string;
   level: number;

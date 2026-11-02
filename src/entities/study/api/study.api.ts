@@ -7,6 +7,14 @@ export const studyApi = createApi({
   baseQuery: fetchBase,
   tagTypes: ["Study"],
   endpoints: (build) => ({
+    createNewStudy: build.mutation<IResponse<IStudy>, string>({
+      query: (context) => ({
+        url: "study/me",
+        method: "POST",
+        body: { context },
+      }),
+      invalidatesTags: ["Study"],
+    }),
     getMyStudy: build.query<IResponse<IStudy[]>, null>({
       query: () => ({
         url: "study/me",
@@ -37,4 +45,5 @@ export const {
   useLazyGetMyStudyQuery,
   useAddNewLanguageMutation,
   useDeleteStudyMutation,
+  useCreateNewStudyMutation,
 } = studyApi;

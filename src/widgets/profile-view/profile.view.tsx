@@ -1,9 +1,12 @@
+import { useLogoutMutation } from "@/entities/auth";
 import {
   ProfileDetails,
   IProps as IProfileDetailsProps,
 } from "@/entities/profile";
 import { ProfileEditForm } from "@/features/profile";
+import { isApiError } from "@/shared/api";
 import { Modal, ModalBody, useNotification } from "@/shared/ui/kit";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface IProps {
@@ -15,6 +18,18 @@ export const ProfileView: React.FC<IProps> = (props) => {
 
   const [isOpen, setOpen] = useState<boolean>(false);
   const notification = useNotification();
+  const [logout] = useLogoutMutation();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    const result = await logout();
+
+    if (result.error && isApiError(result.error)) {
+      return;
+    }
+
+    router.push("/auth");
+  };
 
   const handleSuccess = () => {
     setOpen(false);
@@ -26,7 +41,7 @@ export const ProfileView: React.FC<IProps> = (props) => {
       <ProfileDetails
         {...profileDetails}
         onEdit={() => setOpen(true)}
-        onLogout={console.log}
+        onLogout={handleLogout}
       />
 
       <Modal

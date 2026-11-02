@@ -16,11 +16,11 @@ export const profileApi = createApi({
       providesTags: ["Profile"],
     }),
     createProfile: build.mutation<IResponse<IProfile>, ICreateProfileParams>({
-      query: ({ about, avatar, name, info }) => ({
+      query: ({ about, avatar, name }) => ({
         url: "profiles/me",
         method: "POST",
         body: {
-          profileData: { about, avatar, name, info },
+          profileData: { about, avatar, name },
         },
       }),
       invalidatesTags: ["Profile"],

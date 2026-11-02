@@ -4,11 +4,11 @@ interface IProps {
 
 export const LanguageList: React.FC<IProps> = ({ languages }) => {
   return (
-    <div className="flex flex-wrap gap-2 justify-center sm:justify-start mt-2">
+    <div className="flex flex-wrap gap-1.5 justify-start">
       {languages.map((lang, idx) => (
         <span
           key={idx}
-          className="px-2 py-1 sm:px-3 sm:py-1.5 bg-[var(--ui-primary)]/10 rounded-lg text-xs sm:text-sm font-medium text-[var(--ui-primary)]"
+          className="px-2.5 py-1.5 bg-[var(--ui-primary)]/15 rounded-lg text-sm font-semibold text-[var(--ui-primary)]"
         >
           {lang}
         </span>

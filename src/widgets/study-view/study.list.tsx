@@ -95,9 +95,6 @@ export const StudyList: React.FC<IProps> = ({ list }) => {
         <ModalBody>
           <StudyDeleteForm
             id={selectedStudy?._id || ""}
-            itemTitle={
-              selectedStudy?.study.programmingLanguage || "Не определен"
-            }
             onCancel={() => setDeleteModalOpen(false)}
           />
         </ModalBody>

@@ -22,8 +22,6 @@ export const ProfilePage = () => {
         profileDetails={{
           globalRank: 42,
           totalUser: 121,
-          languages:
-            study?.data?.map((item) => item.study.programmingLanguage) || [],
           profile: profile?.data,
         }}
       />

@@ -23,22 +23,37 @@ export const PlanItem: React.FC<IProps> = ({ study, onContinue, onDelete }) => {
       </button>
 
       <div className="p-3 sm:p-4">
-        <div className="flex flex-col sm:flex-row sm:items-start gap-3">
-          <div className="p-2 bg-[var(--ui-primary)]/10 rounded-lg flex-shrink-0 self-start">
-            <FiCode className="text-[var(--ui-primary)] text-lg" />
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
+          <div className="flex-shrink-0 self-start rounded-lg bg-[var(--ui-primary)]/10 p-2">
+            <FiCode className="text-lg text-[var(--ui-primary)]" />
           </div>
-          <div className="flex-1 min-w-0 pr-6">
-            <div className="text-base font-bold text-[var(--ui-text)] mb-1">
-              {study.study.programmingLanguage}
+          <div className="min-w-0 flex-1 pr-6">
+            <h3 className="mb-1 text-base font-bold text-[var(--ui-text)]">
+              {study.title}
+            </h3>
+            <p className="mb-2 text-sm leading-relaxed text-[var(--ui-text-secondary)]">
+              {study.description}
+            </p>
+            <div className="my-2 grid grid-cols-2 gap-2">
+              <div className="min-w-0 rounded-lg border border-[var(--ui-border)] bg-[var(--ui-background)]/70 px-2.5 py-2">
+                <div className="mb-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--ui-text-muted)]">
+                  Модуль
+                </div>
+                <div className="truncate text-xs font-semibold text-[var(--ui-text)]">
+                  {study.study.moduleTitle || "Не начато"}
+                </div>
+              </div>
+              <div className="min-w-0 rounded-lg border border-[var(--ui-border)] bg-[var(--ui-background)]/70 px-2.5 py-2">
+                <div className="mb-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--ui-text-muted)]">
+                  Уровень
+                </div>
+                <div className="truncate text-xs font-semibold text-[var(--ui-text)]">
+                  {study.study.levelTitle || "Не начато"}
+                </div>
+              </div>
             </div>
-            <div className="text-xs text-[var(--ui-text-secondary)]">
-              Модуль: {study.study.moduleTitle || "Не начато"}
-            </div>
-            <div className="text-xs text-[var(--ui-text-secondary)]">
-              Уровень: {study.study.levelTitle || "Не начато"}
-            </div>
-            <div className="mt-2 mb-3">
-              <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-[var(--ui-primary)]/10 rounded-md text-xs font-medium text-[var(--ui-primary)]">
+            <div className="mb-3 mt-2">
+              <span className="flex w-full items-center gap-1.5 rounded-lg border border-[var(--ui-primary)]/20 bg-[var(--ui-primary)]/10 px-3 py-2 text-xs font-semibold text-[var(--ui-primary)]">
                 <FiBriefcase size={12} />
                 {study.level.positionName}
               </span>

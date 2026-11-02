@@ -8,11 +8,10 @@ import { useDeleteStudyMutation } from "@/entities/study";
 interface IProps {
   onCancel: () => void;
   id: string;
-  itemTitle?: string;
 }
 
 export const StudyDeleteForm: React.FC<IProps> = (props) => {
-  const { onCancel, itemTitle, id } = props;
+  const { onCancel, id } = props;
 
   const [userInput, setUserInput] = useState("");
   const [randomChars, setRandomChars] = useState("");
@@ -55,8 +54,7 @@ export const StudyDeleteForm: React.FC<IProps> = (props) => {
   return (
     <div>
       <p className="text-sm text-[var(--ui-text-secondary)] mb-4">
-        Вы уверены, что хотите удалить{itemTitle ? ` "${itemTitle}"` : ""}? Это
-        действие нельзя отменить.
+        Вы уверены, что хотите удалить этот план? Это действие нельзя отменить.
       </p>
 
       <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 mb-4">

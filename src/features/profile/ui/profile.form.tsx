@@ -15,6 +15,7 @@ import { useCreateProfileMutation } from "@/entities/profile";
 import { isApiError } from "@/shared/api";
 import { useRouter } from "next/navigation";
 import { useNotification } from "@/shared/ui/kit";
+import { useCreateNewStudyMutation } from "@/entities/study";
 
 const TOTAL_STEPS = 4;
 
@@ -37,6 +38,8 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
   const router = useRouter();
   const notification = useNotification();
   const [create, { isLoading }] = useCreateProfileMutation();
+  const [createModule, { isLoading: isLoadingModule }] =
+    useCreateNewStudyMutation();
   const [error, setError] = useState<string | null>(null);
 
   const { handleSubmit, getFieldState } = methods;
@@ -51,12 +54,18 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
     const result = await create({
       about: data.bio,
       avatar: data.avatar,
-      info: data.info,
       name: data.name,
     });
 
     if (result.error && isApiError(result.error)) {
       setError(result.error.data.message);
+      return;
+    }
+
+    const resultModule = await createModule(data.info);
+
+    if (resultModule.error && isApiError(resultModule.error)) {
+      setError(resultModule.error.data.message);
       return;
     }
 
