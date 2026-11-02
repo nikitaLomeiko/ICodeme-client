@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useTelegramVerifiyMutation } from "@/entities/auth";
 import { Loader } from "@/shared/ui/kit";
 
-const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN || "http://127.0.0.1:5173/";
+const DOMAIN = "/";
 
 interface IProps {
   hash: string;
@@ -18,12 +18,10 @@ export const OAuthTelegramPage: React.FC<IProps> = ({ hash }) => {
     if (startedRef.current) return;
     startedRef.current = true;
 
-    const params: Record<string, string> = {};
-
-    hash.split("&").forEach(function (p) {
-      const kv = p.split("=");
-      params[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || "");
-    });
+    const params = Object.fromEntries(
+      new URLSearchParams(hash.replace(/^#/, "")),
+    );
+    window.history.replaceState(null, "", window.location.pathname);
 
     const authorize = async () => {
       try {
@@ -34,8 +32,7 @@ export const OAuthTelegramPage: React.FC<IProps> = ({ hash }) => {
           return;
         }
 
-        const { token, refreshToken, userId, email } = result.data;
-        window.location.href = `${DOMAIN}oauth/success?token=${encodeURIComponent(token)}&refreshToken=${encodeURIComponent(refreshToken)}&userId=${encodeURIComponent(userId)}&email=${encodeURIComponent(email)}`;
+        window.location.replace(`${DOMAIN}oauth/success`);
       } catch {
         window.location.href = `${DOMAIN}oauth/error`;
       }

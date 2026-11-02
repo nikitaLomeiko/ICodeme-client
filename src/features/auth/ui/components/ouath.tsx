@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/shared/ui/kit";
-import { oauthProviders } from "../../model/data/oauth.data";
+import { oauthProviders, TELEGRAM_ORIGIN } from "../../model/data/oauth.data";
 import { useState } from "react";
 
 export const OAuth = () => {
@@ -9,7 +9,13 @@ export const OAuth = () => {
 
   const handleOauth = (endpoint: string) => {
     setLoading(true);
-    window.location.href = endpoint;
+    const url = new URL(endpoint);
+    if (url.hostname === "oauth.telegram.org") {
+      const origin = new URL(TELEGRAM_ORIGIN).origin;
+      url.searchParams.set("origin", origin);
+      url.searchParams.set("return_to", `${origin}/oauth/telegram`);
+    }
+    window.location.assign(url.toString());
   };
 
   return (

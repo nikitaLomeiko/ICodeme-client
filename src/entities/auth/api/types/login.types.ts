@@ -1,6 +1,4 @@
-import { IToken } from "../../model";
-
-export interface IAuthResponse extends IToken, IAuth {}
+export type IAuthResponse = IAuth;
 
 export interface IAuth {
   userId: string;

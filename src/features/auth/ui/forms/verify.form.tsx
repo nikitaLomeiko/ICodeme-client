@@ -10,10 +10,17 @@ import { selectUserId, useConfirmCodeMutation } from "@/entities/auth";
 import { useAppSelector } from "@/shared/lib/hooks";
 import { isApiError } from "@/shared/api";
 
-export const VerifyForm: React.FC<IBaseFormProps & { typeConfirm: string }> = ({
+interface VerifyFormProps extends Omit<IBaseFormProps, "onSuccess"> {
+  onSuccess?: (resetToken?: string) => void | Promise<void>;
+  typeConfirm: string;
+  isProcessing?: boolean;
+}
+
+export const VerifyForm: React.FC<VerifyFormProps> = ({
   setError,
   onSuccess,
   typeConfirm,
+  isProcessing = false,
 }) => {
   const {
     setValue,
@@ -42,9 +49,9 @@ export const VerifyForm: React.FC<IBaseFormProps & { typeConfirm: string }> = ({
       setError(result.error.data.message);
       return;
     }
-    if (result.data?.message) {
-      notification.success(result.data?.message);
-      onSuccess?.();
+    if (result.data) {
+      notification.success(result.data.message || "Почта подтверждена");
+      await onSuccess?.(result.data.data?.resetToken);
     }
   };
 
@@ -58,7 +65,7 @@ export const VerifyForm: React.FC<IBaseFormProps & { typeConfirm: string }> = ({
         length={5}
         value={codeValue}
         onChange={handleCodeChange}
-        disabled={isLoading}
+        disabled={isLoading || isProcessing}
         error={errors.code?.message}
         autoFocus
       />
@@ -68,8 +75,8 @@ export const VerifyForm: React.FC<IBaseFormProps & { typeConfirm: string }> = ({
         variant="primary"
         size="md"
         fullWidth
-        isLoading={isLoading}
-        disabled={isLoading}
+        isLoading={isLoading || isProcessing}
+        disabled={isLoading || isProcessing}
       >
         Подтвердить
       </Button>

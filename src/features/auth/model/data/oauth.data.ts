@@ -2,6 +2,9 @@ import { FaGithub, FaGoogle, FaTelegram } from "react-icons/fa";
 import { IOAtuh } from "../types/oauth.types";
 import { BASE_URL } from "@/shared/api";
 
+export const TELEGRAM_ORIGIN =
+  process.env.NEXT_PUBLIC_TELEGRAM_ORIGIN || "http://127.0.0.1:5173";
+
 export const oauthProviders: IOAtuh[] = [
   {
     id: "google",
@@ -19,6 +22,6 @@ export const oauthProviders: IOAtuh[] = [
     id: "telegram",
     icon: FaTelegram,
     textColor: "!text-blue-500",
-    url: "https://oauth.telegram.org/auth?bot_id=8694368343&origin=http://127.0.0.1:5173&return_to=http://127.0.0.1:5173/oauth/telegram",
+    url: `https://oauth.telegram.org/auth?bot_id=${process.env.NEXT_PUBLIC_TELEGRAM_BOT_ID || "8694368343"}`,
   },
 ];

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -14,7 +14,7 @@ import { FaEnvelope } from "react-icons/fa";
 import { IBaseFormProps } from "../../model/types/form.props";
 import { LoginFormData, loginSchema } from "../../model/validate/auth.schema";
 import { useAppDispatch } from "@/shared/lib/hooks";
-import { saveAuthToken, setAuthData } from "@/entities/auth/model";
+import { setAuthData } from "@/entities/auth/model";
 import { useLoginMutation } from "@/entities/auth";
 import { isApiError } from "@/shared/api";
 
@@ -52,13 +52,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     const resultData = result.data?.data;
 
     if (resultData) {
-      dispatch(
-        saveAuthToken({
-          refreshToken: resultData.refreshToken,
-          accessToken: resultData.accessToken,
-        }),
-      );
-
       dispatch(
         setAuthData({
           email: resultData.email,

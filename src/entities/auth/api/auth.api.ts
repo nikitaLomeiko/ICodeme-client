@@ -8,7 +8,6 @@ import {
   IUserIdResponse,
   IResetPasswordParams,
 } from "./types";
-import { IToken } from "../model";
 import { fetchBase, IResponse } from "@/shared/api";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
@@ -16,6 +15,9 @@ export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBase,
   endpoints: (build) => ({
+    logout: build.mutation<IResponse<null>, void>({
+      query: () => ({ url: "auth/logout", method: "POST" }),
+    }),
     login: build.mutation<IResponse<IAuthResponse>, ILoginParams>({
       query: (params) => ({
         url: "auth/login",
@@ -30,7 +32,10 @@ export const authApi = createApi({
         body: params,
       }),
     }),
-    confirmCode: build.mutation<IResponse<string>, IConfirmCodeParams>({
+    confirmCode: build.mutation<
+      IResponse<{ resetToken?: string }>,
+      IConfirmCodeParams
+    >({
       query: (params) => ({
         url: `auth/confirm/${params.typeConfirm}`,
         method: "POST",
@@ -69,26 +74,19 @@ export const authApi = createApi({
         body: JSON.parse(params),
       }),
     }),
-    validateTokens: build.mutation<IResponse<boolean>, IToken>({
-      query: (params) => ({
-        url: "auth/validate/tokens",
-        method: "POST",
-        body: params,
-      }),
-    }),
   }),
 });
 
 export const {
   useOauthQuery,
   useLoginMutation,
+  useLogoutMutation,
   useLazyOauthQuery,
   useRegisterMutation,
   useVerifyTokenQuery,
   useConfirmCodeMutation,
   useLazyVerifyTokenQuery,
   useResetPasswordMutation,
-  useValidateTokensMutation,
   useSendConfirmCodeMutation,
   useTelegramVerifiyMutation,
 } = authApi;

@@ -17,7 +17,7 @@ export const useProfileForm = (props: IProps) => {
       0: "name",
       1: "avatar",
       2: "bio",
-      3: "language",
+      3: "info",
     };
 
     const field = fieldNames[currentStep];

@@ -20,7 +20,11 @@ import { setUserId, useRegisterMutation } from "@/entities/auth";
 import { isApiError } from "@/shared/api";
 import { useAppDispatch } from "@/shared/lib/hooks";
 
-export const RegisterForm: React.FC<IBaseFormProps> = ({
+interface RegisterFormProps extends Omit<IBaseFormProps, "onSuccess"> {
+  onSuccess?: (credentials: { email: string; password: string }) => void;
+}
+
+export const RegisterForm: React.FC<RegisterFormProps> = ({
   onSuccess,
   setError,
 }) => {
@@ -61,7 +65,7 @@ export const RegisterForm: React.FC<IBaseFormProps> = ({
     if (result.data) {
       dispatch(setUserId(result.data?.data?.userId || ""));
       notification.info(result.data.message || "");
-      onSuccess?.();
+      onSuccess?.({ email: data.email, password: data.password });
     }
   };
 

@@ -1,49 +1,69 @@
 "use client";
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useStore } from "react-redux";
+import type { RootState } from "@/app/providers/redux-store";
+import { setAuthData, useLazyVerifyTokenQuery } from "@/entities/auth";
+import { useAppDispatch } from "@/shared/lib/hooks";
 import {
-  loadAuthToken,
-  logout,
-  selectToken,
-  setAuthData,
-  useLazyVerifyTokenQuery,
-} from "@/entities/auth";
-import { useAppDispatch, useAppSelector } from "@/shared/lib/hooks";
-import { isApiError } from "@/shared/api";
+  invalidateSession,
+  sessionRevision,
+  subscribeSession,
+} from "@/shared/api/session";
 
-interface IProps {
-  children: React.ReactNode;
-}
-
-export const AuthProvider: React.FC<IProps> = ({ children }) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const pathname = usePathname();
   const dispatch = useAppDispatch();
+  const store = useStore<RootState>();
   const [verify] = useLazyVerifyTokenQuery();
-  const token = useAppSelector(selectToken);
-
+  const [attempt, setAttempt] = useState(0);
+  const [failed, setFailed] = useState(false);
   useEffect(() => {
-    dispatch(loadAuthToken());
-  }, [dispatch]);
-
+    try {
+      localStorage.removeItem("auth_token");
+    } catch {}
+    return subscribeSession(() => {
+      invalidateSession();
+      window.location.reload();
+    });
+  }, []);
   useEffect(() => {
-    if (token.accessToken !== "") {
-      fetch();
+    if (
+      ["/oauth/success", "/oauth/telegram"].includes(pathname) ||
+      store.getState().auth.isAuthenticated !== null
+    )
       return;
-    }
-
-    async function fetch() {
-      const result = await verify(null);
-
-      if (result.error && isApiError(result.error)) dispatch(logout());
-
-      if (result.data?.success && result.data.data)
+    let active = true;
+    const revision = sessionRevision();
+    void verify(null).then((result) => {
+      if (!active || revision !== sessionRevision()) return;
+      if (result.data?.data)
         dispatch(
           setAuthData({
-            email: result.data.data.email,
             id: result.data.data.userId,
+            email: result.data.data.email,
           }),
         );
-    }
-  }, [token.accessToken]);
-
+      else if (result.error && store.getState().auth.isAuthenticated === null)
+        setFailed(true);
+    });
+    return () => {
+      active = false;
+    };
+  }, [attempt, dispatch, pathname, store, verify]);
+  if (failed)
+    return (
+      <div role="alert" className="p-6 text-center">
+        Не удалось проверить сессию.{" "}
+        <button
+          onClick={() => {
+            setFailed(false);
+            setAttempt((value) => value + 1);
+          }}
+        >
+          Повторить
+        </button>
+      </div>
+    );
   return children;
 };

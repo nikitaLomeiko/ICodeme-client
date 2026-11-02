@@ -1,96 +1,90 @@
 import {
   fetchBaseQuery,
-  BaseQueryFn,
-  FetchArgs,
-  FetchBaseQueryError,
+  type BaseQueryFn,
+  type FetchArgs,
 } from "@reduxjs/toolkit/query";
-import { ApiError, IBodyError } from "./types/error.types";
+import type { ApiError } from "./types/error.types";
 import { BASE_URL } from "./consts";
-import { RootState } from "@/app/providers/redux-store";
-import { refreshTokens } from "./request/refresh.request";
+import {
+  announceSession,
+  invalidateSession,
+  sessionLock,
+  sessionRevision,
+} from "./session";
+
+const query = fetchBaseQuery({ baseUrl: BASE_URL, credentials: "include" });
+const stale = () => ({
+  error: {
+    status: 409,
+    data: {
+      message: "Сессия изменилась. Повторите запрос.",
+      error: "SESSION_CHANGED",
+    },
+  },
+});
 
 export const fetchBase: BaseQueryFn<
   string | FetchArgs,
   unknown,
-  ApiError,
-  {}
+  ApiError
 > = async (args, api, extraOptions) => {
-  const getState = api.getState as () => RootState;
-  const token = getState().auth.token;
+  const url = typeof args === "string" ? args : args.url;
+  const changesSession = [
+    "auth/login",
+    "auth/logout",
+    "oauth/telegram/verify",
+  ].includes(url);
+  const protectedRequest =
+    !url.startsWith("oauth/") &&
+    (!url.startsWith("auth/") ||
+      ["auth/verify-token", "auth/validate/tokens"].includes(url));
+  const revision = changesSession ? invalidateSession() : sessionRevision();
+  const perform = async () => query(args, api, extraOptions);
+  let result = changesSession ? await sessionLock(perform) : await perform();
+  if (revision !== sessionRevision()) return stale();
 
-  const makeRequest = async (token?: string) => {
-    const baseQuery = fetchBaseQuery({
-      baseUrl: BASE_URL,
-      prepareHeaders: (headers) => {
-        if (token) {
-          headers.set("Authorization", `Bearer ${token}`);
-        }
-        return headers;
-      },
+  if (result.error?.status === 401 && protectedRequest) {
+    // Recheck inside the lock: another request/tab may already have refreshed.
+    result = await sessionLock(async () => {
+      if (revision !== sessionRevision()) return stale();
+      const current = await query("auth/verify-token", api, extraOptions);
+      if (current.error?.status === 401) {
+        const refreshed = await query(
+          { url: "auth/refresh", method: "POST" },
+          api,
+          extraOptions,
+        );
+        if (refreshed.error) return refreshed;
+      } else if (current.error) return current;
+      if (revision !== sessionRevision()) return stale();
+      return perform();
     });
-
-    const fetchArgs = typeof args === "string" ? { url: args } : args;
-
-    return await baseQuery(fetchArgs, api, extraOptions);
-  };
-
-  let result = await makeRequest(token.accessToken);
-
-  if (
-    result.error &&
-    (result.error as FetchBaseQueryError).status === 401 &&
-    token.refreshToken
-  ) {
-    try {
-      const refreshResult = await refreshTokens(token.refreshToken);
-
-      if (refreshResult.data.accessToken) {
-        api.dispatch({
-          type: "auth/saveAuthToken",
-          payload: {
-            accessToken: refreshResult.data.accessToken,
-            refreshToken: refreshResult.data.refreshToken || token.refreshToken,
-          },
-        });
-
-        result = await makeRequest(refreshResult.data.accessToken);
-      } else {
-        api.dispatch({ type: "auth/logout" });
-
-        if (typeof window !== "undefined") {
-          window.location.href = "/auth";
-        }
-      }
-    } catch (refreshError) {
+    if (revision !== sessionRevision()) return stale();
+    if (result.error?.status === 401) {
+      invalidateSession();
       api.dispatch({ type: "auth/logout" });
-      if (typeof window !== "undefined") {
-        window.location.href = "/auth";
-      }
-
-      return {
-        error: {
-          status: 401,
-          data: {
-            message: "Session expired. Please login again.",
-            error: "SESSION_EXPIRED",
-          },
-        } as ApiError,
-      };
     }
   }
-
+  if (changesSession && !result.error) {
+    if (url === "auth/logout") api.dispatch({ type: "auth/logout" });
+    announceSession();
+  }
   if (result.error) {
-    const error = result.error as FetchBaseQueryError;
+    const error = result.error;
     return {
       error: {
-        status: error.status || 500,
-        data: (error.data as IBodyError) || {
-          message: "Unknown error",
-          error: "UNKNOWN_ERROR",
-        },
-      } as ApiError,
+        status: typeof error.status === "number" ? error.status : 503,
+        data:
+          error.data &&
+          typeof error.data === "object" &&
+          "message" in error.data
+            ? (error.data as ApiError["data"])
+            : {
+                message: "Сервер недоступен. Повторите попытку.",
+                error: "NETWORK_ERROR",
+              },
+      },
     };
   }
-
   return result;
 };

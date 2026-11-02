@@ -1,47 +1,54 @@
 "use client";
-
-import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import {
-  saveAuthToken,
-  setAuthData,
-  useValidateTokensMutation,
-} from "@/entities/auth";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { setAuthData, useLazyVerifyTokenQuery } from "@/entities/auth";
 import { useAppDispatch } from "@/shared/lib/hooks";
 import { useLazyGetProfileQuery } from "@/entities/profile";
+import { isApiError } from "@/shared/api";
+import { announceSession } from "@/shared/api/session";
+import { Loader } from "@/shared/ui/kit";
 
 export const OAuthSuccessPage = () => {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [validate] = useValidateTokensMutation();
+  const [verify] = useLazyVerifyTokenQuery();
   const [getProfile] = useLazyGetProfileQuery();
-
+  const started = useRef(false);
+  const [error, setError] = useState("");
   useEffect(() => {
-    const processOAuth = async () => {
-      const token = searchParams.get("token") || "";
-      const refreshToken = searchParams.get("refreshToken") || "";
-      const userId = searchParams.get("userId") || "";
-      const email = searchParams.get("email") || "";
-
-      const result = await validate({ accessToken: token, refreshToken });
-
-      if (!result.data?.success) {
-        router.push("/oauth/error");
+    if (started.current) return;
+    started.current = true;
+    window.history.replaceState(null, "", "/oauth/success");
+    void (async () => {
+      const result = await verify(null);
+      if (!result.data?.data) {
+        setError("Не удалось завершить вход. Повторите попытку.");
         return;
       }
-
-      dispatch(setAuthData({ email, id: userId }));
-      dispatch(saveAuthToken({ accessToken: token, refreshToken }));
-
-      const profile = await getProfile(null);
-
-      if (!profile.data?.success) router.push("/auth/profile");
-      else router.push("/");
-    };
-
-    processOAuth();
-  }, []);
-
-  return null;
+      dispatch(
+        setAuthData({
+          id: result.data.data.userId,
+          email: result.data.data.email,
+        }),
+      );
+      announceSession();
+      const profile = await getProfile(null, false);
+      if (profile.data?.success) router.replace("/profile");
+      else if (
+        profile.error &&
+        isApiError(profile.error) &&
+        profile.error.status === 404
+      )
+        router.replace("/auth/profile");
+      else setError("Вы вошли в аккаунт, но загрузить профиль не удалось.");
+    })();
+  }, [dispatch, getProfile, router, verify]);
+  return error ? (
+    <div role="alert" className="p-6 text-center">
+      {error}{" "}
+      <button onClick={() => window.location.reload()}>Повторить</button>
+    </div>
+  ) : (
+    <Loader />
+  );
 };

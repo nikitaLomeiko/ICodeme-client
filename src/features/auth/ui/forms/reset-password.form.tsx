@@ -13,10 +13,9 @@ import { selectUserId, useResetPasswordMutation } from "@/entities/auth";
 import { useAppSelector } from "@/shared/lib/hooks";
 import { isApiError } from "@/shared/api";
 
-export const ResetPasswordForm: React.FC<IBaseFormProps> = ({
-  setError,
-  onSuccess,
-}) => {
+export const ResetPasswordForm: React.FC<
+  IBaseFormProps & { resetToken: string }
+> = ({ resetToken, setError, onSuccess }) => {
   const {
     register,
     handleSubmit,
@@ -36,7 +35,11 @@ export const ResetPasswordForm: React.FC<IBaseFormProps> = ({
   const handleResetPassword = async (data: ResetPasswordFormData) => {
     setError(null);
 
-    const result = await reset({ userId, newPassword: data.password });
+    const result = await reset({
+      userId,
+      resetToken,
+      newPassword: data.password,
+    });
 
     if (result.error && isApiError(result.error)) {
       setError(result.error.data.message);

@@ -5,6 +5,7 @@ import { profileApi } from "@/entities/profile";
 import { studyApi } from "@/entities/study";
 import { documentApi } from "@/entities/document";
 import { ideApi } from "@/entities/ide";
+import { accountCache } from "./middlewares/account.cache";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
+      accountCache,
       authApi.middleware,
       profileApi.middleware,
       studyApi.middleware,
