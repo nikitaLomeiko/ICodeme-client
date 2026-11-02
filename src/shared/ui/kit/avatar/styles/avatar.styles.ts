@@ -5,6 +5,7 @@ export const sizeClasses = {
   lg: "w-12 h-12 text-base",
   xl: "w-16 h-16 text-lg",
   "2xl": "w-20 h-20 text-xl",
+  "3xl": "w-40 h-40 text-6xl",
 };
 
 export const shapeClasses = {

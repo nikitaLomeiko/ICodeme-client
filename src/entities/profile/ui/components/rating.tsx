@@ -17,7 +17,7 @@ export const Rating: React.FC<IProps> = (props) => {
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
           <FiGlobe className="text-yellow-500 text-sm sm:text-base" />
-          <span className="text-xs text-[var(--ui-text-secondary)]">
+          <span className="text-sm font-semibold text-[var(--ui-text-secondary)]">
             Мировой рейтинг
           </span>
         </div>
@@ -25,7 +25,7 @@ export const Rating: React.FC<IProps> = (props) => {
           #{globalRank}
         </div>
       </div>
-      <div className="text-xs text-[var(--ui-text-secondary)]">
+        <div className="text-sm font-medium text-[var(--ui-text-secondary)]">
         из {totalUser.toLocaleString()} пользователей
       </div>
     </div>
