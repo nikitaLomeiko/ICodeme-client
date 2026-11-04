@@ -4,7 +4,6 @@ import "./styles/index.css";
 import {
   UIThemeProvider,
   ThemeEnum,
-  ThemeSwitcher,
   NotificationsWrapper,
   NotificationProvider,
 } from "@/shared/ui/kit";
@@ -36,7 +35,7 @@ export function RootLayout({
   const availableThemes = [ThemeEnum.LIGHT, ThemeEnum.DARK];
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={bodyClassname}>
         <StoreProvider>
           <AuthProvider>

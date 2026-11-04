@@ -27,25 +27,25 @@ export interface IPlan {
 }
 
 export interface IModule extends INotation {
-  id: string;
-  isCompleted: boolean;
-  isCurrent: boolean;
+  id?: string;
+  isCompleted?: boolean;
+  isCurrent?: boolean;
   levels: ILevel[];
 }
 
 export interface ILevel extends INotation {
-  id: string;
-  isCompleted: boolean;
-  isCurrent: boolean;
+  id?: string;
+  isCompleted?: boolean;
+  isCurrent?: boolean;
   steps: IStep[];
 }
 
 export interface IStep extends INotation {
-  id: string;
-  isCompleted: boolean;
-  isCurrent: boolean;
-  type: "document" | "code" | "quiz" | "exam";
-  position: { x: number; y: number };
+  id?: string;
+  isCompleted?: boolean;
+  isCurrent?: boolean;
+  type: StepType;
+  position?: { x: number; y: number };
   document?: string;
   code?: string;
   quiz?: IQuiz;
@@ -58,7 +58,7 @@ export interface IStepByLevel {
   stepIndexInLevel: number;
 }
 
-export type StepType = "document" | "code" | "quiz" | "exam";
+export type StepType = "document" | "code" | "quiz" | "test" | "exam";
 
 export interface INotation {
   title: string;

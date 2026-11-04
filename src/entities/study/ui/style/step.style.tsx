@@ -10,14 +10,12 @@ interface IPalette {
   chip: string;
 }
 
-export const getStepIcon = (type: StepType) => {
-  const icons: Record<StepType, IconType> = {
-    document: FaBook,
-    code: FaCode,
-    quiz: FaQuestion,
-    exam: FaGraduationCap,
-  };
-  return icons[type];
+export const stepIcons: Record<StepType, IconType> = {
+  document: FaBook,
+  code: FaCode,
+  quiz: FaQuestion,
+  test: FaQuestion,
+  exam: FaGraduationCap,
 };
 
 export const getStepPalette = (type: StepType) => {
@@ -46,6 +44,13 @@ export const getStepPalette = (type: StepType) => {
       dot: "#f59e0b",
       chip: "rgba(251,191,36,0.18)",
     },
+    test: {
+      color: "#fbbf24",
+      bg: "rgba(251,191,36,0.14)",
+      ring: "rgba(251,191,36,0.45)",
+      dot: "#f59e0b",
+      chip: "rgba(251,191,36,0.18)",
+    },
     exam: {
       color: "#c084fc",
       bg: "rgba(192,132,252,0.14)",
@@ -62,6 +67,7 @@ export const getStepLabel = (type: StepType) => {
     document: "Документ",
     code: "Код",
     quiz: "Тест",
+    test: "Тест",
     exam: "Экзамен",
   };
   return labels[type];

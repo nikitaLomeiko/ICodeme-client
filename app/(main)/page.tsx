@@ -2,5 +2,14 @@
 
 import { withAccount, withAuth } from "@/app/providers/auth";
 import { HomePage } from "@/pages-root/home";
+import { Suspense } from "react";
 
-export default withAuth(withAccount(HomePage));
+const ProtectedHomePage = withAuth(withAccount(HomePage));
+
+export default function HomeRoute() {
+  return (
+    <Suspense fallback={null}>
+      <ProtectedHomePage />
+    </Suspense>
+  );
+}

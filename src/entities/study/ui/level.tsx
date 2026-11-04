@@ -24,11 +24,16 @@ export const Level: React.FC<IProps> = (props) => {
   const isLocked = !isCompleted && !isCurrent;
 
   return (
-    <div key={id} className="relative mb-20 last:mb-0">
+    <div
+      key={id}
+      data-level-index={index - 1}
+      className="relative mb-20 last:mb-0"
+    >
       <div
         className={`
           relative mb-10 rounded-2xl
           transition-all duration-300
+          ${isCurrent ? "ring-2 ring-[var(--ui-primary)]" : ""}
           ${
             isCurrent
               ? "bg-[color-mix(in_srgb,var(--ui-primary)_4%,transparent)]"
@@ -39,27 +44,17 @@ export const Level: React.FC<IProps> = (props) => {
           ${isLocked ? "opacity-70 grayscale-[35%]" : ""}
         `}
       >
-        <div className="relative flex items-center gap-4 px-6 py-4 rounded-2xl">
+        <div className="relative flex items-center gap-4 rounded-2xl px-6 py-4">
           <div className="relative shrink-0">
             {isCurrent && (
-              <>
-                <span
-                  aria-hidden
-                  className="
-                    absolute inset-0 rounded-xl
-                    bg-[linear-gradient(135deg,var(--ui-primary),var(--ui-secondary))]
-                    opacity-60 animate-ping
-                  "
-                />
-                <span
-                  aria-hidden
-                  className="
-                    absolute -inset-1 rounded-xl
-                    bg-[linear-gradient(135deg,var(--ui-primary),var(--ui-secondary))]
-                    opacity-30 blur-[8px]
-                  "
-                />
-              </>
+              <span
+                aria-hidden
+                className="
+                  absolute -inset-1 rounded-xl
+                  bg-[linear-gradient(135deg,var(--ui-primary),var(--ui-secondary))]
+                  opacity-30 blur-[8px]
+                "
+              />
             )}
 
             <span
@@ -84,7 +79,7 @@ export const Level: React.FC<IProps> = (props) => {
           <div className="min-w-0">
             <h3
               className={`
-                text-xl font-bold leading-tight
+                text-2xl font-bold leading-tight
                 transition-colors duration-300
                 ${
                   isCurrent
@@ -156,43 +151,13 @@ export const Level: React.FC<IProps> = (props) => {
             </span>
           </div>
         </div>
-
-        {/* Разделитель под хедером */}
-        <div
-          className={`
-            absolute left-0 right-6 bottom-0 h-px transition-opacity duration-300
-            ${
-              isCurrent
-                ? "opacity-80"
-                : isCompleted
-                  ? "opacity-60"
-                  : "opacity-25"
-            }
-            bg-[linear-gradient(90deg,var(--ui-primary),var(--ui-border),transparent)]
-          `}
-        />
       </div>
 
       <div
-        className={`
-          relative rounded-[2rem] w-full
-          transition-all duration-500
-          ${isLocked ? "opacity-45 grayscale-[60%] pointer-events-none" : ""}
-        `}
+        className="relative w-full rounded-[2rem] transition-all duration-500"
         style={{ minHeight: maxY }}
       >
         {children}
-
-        {isLocked && (
-          <div
-            aria-hidden
-            className="
-              absolute inset-0 rounded-[2rem]
-              bg-[linear-gradient(180deg,transparent,color-mix(in_srgb,var(--ui-background)_70%,transparent))]
-              backdrop-blur-[2px]
-            "
-          />
-        )}
       </div>
     </div>
   );

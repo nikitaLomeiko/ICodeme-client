@@ -15,7 +15,12 @@ export const AchievementList: React.FC<IProps> = (props) => {
     <Card
       title="Все достижения"
       headerAction={
-        <Button variant="outline" size="sm" onClick={() => router.back()}>
+        <Button
+          className="mt-2"
+          variant="outline"
+          size="sm"
+          onClick={() => router.back()}
+        >
           Назад
         </Button>
       }

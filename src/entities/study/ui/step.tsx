@@ -1,14 +1,16 @@
 import { FaLock } from "react-icons/fa";
-import { IStep } from "../model";
+import { getStepPosition, IStep } from "../model";
 import {
   getCardStyle,
-  getStepIcon,
   getStepLabel,
   getStepPalette,
+  stepIcons,
 } from "./style/step.style";
 
 interface IProps extends IStep {
   stepNumber: number;
+  isSelected?: boolean;
+  onSelect?: () => void;
 }
 
 export const Step: React.FC<IProps> = (props) => {
@@ -19,12 +21,14 @@ export const Step: React.FC<IProps> = (props) => {
     position,
     type,
     stepNumber,
-    isCompleted,
-    isCurrent,
+    isCompleted = false,
+    isCurrent = false,
+    isSelected = false,
+    onSelect,
   } = props;
 
-  const pos = position;
-  const Icon = getStepIcon(type);
+  const pos = getStepPosition(position, stepNumber - 1);
+  const Icon = stepIcons[type];
   const label = getStepLabel(type);
   const palette = getStepPalette(type);
   const isLocked = !isCompleted && !isCurrent;
@@ -43,6 +47,10 @@ export const Step: React.FC<IProps> = (props) => {
   return (
     <div
       key={id}
+      data-step=""
+      data-step-index={stepNumber - 1}
+      data-current-step={isCurrent ? "" : undefined}
+      tabIndex={-1}
       className={`
         absolute group h-[100px] w-[100px] transition-transform duration-300 2xl:h-[150px] 2xl:w-[150px]
         ${
@@ -88,9 +96,20 @@ export const Step: React.FC<IProps> = (props) => {
               ? ""
               : "group-hover:-translate-y-3 group-hover:scale-110 group-hover:rotate-3"
           }
+          ${isSelected ? "ring-2 ring-[var(--ui-primary)] ring-offset-2 ring-offset-[var(--ui-background)]" : ""}
         `}
         style={cardStyle}
       >
+        {onSelect && (
+          <button
+            type="button"
+            onClick={onSelect}
+            disabled={isLocked}
+            aria-label={`Выбрать шаг «${title}»`}
+            aria-pressed={isSelected}
+            className="absolute inset-0 z-10 rounded-[1.6rem] cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--ui-primary)] disabled:cursor-default"
+          />
+        )}
         {!isLocked && (
           <div
             aria-hidden

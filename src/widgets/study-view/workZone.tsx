@@ -1,40 +1,75 @@
 "use client";
 
-import { motion } from "framer-motion";
-import React from "react";
-import { FaCrosshairs, FaMap } from "react-icons/fa";
+import React, { useRef } from "react";
 import { SideBar } from "./components/side.bar";
+import {
+  selectCurrentPlan,
+  selectSelectedLevelIndex,
+  selectSelectedStep,
+  selectSelectedStepIndex,
+  selectViewedModuleIndex,
+  StepPage,
+  type IStudy,
+} from "@/entities/study";
+import { ActionsBar } from "./components/actions.bar";
 import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/shared/lib/hooks";
 
 interface IProps {
   children: React.ReactNode;
+  isLoading?: boolean;
+  isError?: boolean;
+  smoothWheelScroll?: boolean;
+  study?: IStudy;
+  showCurrentStepButton?: boolean;
 }
 
-export const WorkZone: React.FC<IProps> = ({ children }) => {
+export const WorkZone: React.FC<IProps> = (props) => {
+  const {
+    children,
+    isLoading,
+    isError,
+    study,
+    showCurrentStepButton = true,
+  } = props;
+
   const router = useRouter();
-  const handleWheel = (e: React.WheelEvent) => {
-    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-      e.preventDefault();
+
+  const selectedStep = useAppSelector(selectSelectedStep);
+  const currentPlan = useAppSelector(selectCurrentPlan);
+  const moduleIndex = useAppSelector(selectViewedModuleIndex);
+  const levelIndex = useAppSelector(selectSelectedLevelIndex);
+  const stepIndex = useAppSelector(selectSelectedStepIndex);
+
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const handleStartStep = () => {
+    if (
+      selectedStep == null ||
+      currentPlan == null ||
+      levelIndex < 0 ||
+      stepIndex < 0
+    ) {
+      return;
     }
-  };
 
-  const handleGoToCurrentStep = () => {
-    const currentStep = document.querySelector("[data-current-step]");
+    const stepPage = StepPage[selectedStep.type];
+    if (!stepPage) return;
 
-    currentStep?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-      inline: "center",
+    const params = new URLSearchParams({
+      studyId: currentPlan._id,
+      moduleIndex: String(moduleIndex),
+      levelIndex: String(levelIndex),
+      stepIndex: String(stepIndex),
     });
-  };
 
-  const handleOpenModulesMap = () => {
-    router.push("/map");
+    router.push(`${stepPage}?${params.toString()}`);
   };
 
   return (
     <div className="relative h-full min-h-0 w-full">
       <div
+        ref={contentRef}
         className="h-full min-h-0 lg:pr-[440px] pr-[0px]"
         style={{
           backgroundImage: `
@@ -43,38 +78,24 @@ export const WorkZone: React.FC<IProps> = ({ children }) => {
           `,
           backgroundSize: "40px 40px",
           backgroundColor: "var(--ui-background)",
-          scrollBehavior: "smooth",
         }}
-        onWheel={handleWheel}
       >
-        {children}
+        {isLoading ? (
+          <p className="p-6 text-[var(--ui-text-muted)]">Загрузка плана...</p>
+        ) : isError ? (
+          <p className="p-6 text-[var(--ui-text-muted)]">Нет плана обучения.</p>
+        ) : (
+          children
+        )}
       </div>
 
-      <div className="fixed lg:right-[432px] right-[20px] lg:bottom-8 bottom-24 z-50 flex flex-col gap-3">
-        <motion.button
-          type="button"
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.92 }}
-          onClick={handleOpenModulesMap}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--ui-border)] bg-[var(--ui-background-secondary)] text-[var(--ui-text)] shadow-xl backdrop-blur-md transition-colors hover:bg-[var(--ui-background-tertiary)]"
-          title="Карта модулей"
-        >
-          <FaMap size={17} />
-        </motion.button>
+      <ActionsBar
+        contentRef={contentRef}
+        showCurrentStepButton={showCurrentStepButton}
+        study={study}
+      />
 
-        <motion.button
-          type="button"
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.92 }}
-          onClick={handleGoToCurrentStep}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--ui-border)] bg-[var(--ui-background-secondary)] text-[var(--ui-text)] shadow-xl backdrop-blur-md transition-colors hover:bg-[var(--ui-background-tertiary)]"
-          title="К текущему шагу"
-        >
-          <FaCrosshairs size={17} />
-        </motion.button>
-      </div>
-
-      <SideBar />
+      <SideBar onStartStep={handleStartStep} />
     </div>
   );
 };

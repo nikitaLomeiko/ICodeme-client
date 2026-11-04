@@ -5,11 +5,33 @@ import { IModule } from "../model";
 interface IProps extends Omit<IModule, "levels"> {
   levelsCount: number;
   index: number;
+  variant?: "card" | "header";
+  href?: string;
 }
 
 export const Module: React.FC<IProps> = (props) => {
-  const { description, title, isCompleted, isCurrent, levelsCount, index } =
-    props;
+  const {
+    description,
+    title,
+    isCompleted,
+    isCurrent,
+    levelsCount,
+    index,
+    variant = "card",
+    href = "/",
+  } = props;
+
+  if (variant === "header") {
+    return (
+      <div className="mb-8">
+        <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-[var(--ui-primary)]">
+          Модуль {String(index).padStart(2, "0")}
+        </div>
+        <h2 className="mb-2 text-2xl font-bold">{title}</h2>
+        <p className="text-sm text-[var(--ui-text-muted)]">{description}</p>
+      </div>
+    );
+  }
 
   const isLocked = !isCurrent && !isCompleted;
 
@@ -74,7 +96,7 @@ export const Module: React.FC<IProps> = (props) => {
         </button>
       ) : (
         <Link
-          href={`/`}
+          href={href}
           className="flex h-10 shrink-0 items-center gap-2 rounded-xl border border-[var(--ui-border)] bg-[var(--ui-background)] px-4 text-sm font-medium text-[var(--ui-text)] transition-all hover:border-[var(--ui-primary)] hover:bg-[var(--ui-primary)] hover:text-white"
         >
           Открыть

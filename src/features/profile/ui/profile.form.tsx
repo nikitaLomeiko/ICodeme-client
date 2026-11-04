@@ -15,7 +15,10 @@ import { useCreateProfileMutation } from "@/entities/profile";
 import { isApiError } from "@/shared/api";
 import { useRouter } from "next/navigation";
 import { useNotification } from "@/shared/ui/kit";
-import { useCreateNewStudyMutation } from "@/entities/study";
+import {
+  useCreateNewStudyMutation,
+  useTestGenerateModuleByStudyIdMutation,
+} from "@/entities/study";
 
 const TOTAL_STEPS = 4;
 
@@ -40,6 +43,8 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
   const [create, { isLoading }] = useCreateProfileMutation();
   const [createModule, { isLoading: isLoadingModule }] =
     useCreateNewStudyMutation();
+  const [generateModule, { isLoading: isLoadingGenerated }] =
+    useTestGenerateModuleByStudyIdMutation();
   const [error, setError] = useState<string | null>(null);
 
   const { handleSubmit, getFieldState } = methods;
@@ -66,6 +71,22 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit }) => {
 
     if (resultModule.error && isApiError(resultModule.error)) {
       setError(resultModule.error.data.message);
+      return;
+    }
+
+    if (!resultModule.data?.data?._id) {
+      return;
+    }
+
+    const resultGeneretedModulee = await generateModule(
+      resultModule.data?.data?._id,
+    );
+
+    if (
+      resultGeneretedModulee.error &&
+      isApiError(resultGeneretedModulee.error)
+    ) {
+      setError(resultGeneretedModulee.error.data.message);
       return;
     }
 

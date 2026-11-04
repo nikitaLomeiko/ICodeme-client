@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { IStepByLevel } from "../../model";
+import { getStepPosition, IStep } from "../../model";
 
 interface IProps {
-  levelSteps: IStepByLevel[];
+  steps: IStep[];
 }
 
-export const StepLine: React.FC<IProps> = ({ levelSteps }) => {
+export const StepLine: React.FC<IProps> = ({ steps }) => {
   const containerRef = useRef<SVGSVGElement | null>(null);
   const [width, setWidth] = useState(0);
   const [lineColor, setLineColor] = useState("rgba(100,116,139,0.35)");
@@ -43,14 +43,10 @@ export const StepLine: React.FC<IProps> = ({ levelSteps }) => {
     };
   }, []);
 
-  if (levelSteps.length < 2) return null;
+  if (steps.length < 2) return null;
 
-  const sortedSteps = [...levelSteps].sort(
-    (a, b) => a.stepIndexInLevel - b.stepIndexInLevel,
-  );
-
-  const points = sortedSteps.map((item) => {
-    const pos = item.step.position || { x: 100, y: 100 };
+  const points = steps.map((step, index) => {
+    const pos = getStepPosition(step.position, index);
     const xPx = (pos.x / 100) * width;
     return {
       x: xPx + 60,

@@ -22,6 +22,13 @@ export const studyApi = createApi({
       }),
       providesTags: ["Study"],
     }),
+    getMyStudyById: build.query<IResponse<IStudy>, string>({
+      query: (id) => ({
+        url: `study/me/${encodeURIComponent(id)}`,
+        method: "GET",
+      }),
+      providesTags: ["Study"],
+    }),
     addNewLanguage: build.mutation<IResponse<IStudy>, string>({
       query: (language) => ({
         url: "study/me",
@@ -37,13 +44,23 @@ export const studyApi = createApi({
       }),
       invalidatesTags: ["Study"],
     }),
+    testGenerateModuleByStudyId: build.mutation<IResponse<void>, string>({
+      query: (studyId) => ({
+        url: "study/test/modules",
+        method: "POST",
+        body: { studyId },
+        invalidatesTags: ["Study"],
+      }),
+    }),
   }),
 });
 
 export const {
   useGetMyStudyQuery,
+  useGetMyStudyByIdQuery,
   useLazyGetMyStudyQuery,
   useAddNewLanguageMutation,
   useDeleteStudyMutation,
   useCreateNewStudyMutation,
+  useTestGenerateModuleByStudyIdMutation,
 } = studyApi;

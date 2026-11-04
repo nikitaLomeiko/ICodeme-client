@@ -96,7 +96,7 @@ export const ProfileEditForm: React.FC<IProps> = (props) => {
           size="md"
           variant="rounded"
         />
-        <p className="mt-1 text-xs text-gray-500">
+        <p className="mt-5 text-xs text-gray-500">
           От 2 до 50 символов. Разрешены буквы, цифры, пробелы, - и _
         </p>
       </div>
