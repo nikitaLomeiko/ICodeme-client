@@ -14,6 +14,7 @@ import {
 import { ActionsBar } from "./components/actions.bar";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/shared/lib/hooks";
+import { PageLoading } from "@/widgets/layout/ui/page-loading";
 
 interface IProps {
   children: React.ReactNode;
@@ -81,7 +82,7 @@ export const WorkZone: React.FC<IProps> = (props) => {
         }}
       >
         {isLoading ? (
-          <p className="p-6 text-[var(--ui-text-muted)]">Загрузка плана...</p>
+          <PageLoading />
         ) : isError ? (
           <p className="p-6 text-[var(--ui-text-muted)]">Нет плана обучения.</p>
         ) : (

@@ -50,7 +50,7 @@ export const MapPage = () => {
         study={selectedStudy}
       >
         {selectedStudy && (
-          <div className="mx-auto max-w-5xl px-4 py-6">
+          <div className="w-full px-4 py-6">
             <div className="mb-8">
               <div className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--ui-text-muted)]">
                 Карта обучения

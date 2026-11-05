@@ -18,7 +18,7 @@ export const StudyModuleMap = ({
   moduleIndex,
   onSelectStep,
 }: IProps) => (
-  <div className="mx-auto max-w-5xl px-4 py-6">
+  <div className="w-full px-4 py-6">
     <Module
       {...module}
       index={moduleIndex + 1}

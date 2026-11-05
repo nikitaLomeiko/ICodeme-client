@@ -39,7 +39,7 @@ export const SideBar: React.FC<IProps> = (props) => {
     currentLevel?.steps.filter((step) => step.isCompleted).length ?? 0;
 
   return (
-    <aside className="lg:flex hidden fixed right-4 top-4 bottom-4 z-40 w-[400px] flex-col gap-4 overflow-y-auto pr-1">
+    <aside data-study-sidebar className="lg:flex hidden fixed right-4 top-4 bottom-4 z-40 w-[400px] flex-col gap-4 overflow-y-auto pr-1">
       <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}

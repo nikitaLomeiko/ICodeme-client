@@ -1,14 +1,26 @@
-export type QuestionType = "choice" | "text";
+export type QuestionType = "choice" | "text" | "fields";
 
 export interface IOption {
   id: string;
   label: string;
 }
 
+export interface IQuestionField {
+  label: string;
+  placeholder?: string;
+  correct: string[];
+}
+
 export interface IQuestion {
   id: string;
   type: QuestionType;
   title: string;
+  description?: string;
+  codeSnippet?: string;
+  answerLabel?: string;
+  answerPlaceholder?: string;
+  fields?: IQuestionField[];
+  errors?: string[];
   options?: IOption[];
   multiple?: boolean;
   points?: number;
@@ -30,7 +42,7 @@ export interface ITest {
 
 export type AnswerValue = string | string[];
 export type Phase = "idle" | "running" | "finished";
-export type QuestionState = "correct" | "incorrect" | "skipped";
+export type QuestionState = "correct" | "incorrect" | "skipped" | "ungraded";
 
 export interface IResultEntry {
   question: IQuestion;
@@ -47,6 +59,7 @@ export interface IResults {
   answeredCount: number;
   skippedCount: number;
   correctCount: number;
+  gradedCount: number;
 }
 
 export interface IQuizState {

@@ -20,7 +20,7 @@ export const StartScreen: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="w-full min-w-0">
       <div className="bg-[var(--ui-background-secondary)] border border-[var(--ui-border)] rounded-2xl shadow-sm p-6 sm:p-10 text-center">
         <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-[var(--ui-primary)] to-[var(--ui-secondary)] flex items-center justify-center text-white shadow-lg">
           <FaList size={26} />
@@ -39,7 +39,7 @@ export const StartScreen: React.FC = () => {
             value={state.quiz?.questions.length || 0}
             label="Вопросов"
           />
-          <MiniStat icon={FaStar} value={maxScore || 0} label="Макс. баллов" />
+          {state.quiz?.settings.isScore && <MiniStat icon={FaStar} value={maxScore || 0} label="Макс. баллов" />}
           <MiniStat icon={FaClock} value={timedCount || 0} label="С таймером" />
         </div>
 

@@ -18,11 +18,14 @@ export const formatUserAnswer = (
 };
 
 export const formatCorrectAnswer = (question: IQuestion): string => {
+  if (question.type === "fields") {
+    return question.fields?.map((field) => field.correct.join(" / ")).join("; ") ?? "";
+  }
   if (!question.correct?.length) return "";
   if (question.type === "choice") {
     return question.correct.map((id) => optionLabel(question, id)).join(", ");
   }
-  return question.correct[0];
+  return question.correct.join(" / ");
 };
 
 export const pointsLabel = (points: number): string => {

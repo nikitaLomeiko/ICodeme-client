@@ -6,7 +6,9 @@ export const isQuestionAnswered = (
 ): boolean => {
   const value = answers[questionId];
   if (value === undefined) return false;
-  return Array.isArray(value) ? value.length > 0 : value.trim().length > 0;
+  return Array.isArray(value)
+    ? value.some((item) => item.trim().length > 0)
+    : value.trim().length > 0;
 };
 
 export const isOptionSelected = (

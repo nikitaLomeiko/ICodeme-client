@@ -146,6 +146,19 @@ export const quizReducer = (
       };
     }
 
+    case "SET_FIELD_ANSWER": {
+      const question = state.quiz?.questions[state.currentIndex];
+      if (!question || question.type !== "fields" || !question.fields?.[action.index]) return state;
+      const current = state.answers[question.id];
+      const answer = Array.isArray(current) ? [...current] : [];
+      answer[action.index] = action.value;
+      return {
+        ...state,
+        answers: { ...state.answers, [question.id]: answer },
+        skipped: { ...state.skipped, [question.id]: false },
+      };
+    }
+
     default:
       return state;
   }

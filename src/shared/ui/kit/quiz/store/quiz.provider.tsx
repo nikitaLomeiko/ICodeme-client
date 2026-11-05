@@ -22,7 +22,7 @@ export const QuizProvider: React.FC<IProps> = ({ children, quiz }) => {
 
   useEffect(() => {
     dispatch(setQuiz(quiz));
-  }, [dispatch, setQuiz]);
+  }, [quiz]);
 
   return (
     <quizContext.Provider value={{ state, dispatch }}>

@@ -7,10 +7,11 @@ interface IProps {
     event: ChangeEvent<HTMLTextAreaElement, HTMLTextAreaElement>,
   ) => void;
   isNavigate: boolean;
+  placeholder?: string;
 }
 
 export const AnswerField: React.FC<IProps> = (props) => {
-  const { isNavigate, onChange, onSubmit, value } = props;
+  const { isNavigate, onChange, onSubmit, value, placeholder } = props;
 
   return (
     <textarea
@@ -22,7 +23,7 @@ export const AnswerField: React.FC<IProps> = (props) => {
           onSubmit();
         }
       }}
-      placeholder="Введите ваш ответ..."
+      placeholder={placeholder || "Введите ваш ответ..."}
       rows={4}
       className="
                       w-full rounded-xl border-2 border-[var(--ui-border)]

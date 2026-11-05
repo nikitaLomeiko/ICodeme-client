@@ -1,7 +1,6 @@
 "use client";
 
 import { AnimatePresence } from "framer-motion";
-import { Layout } from "@/widgets/layout";
 import { useQuiz } from "./store/use.quiz";
 import { NavigationMap } from "./ui/navigation.map";
 import { QuizCard } from "./ui/quiz.card";
@@ -17,7 +16,7 @@ export const QuizPage: React.FC = () => {
       {state.phase === "idle" && <StartScreen />}
 
       {state.phase === "running" && (
-        <div className="max-w-3xl mx-auto">
+        <div className="w-full min-w-0">
           <QuizHead
             count={state.quiz?.questions?.length || 0}
             title={state.quiz?.title || ""}

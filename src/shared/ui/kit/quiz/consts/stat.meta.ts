@@ -1,4 +1,4 @@
-import { FaCheckCircle, FaHourglass, FaTimesCircle } from "react-icons/fa";
+import { FaCheckCircle, FaHourglass, FaQuestionCircle, FaTimesCircle } from "react-icons/fa";
 import { QuestionState } from "../types";
 
 export const stateMeta: Record<
@@ -18,6 +18,11 @@ export const stateMeta: Record<
   skipped: {
     label: "Не отвечен",
     icon: FaHourglass,
+    chip: "text-[var(--ui-text-muted)] bg-[var(--ui-fill)]",
+  },
+  ungraded: {
+    label: "Без проверки",
+    icon: FaQuestionCircle,
     chip: "text-[var(--ui-text-muted)] bg-[var(--ui-fill)]",
   },
 };

@@ -4,7 +4,7 @@ import { pointsLabel } from "../../libs/utils";
 import { QuestionType } from "../../types";
 
 interface IProps {
-  points: number;
+  points?: number;
   type: QuestionType;
   currentIndex: number;
   total: number;
@@ -29,7 +29,7 @@ export const QuestionHead: React.FC<IProps> = (props) => {
             {points} {pointsLabel(points)}
           </span>
         )}
-        {type === "text" && (
+        {(type === "text" || type === "fields") && (
           <span className="px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 bg-[var(--ui-info)]/10 text-[var(--ui-info)]">
             <FaPencilAlt size={10} />
             Открытый ответ

@@ -13,6 +13,13 @@ export const isAnswerCorrect = (
   question: IQuestion,
   answer?: AnswerValue,
 ): boolean => {
+  if (question.type === "fields") {
+    if (!Array.isArray(answer) || !question.fields?.length) return false;
+    return question.fields.every((field, index) =>
+      field.correct.some((value) => normalize(value) === normalize(answer[index] ?? "")),
+    );
+  }
+
   if (!question.correct?.length || !answer) return false;
 
   if (question.type === "text") {
@@ -43,12 +50,15 @@ export const computeResults = (
       isQuestionAnswered(answers, question.id) && !skipped[question.id];
     const isSkipped = !answered && skipped[question.id];
 
+    const gradable = question.type === "fields"
+      ? Boolean(question.fields?.length && question.fields.every((field) => field.correct.length))
+      : Boolean(question.correct?.length);
     let state: QuestionState = "skipped";
     let earned = 0;
 
     if (answered) {
-      const correct = isAnswerCorrect(question, answers[question.id]);
-      state = correct ? "correct" : "incorrect";
+      const correct = gradable && isAnswerCorrect(question, answers[question.id]);
+      state = !gradable ? "ungraded" : correct ? "correct" : "incorrect";
       earned = correct && quiz.settings?.isScore ? (question.points ?? 0) : 0;
     }
 
@@ -68,5 +78,8 @@ export const computeResults = (
     answeredCount: detail.filter((item) => item.answered).length,
     skippedCount: detail.filter((item) => !item.answered).length,
     correctCount: detail.filter((item) => item.state === "correct").length,
+    gradedCount: quiz.questions.filter((question) => question.type === "fields"
+      ? Boolean(question.fields?.length && question.fields.every((field) => field.correct.length))
+      : Boolean(question.correct?.length)).length,
   };
 };

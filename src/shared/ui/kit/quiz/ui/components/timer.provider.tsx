@@ -9,7 +9,7 @@ interface IProps {
 export const TimerProvider: React.FC<IProps> = ({ children }) => {
   const { dispatch, state } = useQuiz();
 
-  const notification = useNotification();
+  const { warning } = useNotification();
 
   useEffect(() => {
     if (state.phase !== "running") return;
@@ -29,7 +29,7 @@ export const TimerProvider: React.FC<IProps> = ({ children }) => {
 
       if (left <= 0) {
         dispatch(markSkipped(question.id));
-        notification.warning(
+        warning(
           `Время на вопрос вышло — вопрос «${question.title}» засчитан как не отвеченный`,
         );
         dispatch(goNextQuestion());
@@ -40,7 +40,7 @@ export const TimerProvider: React.FC<IProps> = ({ children }) => {
 
     tick();
     return () => window.clearTimeout(timeoutId);
-  }, [state.currentIndex, state.phase, dispatch]);
+  }, [state.currentIndex, state.phase, state.quiz?.questions, dispatch, warning]);
 
   return children;
 };

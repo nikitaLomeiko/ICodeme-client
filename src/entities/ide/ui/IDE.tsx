@@ -18,10 +18,12 @@ import { IProjectMeta } from "../model/types/ide.types";
 interface IProps {
   meta: IProjectMeta;
   userId: string;
+  initialFiles?: FileNode[];
+  className?: string;
 }
 
 export const IDE: React.FC<IProps> = (props) => {
-  const { meta, userId } = props;
+  const { meta, userId, initialFiles, className } = props;
 
   const terminalRef = useRef<ITerminalHandle>(null);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
@@ -110,9 +112,9 @@ export const IDE: React.FC<IProps> = (props) => {
 
   return (
     <div>
-      <FileProvider>
+      <FileProvider initialFileSystem={initialFiles}>
         <EnviromentProvider>
-          <CodeEnviroment onRun={handleRun} />
+          <CodeEnviroment onRun={handleRun} className={className} />
         </EnviromentProvider>
       </FileProvider>
       <Modal

@@ -38,7 +38,7 @@ export const CodeHeader: React.FC<IProps> = ({ onRun }) => {
       );
       return () => clearTimeout(timer);
     }
-  }, [copied]);
+  }, [copied, dispatch]);
 
   return (
     <header className="flex items-center gap-3 px-4 py-2 bg-[var(--ui-background-secondary)] rounded-t-lg border-b border-[var(--ui-primary)]/20 shrink-0">
@@ -64,12 +64,14 @@ export const CodeHeader: React.FC<IProps> = ({ onRun }) => {
       <div className="flex items-center gap-1.5 ml-auto">
         <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-[var(--ui-text)]/5 border border-[var(--ui-border)]">
           <button
+            type="button"
             onClick={() =>
               dispatch?.({
                 type: "SET_FONT_SIZE",
                 size: Math.max(10, fontSize - 1),
               })
             }
+            disabled={fontSize <= 10}
             className="rounded hover:bg-[var(--ui-text)]/5 text-[var(--ui-text-muted)] hover:text-[var(--ui-primary)] transition-all p-0.5"
             title="Decrease font size"
           >
@@ -79,12 +81,14 @@ export const CodeHeader: React.FC<IProps> = ({ onRun }) => {
             {fontSize}
           </span>
           <button
+            type="button"
             onClick={() =>
               dispatch?.({
                 type: "SET_FONT_SIZE",
-                size: Math.max(24, fontSize + 1),
+                size: Math.min(24, fontSize + 1),
               })
             }
+            disabled={fontSize >= 24}
             className="rounded hover:bg-[var(--ui-text)]/5 text-[var(--ui-text-muted)] hover:text-[var(--ui-primary)] transition-all p-0.5"
             title="Increase font size"
           >

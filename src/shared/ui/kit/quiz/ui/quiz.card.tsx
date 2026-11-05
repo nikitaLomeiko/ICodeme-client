@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { getTextAnswer, isOptionSelected } from "../libs/utils/selectors";
-import { goNextQuestion, selectOption, setTextAnswer } from "../store/actions";
+import { goNextQuestion, selectOption, setFieldAnswer, setTextAnswer } from "../store/actions";
 import { useQuiz } from "../store/use.quiz";
 import { ChoiceItem } from "./components/choice.item";
 import { AnswerField } from "./components/answer.field";
@@ -16,8 +18,6 @@ export const QuizCard: React.FC = () => {
   const { quiz, currentIndex, timeLeft, answers } = state;
   const question = state.quiz?.questions[currentIndex];
   const total = state.quiz?.questions.length;
-
-  console.log(state);
 
   const handleSubmit = () => {
     dispatch(goNextQuestion());
@@ -37,7 +37,7 @@ export const QuizCard: React.FC = () => {
           <QuestionHead
             currentIndex={currentIndex}
             isMultiple={question?.multiple ?? false}
-            points={question?.points ?? 0}
+            points={question?.points}
             timeLeft={timeLeft ?? 0}
             timeLimit={question?.timeLimit ?? 0}
             total={total || 0}
@@ -48,10 +48,14 @@ export const QuizCard: React.FC = () => {
             {question?.title}
           </h2>
 
+          {question?.description && <div className="mb-5 space-y-2 text-sm leading-7 text-[var(--ui-text-muted)] [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:bg-[var(--ui-background-tertiary)] [&_pre]:p-4"><ReactMarkdown remarkPlugins={[remarkGfm]}>{question.description}</ReactMarkdown></div>}
+          {question?.codeSnippet && <pre className="mb-5 overflow-x-auto rounded-xl bg-[var(--ui-background-tertiary)] p-4 text-sm text-[var(--ui-text)]"><code>{question.codeSnippet}</code></pre>}
+
           {question?.type === "choice" ? (
             <div className="space-y-3">
               {question.options?.map((option, index) => (
                 <ChoiceItem
+                  key={option.id}
                   id={option.id}
                   index={index}
                   label={option.label}
@@ -60,13 +64,31 @@ export const QuizCard: React.FC = () => {
                 />
               ))}
             </div>
+          ) : question?.type === "fields" ? (
+            <div className="space-y-4">
+              {question.fields?.map((field, index) => (
+                <label key={index} className="block space-y-2 text-sm text-[var(--ui-text)]">
+                  <span>{field.label || `Ответ ${index + 1}`}</span>
+                  <input
+                    value={Array.isArray(answers[question.id]) ? answers[question.id][index] ?? "" : ""}
+                    placeholder={field.placeholder || "Введите ответ"}
+                    onChange={(event) => dispatch(setFieldAnswer(index, event.target.value))}
+                    className="w-full rounded-xl border-2 border-[var(--ui-border)] bg-[var(--ui-background)] p-4 outline-none focus:border-[var(--ui-primary)]"
+                  />
+                </label>
+              ))}
+            </div>
           ) : (
-            <AnswerField
-              isNavigate={quiz?.settings.isNavigate || false}
-              value={getTextAnswer(answers, question?.id || "0")}
-              onSubmit={handleSubmit}
-              onChange={(event) => dispatch(setTextAnswer(event.target.value))}
-            />
+            <label className="block space-y-2 text-sm text-[var(--ui-text)]">
+              {question?.answerLabel && <span>{question.answerLabel}</span>}
+              <AnswerField
+                isNavigate={quiz?.settings.isNavigate || false}
+                value={getTextAnswer(answers, question?.id || "0")}
+                placeholder={question?.answerPlaceholder}
+                onSubmit={handleSubmit}
+                onChange={(event) => dispatch(setTextAnswer(event.target.value))}
+              />
+            </label>
           )}
 
           <QuestionFooter

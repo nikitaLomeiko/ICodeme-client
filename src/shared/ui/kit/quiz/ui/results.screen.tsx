@@ -19,13 +19,14 @@ export const ResultsScreen: React.FC = () => {
 
   const results = useMemo(
     () => computeResults(answers, skipped, quiz),
-    [answers, skipped, quiz?.settings],
+    [answers, skipped, quiz],
   );
 
-  const percent =
-    quiz?.settings.isScore && (results?.maxScore || 0) > 0
-      ? (results?.totalEarned || 1) / (results?.maxScore || 1)
-      : (results?.correctCount || 1) / (results?.detail.length || 1);
+  const percent = quiz?.settings.isScore && results?.maxScore
+    ? results.totalEarned / results.maxScore
+    : results?.gradedCount
+      ? results.correctCount / results.gradedCount
+      : 0;
 
   const ringSize = 120;
   const ringStroke = 12;
@@ -37,7 +38,7 @@ export const ResultsScreen: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       <div className="bg-[var(--ui-background-secondary)] border border-[var(--ui-border)] rounded-2xl shadow-sm p-6 sm:p-8 text-center">
         <p className="text-xs uppercase tracking-widest text-[var(--ui-text-muted)] font-semibold">
           Тест пройден
@@ -100,7 +101,7 @@ export const ResultsScreen: React.FC = () => {
                   {results?.correctCount}
                 </span>
                 <span className="text-xs text-[var(--ui-text-muted)] font-semibold">
-                  из {results?.detail.length} верных
+                  из {results?.gradedCount} проверяемых
                 </span>
               </>
             )}
@@ -206,7 +207,7 @@ export const ResultsScreen: React.FC = () => {
                   )}
 
                   {entry.state !== "correct" &&
-                    entry.question.correct?.length && (
+                    (entry.question.correct?.length || entry.question.fields?.some((field) => field.correct.length)) && (
                       <p className="text-xs text-[var(--ui-success)] mt-0.5">
                         Правильный ответ:{" "}
                         <span className="font-medium">
@@ -214,6 +215,9 @@ export const ResultsScreen: React.FC = () => {
                         </span>
                       </p>
                     )}
+                  {entry.state === "incorrect" && entry.question.errors?.map((message, errorIndex) => (
+                    <p key={errorIndex} className="mt-1 text-xs text-[var(--ui-text-muted)]">{message}</p>
+                  ))}
                 </div>
                 <span
                   className={`

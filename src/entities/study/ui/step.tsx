@@ -1,3 +1,6 @@
+"use client";
+
+import { useRef, useState } from "react";
 import { FaLock } from "react-icons/fa";
 import { getStepPosition, IStep } from "../model";
 import {
@@ -32,6 +35,29 @@ export const Step: React.FC<IProps> = (props) => {
   const label = getStepLabel(type);
   const palette = getStepPalette(type);
   const isLocked = !isCompleted && !isCurrent;
+  const stepRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const [tooltipSide, setTooltipSide] = useState<"left" | "right">("right");
+
+  const updateTooltipSide = () => {
+    const step = stepRef.current;
+    if (!step) return;
+
+    const sidebar = document.querySelector<HTMLElement>("[data-study-sidebar]");
+    const rightBoundary = sidebar?.getClientRects().length
+      ? sidebar.getBoundingClientRect().left
+      : window.innerWidth;
+    const rect = step.getBoundingClientRect();
+    const tooltipWidth = tooltipRef.current?.offsetWidth ?? 200;
+    const spaceRight = rightBoundary - rect.right - 8;
+    const spaceLeft = rect.left - 8;
+
+    setTooltipSide(
+      spaceRight < tooltipWidth + 16 && spaceLeft > spaceRight
+        ? "left"
+        : "right",
+    );
+  };
 
   const containerStyle: React.CSSProperties = {
     left: `${pos.x}%`,
@@ -46,11 +72,14 @@ export const Step: React.FC<IProps> = (props) => {
 
   return (
     <div
+      ref={stepRef}
       key={id}
       data-step=""
       data-step-index={stepNumber - 1}
       data-current-step={isCurrent ? "" : undefined}
       tabIndex={-1}
+      onPointerEnter={updateTooltipSide}
+      onFocusCapture={updateTooltipSide}
       className={`
         absolute group h-[100px] w-[100px] transition-transform duration-300 2xl:h-[150px] 2xl:w-[150px]
         ${
@@ -204,13 +233,15 @@ export const Step: React.FC<IProps> = (props) => {
       </div>
 
       <div
-        className="
-          absolute left-full top-1/2 ml-4 w-[200px] pointer-events-none
-          -translate-y-1/2 translate-x-[-6px] opacity-0
+        ref={tooltipRef}
+        className={`
+          absolute top-1/2 w-[200px] pointer-events-none
+          ${tooltipSide === "left" ? "right-full mr-4 translate-x-[6px]" : "left-full ml-4 translate-x-[-6px]"}
+          -translate-y-1/2 opacity-0
           transition-all duration-300 ease-out
           group-hover:translate-x-0 group-hover:opacity-100
           group-focus-within:translate-x-0 group-focus-within:opacity-100
-        "
+        `}
       >
         <div className="text-left py-1 text-[var(--ui-text)]">
           <div className="text-[12px] font-bold leading-tight line-clamp-1">

@@ -1,4 +1,4 @@
-import { ITest, ITestSettings } from "../types/types";
+import { ITest } from "../types/types";
 
 export type QuizAction =
   | { type: "SET_QUIZ"; quiz: ITest }
@@ -11,6 +11,7 @@ export type QuizAction =
   | { type: "GO_PREV" }
   | { type: "SELECT_OPTION"; optionId: string }
   | { type: "SET_TEXT_ANSWER"; value: string }
+  | { type: "SET_FIELD_ANSWER"; index: number; value: string }
   | { type: "SKIP_QUESTION" }
   | { type: "MARK_SKIPPED"; questionId: string };
 
@@ -46,6 +47,12 @@ export const selectOption = (optionId: string): QuizAction => ({
 
 export const setTextAnswer = (value: string): QuizAction => ({
   type: "SET_TEXT_ANSWER",
+  value,
+});
+
+export const setFieldAnswer = (index: number, value: string): QuizAction => ({
+  type: "SET_FIELD_ANSWER",
+  index,
   value,
 });
 

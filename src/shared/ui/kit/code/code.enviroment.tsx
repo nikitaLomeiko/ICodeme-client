@@ -11,19 +11,20 @@ import { FileNode } from "./types/types";
 
 interface IProps {
   onRun: (Files: FileNode[]) => void;
+  className?: string;
 }
 
-export const CodeEnviroment: React.FC<IProps> = ({ onRun }) => {
+export const CodeEnviroment: React.FC<IProps> = ({ onRun, className = "h-screen" }) => {
   const { activeFileId, allFiles, setActiveFileId, activeFile } = useExplorer();
 
   useEffect(() => {
     if (!activeFileId && allFiles.length > 0) {
       setActiveFileId(allFiles[0].id);
     }
-  }, [allFiles, activeFileId]);
+  }, [allFiles, activeFileId, setActiveFileId]);
 
   return (
-    <div className="h-screen flex flex-col bg-[var(--ui-background-tertiary)] rounded-lg">
+    <div className={`${className} flex flex-col bg-[var(--ui-background-tertiary)] rounded-lg`}>
       <CodeHeader onRun={(files) => onRun(files)} />
 
       <div className="flex-1 flex overflow-hidden ronded-lg">

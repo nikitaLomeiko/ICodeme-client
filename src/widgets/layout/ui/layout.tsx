@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 
 import { Sidebar } from "./components/sidebar";
 import { Navbar } from "./components/navbar";
@@ -8,20 +8,26 @@ import { Navbar } from "./components/navbar";
 import { Logotype } from "@/shared/ui/logotype";
 import { tabs } from "../model/data/tabs.data";
 import { useMobile } from "@/shared/lib/hooks";
+import { PageLoading } from "./page-loading";
 
 interface LayoutProps {
   children: React.ReactNode;
   isRenderSideBar?: boolean;
-  isCentered?: boolean;
 }
 
 export const Layout: React.FC<LayoutProps> = ({
   children,
   isRenderSideBar = true,
-  isCentered = true,
 }) => {
   const isMobile = useMobile();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const contentWidthClass = `w-full px-4 md:pr-6 ${
+    isRenderSideBar
+      ? isSidebarCollapsed
+        ? "md:pl-4"
+        : "md:pl-[72px]"
+      : "md:pl-6"
+  }`;
 
   return (
     <div className="min-h-screen bg-[var(--ui-background)] transition-colors duration-300">
@@ -51,9 +57,9 @@ export const Layout: React.FC<LayoutProps> = ({
         }}
       >
         <div
-          className={`text-[var(--ui-text)] ${isCentered ? `mx-auto ${isSidebarCollapsed ? "w-full max-w-none md:pl-8" : "container md:pl-20"} md:pr-6 px-5` : ""} pt-4 pb-28`}
+          className={`text-[var(--ui-text)] ${contentWidthClass} pt-4 pb-28`}
         >
-          {children}
+          <Suspense fallback={<PageLoading />}>{children}</Suspense>
         </div>
       </main>
 
