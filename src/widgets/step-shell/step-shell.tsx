@@ -4,6 +4,8 @@ import { ReactNode } from "react";
 import { PageLoading } from "@/widgets/layout/ui/page-loading";
 import { BackButton } from "@/shared/ui/back-button";
 import { StepAssignment } from "./components/step-assignment";
+import { StepRuntimeInfo } from "./components/step-runtime-info";
+import type { ISettings } from "@/entities/study";
 
 interface IProps {
   children?: ReactNode;
@@ -12,10 +14,19 @@ interface IProps {
   title?: string;
   description?: string;
   content?: string;
+  settings?: ISettings;
 }
 
 export const StepShell: React.FC<IProps> = (props) => {
-  const { children, message, loading, content, description, title } = props;
+  const {
+    children,
+    message,
+    loading,
+    content,
+    description,
+    title,
+    settings,
+  } = props;
 
   return (
     <div className="w-full px-4 pb-12 pt-3 sm:px-6">
@@ -40,6 +51,7 @@ export const StepShell: React.FC<IProps> = (props) => {
             content={content}
           />
           <div className="mt-5">{children}</div>
+          <StepRuntimeInfo settings={settings} />
         </>
       )}
     </div>

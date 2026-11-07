@@ -20,10 +20,11 @@ interface IProps {
   userId: string;
   initialFiles?: FileNode[];
   className?: string;
+  stepId: string;
 }
 
 export const IDE: React.FC<IProps> = (props) => {
-  const { meta, userId, initialFiles, className } = props;
+  const { meta, userId, initialFiles, className, stepId } = props;
 
   const terminalRef = useRef<ITerminalHandle>(null);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
@@ -81,12 +82,15 @@ export const IDE: React.FC<IProps> = (props) => {
     terminalRef.current?.push("Загрузка...");
 
     const result = await createContainer({
-      _id: generateId(),
-      dir: files,
-      meta,
-      userId,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      project: {
+        _id: generateId(),
+        dir: files,
+        meta,
+        userId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      stepId,
     });
 
     if (result.error && isApiError(result.error)) {

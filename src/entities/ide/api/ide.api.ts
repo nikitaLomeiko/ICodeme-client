@@ -9,13 +9,14 @@ export const ideApi = createApi({
   endpoints: (build) => ({
     createAndRunContainer: build.mutation<
       IResponse<IContainerResponse>,
-      IProject
+      { project: IProject; stepId: string }
     >({
-      query: (project) => ({
+      query: ({ project, stepId }) => ({
         url: "ide/docker/run",
         method: "POST",
         body: {
           project,
+          stepId,
         },
       }),
     }),

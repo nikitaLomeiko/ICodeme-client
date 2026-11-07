@@ -7,6 +7,18 @@ import {
   useStudyStep,
 } from "@/widgets/step-shell";
 
+const defaultEntryFiles: Record<string, string> = {
+  bash: "main.sh",
+  c: "main.c",
+  cpp: "main.cpp",
+  go: "main.go",
+  java: "Main.java",
+  javascript: "index.js",
+  python: "main.py",
+  rust: "main.rs",
+  typescript: "index.ts",
+};
+
 export function CodeStepPage() {
   const params = useStepRouteParams();
 
@@ -23,28 +35,44 @@ export function CodeStepPage() {
     return <StepShell message="Задание для этого шага не найдено." />;
   }
 
-  const language = "python";
+  const language =
+    step.settings?.language ?? step.settings?.initProject?.language ?? "python";
+  const entryFile =
+    step.settings?.entryFile ??
+    defaultEntryFiles[language.toLowerCase()] ??
+    "main.txt";
+  const projectMeta = {
+    name:
+      step.settings?.initProject?.name ??
+      `study-${params.studyId}-${params.moduleIndex}-${params.levelIndex}-${params.stepIndex}`,
+    title: step.settings?.initProject?.title ?? step.title,
+    subtitle: step.settings?.initProject?.subtitle ?? step.description,
+    language,
+  };
+  const runtimeSettings = {
+    ...step.settings,
+    language,
+    entryFile,
+  };
+
   return (
     <StepShell
       title={step.title}
       description={step.description}
       content={step.code}
+      settings={runtimeSettings}
     >
       <div className="flex w-full min-w-0 flex-col gap-5">
         <div className="w-full min-w-0 overflow-hidden rounded-xl border border-[var(--ui-border)]">
           <IDE
+            stepId={step.id || "-1"}
             key={`${params.studyId}:${params.moduleIndex}:${params.levelIndex}:${params.stepIndex}`}
             userId={study?.userId ?? ""}
-            meta={{
-              name: `study-${params.studyId}-${params.moduleIndex}-${params.levelIndex}-${params.stepIndex}`,
-              title: step.title,
-              subtitle: step.description,
-              language,
-            }}
+            meta={projectMeta}
             initialFiles={[
               {
                 id: "main",
-                name: "main.py",
+                name: entryFile,
                 type: "file",
                 content: "",
                 children: [],

@@ -109,7 +109,14 @@ export const CodeEditor: React.FC<IProps> = (props) => {
       <div
         className="flex-1 relative overflow-hidden"
         style={{
-          font: `600 ${fontSize}px/1.6 'Geist Mono','JetBrains Mono','Fira Code',monospace`,
+          fontFamily:
+            "var(--font-geist-mono), 'Geist Mono', 'JetBrains Mono', 'Fira Code', monospace",
+          fontSize,
+          fontWeight: 600,
+          lineHeight: 1.6,
+          letterSpacing: 0,
+          fontVariantLigatures: "none",
+          fontFeatureSettings: '"liga" 0, "calt" 0',
         }}
       >
         <div className="absolute inset-0 flex">

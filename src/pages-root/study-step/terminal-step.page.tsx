@@ -28,6 +28,7 @@ export function TerminalStepPage() {
       title={step.title}
       description={step.description}
       content={step.code}
+      settings={step.settings}
     >
       <div className="flex w-full min-w-0 flex-col gap-5">
         <div className="w-full min-w-0 overflow-hidden rounded-xl border border-[var(--ui-border)]">

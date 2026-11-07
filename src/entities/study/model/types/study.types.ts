@@ -1,3 +1,4 @@
+import { IProjectMeta } from "@/entities/ide/model/types/ide.types";
 import { IQuiz } from "./quiz.types";
 
 export interface IStudy extends INotation {
@@ -50,6 +51,15 @@ export interface IStep extends INotation {
   code?: string;
   quiz?: IQuiz;
   exam?: IQuiz;
+  settings: ISettings;
+}
+
+export interface ISettings {
+  language?: string;
+  initProject?: IProjectMeta;
+  entryFile?: string;
+  timeLimitMs?: number;
+  memoryLimitMb?: number;
 }
 
 export interface IStepByLevel {
@@ -58,7 +68,13 @@ export interface IStepByLevel {
   stepIndexInLevel: number;
 }
 
-export type StepType = "document" | "code" | "terminal" | "quiz" | "test" | "exam";
+export type StepType =
+  | "document"
+  | "code"
+  | "terminal"
+  | "quiz"
+  | "test"
+  | "exam";
 
 export interface INotation {
   title: string;

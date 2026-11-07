@@ -174,6 +174,11 @@ export const EditorArea: React.FC<IProps> = (props) => {
               padding: 0,
               border: 0,
               background: "transparent",
+              font: "inherit",
+              letterSpacing: "inherit",
+              fontVariantLigatures: "inherit",
+              fontFeatureSettings: "inherit",
+              tabSize: 2,
               whiteSpace: "pre-wrap",
               wordBreak: "break-all",
             }}
@@ -181,6 +186,10 @@ export const EditorArea: React.FC<IProps> = (props) => {
             <code
               style={{
                 color: "var(--ui-text)",
+                font: "inherit",
+                letterSpacing: "inherit",
+                fontVariantLigatures: "inherit",
+                fontFeatureSettings: "inherit",
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-all",
               }}
@@ -203,6 +212,11 @@ export const EditorArea: React.FC<IProps> = (props) => {
                 padding: 0,
                 border: 0,
                 background: "transparent",
+                font: "inherit",
+                letterSpacing: "inherit",
+                fontVariantLigatures: "inherit",
+                fontFeatureSettings: "inherit",
+                tabSize: 2,
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-all",
               }}
@@ -210,6 +224,10 @@ export const EditorArea: React.FC<IProps> = (props) => {
               <code
                 style={{
                   color: "transparent",
+                  font: "inherit",
+                  letterSpacing: "inherit",
+                  fontVariantLigatures: "inherit",
+                  fontFeatureSettings: "inherit",
                   whiteSpace: "pre-wrap",
                   wordBreak: "break-all",
                 }}
@@ -246,9 +264,11 @@ export const EditorArea: React.FC<IProps> = (props) => {
           resize: "none",
           overflow: "auto",
           boxSizing: "border-box",
-          fontFamily: "inherit",
-          fontSize: "inherit",
-          lineHeight: "inherit",
+          font: "inherit",
+          letterSpacing: "inherit",
+          fontVariantLigatures: "inherit",
+          fontFeatureSettings: "inherit",
+          tabSize: 2,
           whiteSpace: "pre-wrap",
           wordBreak: "break-all",
           WebkitAppearance: "none",
