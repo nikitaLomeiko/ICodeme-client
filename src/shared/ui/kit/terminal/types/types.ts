@@ -36,6 +36,7 @@ export interface ITerminalProps {
   onInput?: (input: string) => void;
   onChange?: (draft: string) => void;
   readonly?: boolean;
+  bodyClassName?: string;
 }
 
 export interface ITerminalHandle {

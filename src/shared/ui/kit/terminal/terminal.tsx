@@ -15,6 +15,7 @@ export const Terminal = forwardRef<ITerminalHandle, ITerminalProps>(
       onInput,
       onChange,
       readonly = false,
+      bodyClassName = "",
     } = props;
 
     const terminal = useTerminal({
@@ -52,7 +53,7 @@ export const Terminal = forwardRef<ITerminalHandle, ITerminalProps>(
         <div
           ref={terminal.bodyRef}
           onClick={terminal.focus}
-          className="h-[420px] cursor-text overflow-y-auto px-5 py-4 font-mono text-[13px] leading-relaxed"
+          className={`h-[420px] cursor-text overflow-y-auto px-5 py-4 font-mono text-[13px] leading-relaxed ${bodyClassName}`}
         >
           {terminal.lines.map((line) => (
             <TerminalLine key={line.id} line={line} />

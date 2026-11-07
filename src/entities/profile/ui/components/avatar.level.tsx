@@ -7,7 +7,11 @@ interface IProps {
   size?: "2xl" | "3xl";
 }
 
-export const AvatarLevel: React.FC<IProps> = ({ experience, avatar, size = "2xl" }) => {
+export const AvatarLevel: React.FC<IProps> = ({
+  experience,
+  avatar,
+  size = "2xl",
+}) => {
   const avatarMeta =
     illustratedAvatars.find((a) => a.label === avatar) ?? illustratedAvatars[0];
 

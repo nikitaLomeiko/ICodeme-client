@@ -1,6 +1,6 @@
 import { IconType } from "react-icons";
 import { StepType } from "../../model";
-import { FaBook, FaCode, FaGraduationCap, FaQuestion } from "react-icons/fa";
+import { FaBook, FaCode, FaGraduationCap, FaQuestion, FaTerminal } from "react-icons/fa";
 
 interface IPalette {
   color: string;
@@ -13,6 +13,7 @@ interface IPalette {
 export const stepIcons: Record<StepType, IconType> = {
   document: FaBook,
   code: FaCode,
+  terminal: FaTerminal,
   quiz: FaQuestion,
   test: FaQuestion,
   exam: FaGraduationCap,
@@ -36,6 +37,13 @@ export const getStepPalette = (type: StepType) => {
       ring: "rgba(52,211,153,0.45)",
       dot: "#10b981",
       chip: "rgba(52,211,153,0.18)",
+    },
+    terminal: {
+      color: "#a78bfa",
+      bg: "rgba(167,139,250,0.14)",
+      ring: "rgba(167,139,250,0.45)",
+      dot: "#8b5cf6",
+      chip: "rgba(167,139,250,0.18)",
     },
     quiz: {
       color: "#fbbf24",
@@ -66,6 +74,7 @@ export const getStepLabel = (type: StepType) => {
   const labels: Record<StepType, string> = {
     document: "Документ",
     code: "Код",
+    terminal: "Терминал",
     quiz: "Тест",
     test: "Тест",
     exam: "Экзамен",

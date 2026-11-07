@@ -58,7 +58,7 @@ export interface IStepByLevel {
   stepIndexInLevel: number;
 }
 
-export type StepType = "document" | "code" | "quiz" | "test" | "exam";
+export type StepType = "document" | "code" | "terminal" | "quiz" | "test" | "exam";
 
 export interface INotation {
   title: string;

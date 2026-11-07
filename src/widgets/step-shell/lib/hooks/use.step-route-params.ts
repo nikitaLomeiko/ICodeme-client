@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import type { StudyStepParams } from "./use-study-step";
+import { StudyStepParams } from "./use.study-step";
 
 export function useStepRouteParams(): StudyStepParams {
   const params = useSearchParams();

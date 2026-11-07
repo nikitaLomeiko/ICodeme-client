@@ -12,6 +12,7 @@ export interface StudyStepParams {
 
 export function useStudyStep(params: StudyStepParams) {
   const positions = [params.moduleIndex, params.levelIndex, params.stepIndex];
+
   const indices = positions.map(Number);
   const isValid =
     Boolean(params.studyId) &&

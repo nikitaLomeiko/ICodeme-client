@@ -1,1 +1,1 @@
-export { DocumentationPage as default } from "@/pages-root/documentation";
+export { DocumentationStepPage as default } from "@/pages-root/study-step/documentation-step.page";

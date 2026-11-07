@@ -3,6 +3,7 @@ import type { StepType } from "@/entities/study";
 const colors: Record<StepType, string> = {
   document: "#38bdf8",
   code: "#34d399",
+  terminal: "#a78bfa",
   quiz: "#fbbf24",
   test: "#fb923c",
   exam: "#c084fc",
@@ -108,6 +109,33 @@ export const StepIllustration: React.FC<IProps> = ({ type }) => {
               strokeLinecap="round"
               opacity="0.45"
             />
+          </>
+        )}
+
+        {type === "terminal" && (
+          <>
+            <rect
+              x="48"
+              y="28"
+              width="224"
+              height="116"
+              rx="12"
+              fill="var(--ui-background-secondary)"
+              stroke={color}
+              strokeWidth="2"
+            />
+            <path d="M48 54h224" stroke={color} strokeWidth="2" opacity="0.55" />
+            <circle cx="66" cy="41" r="4" fill={color} />
+            <circle cx="80" cy="41" r="4" fill={color} opacity="0.55" />
+            <circle cx="94" cy="41" r="4" fill={color} opacity="0.3" />
+            <path
+              d="m84 76 14 11-14 11m28 0h18m-46 15h102m-102 10h72"
+              stroke={color}
+              strokeWidth="5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <rect x="224" y="105" width="8" height="18" rx="2" fill={color} opacity="0.8" />
           </>
         )}
 
